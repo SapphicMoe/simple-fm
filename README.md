@@ -7,12 +7,15 @@ Actual documentation coming soon! Project still WIP.
 # Example
 
 ```ts
-import { LastFMClient } from '@solely/simple-fm';
+import simpleFM from '@solely/simple-fm';
 
-const client = new LastFMClient('your last.fm token here');
+// Replace the token with your Last.fm token.
+const client = new simpleFM('last.fm token');
 
+// Fetch tags from the artist "Waterparks".
 const tags = await client.fetchArtistTags('Waterparks');
 
+// Log it.
 console.log(tags);
 ```
 
