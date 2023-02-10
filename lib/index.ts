@@ -1,7 +1,7 @@
 import { $fetch, SearchParameters } from 'ofetch';
-import type { Tag, Track } from './types';
+import type { Album, Artist, Tag, Track, User } from './types';
 
-export class LastFMClient {
+class LastFMClient {
   constructor(private token: string) {
     this.token = token;
   }
@@ -26,7 +26,7 @@ export class LastFMClient {
       url: track.url,
       listeners: track.listeners,
       image: track.image[3]['#text'],
-    };
+    } as Track;
   }
 
   public async fetchAlbum(name: string) {
@@ -41,7 +41,7 @@ export class LastFMClient {
       artist: album.artist,
       url: album.url,
       image: album.image[3]['#text'],
-    };
+    } as Album;
   }
 
   public async fetchArtist(name: string) {
@@ -59,7 +59,7 @@ export class LastFMClient {
       bio: artist.bio.summary || null,
       scrobbles: artist.stats.playcount || null,
       listeners: artist.stats.listeners || null,
-    };
+    } as Artist;
   }
 
   public async fetchArtistTags(name: string) {
@@ -75,8 +75,8 @@ export class LastFMClient {
     return tag.map((tag: Tag) => {
       return {
         name: tag.name,
-        link: tag?.url,
-        timesRanked: tag?.count,
+        link: tag.url,
+        timesRanked: tag.count,
       };
     });
   }
@@ -96,13 +96,13 @@ export class LastFMClient {
         rank: track['@attr']?.rank,
         name: track.name,
         artist: {
-          name: track?.artist?.name,
-          url: track?.artist?.url,
+          name: track.artist.name,
+          url: track.artist.url,
         },
-        url: track?.url,
-        scrobbles: track?.playcount,
-        listeners: track?.listeners,
-      };
+        url: track.url,
+        scrobbles: track.playcount,
+        listeners: track.listeners,
+      } as Track;
     });
   }
 
@@ -120,7 +120,10 @@ export class LastFMClient {
       realName: user.realname || null,
       country: user.country || null,
       url: user.url || null,
+      registered: new Date(user.registered['#text'] * 1000) || null,
       image: user.image[3]['#text'] || null,
-    };
+    } as User;
   }
 }
+
+export default LastFMClient;
