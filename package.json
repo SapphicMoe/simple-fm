@@ -1,0 +1,19 @@
+{
+  "name": "@solely/simple-fm",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "Zlib",
+  "author": "Chloe Arciniega <solely@riseup.net>",
+  "description": "A simple Last.fm wrapper in TypeScript.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/solelychloe/simple-fm",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "eslint": "^8.33.0",
+    "ofetch": "^1.0.0",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5"
+  }
+}
