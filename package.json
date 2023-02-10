@@ -7,7 +7,13 @@
   "description": "A simple Last.fm wrapper in TypeScript.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint ."
+  },
   "repository": "https://github.com/solelychloe/simple-fm",
+  "packageManager": "yarn@3.3.1",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
