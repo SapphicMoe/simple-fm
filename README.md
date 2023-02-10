@@ -15,3 +15,11 @@ const tags = await client.fetchArtistTags('Waterparks');
 
 console.log(tags);
 ```
+
+# License
+
+This package is licensed under the [zlib][license] license.
+
+© 2023 Chloe Arciniega.
+
+[license]: /LICENSE
