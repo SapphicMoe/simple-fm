@@ -5,11 +5,19 @@
   "license": "Zlib",
   "author": "Chloe Arciniega <solely@riseup.net>",
   "description": "A simple, asynchronous Last.fm wrapper in TypeScript.",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "files": [
+    "./dist"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepublish": "yarn build"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   },
   "repository": "https://github.com/solelychloe/simple-fm",
   "packageManager": "yarn@3.3.1",
