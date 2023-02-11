@@ -1,4 +1,4 @@
-import type { UserType } from './types';
+import type { TrackType, UserType } from './types';
 
 import { APIRequest } from './request.js';
 const request = new APIRequest();
@@ -26,6 +26,26 @@ class User {
       registered: new Date(user.registered['#text'] * 1000) || null,
       image: user.image[3]['#text'] || null,
     } as UserType;
+  }
+
+  public async fetchRecentTrack(userName: string) {
+    const { recenttracks } = await request.fetch({
+      method: 'user.getRecentTracks',
+      user: userName,
+      api_key: this.token,
+      format: 'json',
+    });
+
+    const [track] = recenttracks.track;
+
+    return {
+      currentlyPlaying: JSON.parse(track['@attr'].nowplaying),
+      name: track.name,
+      artist: track.artist['#text'],
+      album: track.album['#text'],
+      url: track.url,
+      image: track.image[3]['#text'],
+    } as TrackType;
   }
 }
 

@@ -19,10 +19,10 @@ import simpleFM from '@solely/simple-fm';
 const client = new simpleFM('last.fm token');
 
 // Fetch tags from the artist "Waterparks".
-const tags = await client.artist.fetchTags('Waterparks');
+await client.artist.fetchTags('Waterparks');
 
-// Log it.
-console.log(tags);
+// Fetch the recent track from a user.
+await client.user.fetchRecentTrack('solelychloe');
 ```
 
 # License
