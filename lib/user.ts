@@ -39,7 +39,7 @@ class User {
     const [track] = recenttracks.track;
 
     return {
-      currentlyPlaying: JSON.parse(track['@attr'].nowplaying),
+      currentlyPlaying: track['@attr'] ? JSON.parse(track['@attr'].nowplaying) : false,
       name: track.name,
       artist: track.artist['#text'],
       album: track.album['#text'],
