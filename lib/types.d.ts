@@ -1,25 +1,25 @@
-export type Album = {
+export type AlbumType = {
   name: string;
   artist: string;
   url: string | URL;
-  image: object[];
+  image?: object[];
 };
 
-export type Artist = {
+export type ArtistType = {
   name: string;
   url: string | URL;
-  bio: string;
-  scrobbles: string | number;
-  listeners: string | number;
+  bio?: string;
+  scrobbles?: string | number;
+  listeners?: string | number;
 };
 
-export type Tag = {
+export type TagType = {
   name: string;
   url: string | URL;
-  count: string | number;
+  count?: string | number;
 };
 
-export type Track = {
+export type TrackType = {
   ['@attr']?: {
     rank: string | number;
   };
@@ -34,11 +34,11 @@ export type Track = {
   listeners?: string | number;
 };
 
-export type User = {
+export type UserType = {
   name: string;
   realName?: string | null;
   country?: string;
-  url?: string | URL;
-  registered?: string | Date;
+  url: string | URL;
+  registered: string | Date;
   image?: object[];
 };

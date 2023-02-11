@@ -1,6 +1,6 @@
 # simple-fm
 
-A simple Last.fm wrapper in TypeScript.
+A simple, asynchronous Last.fm wrapper in TypeScript.
 
 Actual documentation coming soon! Project still WIP.
 

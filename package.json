@@ -4,7 +4,7 @@
   "type": "module",
   "license": "Zlib",
   "author": "Chloe Arciniega <solely@riseup.net>",
-  "description": "A simple Last.fm wrapper in TypeScript.",
+  "description": "A simple, asynchronous Last.fm wrapper in TypeScript.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

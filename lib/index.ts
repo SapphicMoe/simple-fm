@@ -1,129 +1,22 @@
-import { $fetch, SearchParameters } from 'ofetch';
-import type { Album, Artist, Tag, Track, User } from './types';
+import Artist from './artist.js';
+import Album from './album.js';
+import User from './user.js';
+import Track from './track.js';
 
-class LastFMClient {
+export default class LastFMClient {
+  public readonly album: Album;
+  public readonly artist: Artist;
+  public readonly track: Track;
+  public readonly user: User;
+
   constructor(private token: string) {
+    if (!token) throw new Error('You have not specified a Last.fm API key.');
+
     this.token = token;
-  }
 
-  private async request(params: SearchParameters) {
-    const baseURL = 'https://ws.audioscrobbler.com/2.0';
-    const data = await $fetch(baseURL, { params });
-
-    return data;
-  }
-
-  public async fetchTrack(name: string) {
-    const {
-      results: { trackmatches },
-    } = await this.request({ method: 'track.search', track: name, api_key: this.token, format: 'json', limit: 1 });
-
-    const [track] = trackmatches.track;
-
-    return {
-      name: track.name,
-      artist: track.artist,
-      url: track.url,
-      listeners: track.listeners,
-      image: track.image[3]['#text'],
-    } as Track;
-  }
-
-  public async fetchAlbum(name: string) {
-    const {
-      results: { albummatches },
-    } = await this.request({ method: 'album.search', album: name, api_key: this.token, format: 'json', limit: 1 });
-
-    const [album] = albummatches.album;
-
-    return {
-      name: album.name,
-      artist: album.artist,
-      url: album.url,
-      image: album.image[3]['#text'],
-    } as Album;
-  }
-
-  public async fetchArtist(name: string) {
-    const { artist } = await this.request({
-      method: 'artist.getinfo',
-      artist: name,
-      api_key: this.token,
-      format: 'json',
-      limit: 1,
-    });
-
-    return {
-      name: artist.name,
-      url: artist.url || null,
-      bio: artist.bio.summary || null,
-      scrobbles: artist.stats.playcount || null,
-      listeners: artist.stats.listeners || null,
-    } as Artist;
-  }
-
-  public async fetchArtistTags(name: string) {
-    const {
-      toptags: { tag },
-    } = await this.request({
-      method: 'artist.getTopTags',
-      artist: name,
-      api_key: this.token,
-      format: 'json',
-    });
-
-    return tag.map((tag: Tag) => {
-      return {
-        name: tag.name,
-        link: tag.url,
-        timesRanked: tag.count,
-      };
-    });
-  }
-
-  public async fetchArtistTracks(name: string) {
-    const {
-      toptracks: { track },
-    } = await this.request({
-      method: 'artist.getTopTracks',
-      artist: name,
-      api_key: this.token,
-      format: 'json',
-    });
-
-    return track.map((track: Track) => {
-      return {
-        rank: track['@attr']?.rank,
-        name: track.name,
-        artist: {
-          name: track.artist.name,
-          url: track.artist.url,
-        },
-        url: track.url,
-        scrobbles: track.playcount,
-        listeners: track.listeners,
-      } as Track;
-    });
-  }
-
-  public async fetchUser(name: string) {
-    const { user } = await this.request({
-      method: 'user.getInfo',
-      user: name,
-      api_key: this.token,
-      format: 'json',
-      limit: 1,
-    });
-
-    return {
-      name: user.name || null,
-      realName: user.realname || null,
-      country: user.country || null,
-      url: user.url || null,
-      registered: new Date(user.registered['#text'] * 1000) || null,
-      image: user.image[3]['#text'] || null,
-    } as User;
+    this.album = new Album(token);
+    this.artist = new Artist(token);
+    this.track = new Track(token);
+    this.user = new User(token);
   }
 }
-
-export default LastFMClient;
