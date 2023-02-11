@@ -13,7 +13,7 @@ import simpleFM from '@solely/simple-fm';
 const client = new simpleFM('last.fm token');
 
 // Fetch tags from the artist "Waterparks".
-const tags = await client.fetchArtistTags('Waterparks');
+const tags = await client.artist.fetchTags('Waterparks');
 
 // Log it.
 console.log(tags);
