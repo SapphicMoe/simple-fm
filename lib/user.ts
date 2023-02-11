@@ -1,4 +1,4 @@
-import type { TrackType, UserType } from './types';
+import type { UserGetInfoResponse, UserGetRecentTracksResponse, UserTrackType, UserType } from './types';
 
 import { request } from './request.js';
 
@@ -8,8 +8,8 @@ class User {
     this.token = token;
   }
 
-  public async fetch(userName: string) {
-    const { user } = await request({
+  public async fetch(userName: string): Promise<UserType> {
+    const { user } = await request<UserGetInfoResponse>({
       method: 'user.getInfo',
       user: userName,
       api_key: this.token,
@@ -18,17 +18,17 @@ class User {
     });
 
     return {
-      name: user.name || null,
+      name: user.name,
       realName: user.realname || null,
-      country: user.country || null,
-      url: user.url || null,
-      registered: new Date(user.registered['#text'] * 1000) || null,
-      image: user.image[3]['#text'] || null,
-    } as UserType;
+      country: user.country,
+      url: user.url,
+      registered: new Date(user.registered['#text'] * 1000),
+      image: user.image.find((i) => i.size == 'large')?.['#text'],
+    };
   }
 
-  public async fetchRecentTrack(userName: string) {
-    const { recenttracks } = await request({
+  public async fetchRecentTrack(userName: string): Promise<UserTrackType> {
+    const { recenttracks } = await request<UserGetRecentTracksResponse>({
       method: 'user.getRecentTracks',
       user: userName,
       api_key: this.token,
@@ -38,13 +38,13 @@ class User {
     const [track] = recenttracks.track;
 
     return {
-      currentlyPlaying: track['@attr'] ? JSON.parse(track['@attr'].nowplaying) : false,
+      currentlyPlaying: track['@attr']?.nowplaying === 'true',
       name: track.name,
       artist: track.artist['#text'],
       album: track.album['#text'],
       url: track.url,
       image: track.image[3]['#text'],
-    } as TrackType;
+    };
   }
 }
 

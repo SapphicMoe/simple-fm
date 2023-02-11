@@ -1,4 +1,4 @@
-import type { AlbumType } from './types';
+import type { AlbumSearchResponse, AlbumType } from './types';
 
 import { request } from './request.js';
 
@@ -8,10 +8,10 @@ class Album {
     this.token = token;
   }
 
-  public async fetch(albumName: string) {
+  public async fetch(albumName: string): Promise<AlbumType> {
     const {
       results: { albummatches },
-    } = await request({
+    } = await request<AlbumSearchResponse>({
       method: 'album.search',
       album: albumName,
       api_key: this.token,
@@ -25,8 +25,9 @@ class Album {
       name: album.name,
       artist: album.artist,
       url: album.url,
-      image: album.image[3]['#text'],
-    } as AlbumType;
+      // Just in case it's possible for it to not exist?
+      image: album.image.find((i) => i.size == 'large')?.['#text'],
+    };
   }
 }
 

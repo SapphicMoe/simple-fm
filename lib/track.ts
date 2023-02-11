@@ -1,4 +1,4 @@
-import type { TrackType } from './types';
+import type { TrackSearchResponse, TrackType } from './types';
 
 import { request } from './request.js';
 
@@ -8,10 +8,10 @@ class Track {
     this.token = token;
   }
 
-  public async fetch(trackName: string) {
+  public async fetch(trackName: string): Promise<TrackType> {
     const {
       results: { trackmatches },
-    } = await request({
+    } = await request<TrackSearchResponse>({
       method: 'track.search',
       track: trackName,
       api_key: this.token,
@@ -22,12 +22,12 @@ class Track {
     const [track] = trackmatches.track;
 
     return {
-      name: track.name || null,
-      artist: track.artist || null,
-      url: track.url || null,
-      listeners: track.listeners || null,
-      image: track.image[3]['#text'] || null,
-    } as TrackType;
+      name: track.name,
+      artist: track.artist,
+      url: track.url,
+      listeners: track.listeners,
+      image: track.image.find((i) => i.size == 'large')?.['#text'],
+    };
   }
 }
 

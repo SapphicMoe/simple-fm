@@ -1,4 +1,11 @@
-import type { ArtistType, TagType, TrackType } from './types';
+import type {
+  ArtistGetInfoResponse,
+  ArtistGetTopTagsResponse,
+  ArtistGetTopTracksResponse,
+  ArtistTrackType,
+  ArtistType,
+  TagType,
+} from './types';
 
 import { request } from './request.js';
 
@@ -8,8 +15,8 @@ class Artist {
     this.token = token;
   }
 
-  public async fetch(artistName: string) {
-    const { artist } = await request({
+  public async fetch(artistName: string): Promise<ArtistType> {
+    const { artist } = await request<ArtistGetInfoResponse>({
       method: 'artist.getinfo',
       artist: artistName,
       api_key: this.token,
@@ -18,55 +25,55 @@ class Artist {
     });
 
     return {
-      name: artist.name || null,
-      url: artist.url || null,
-      bio: artist.bio.summary || null,
-      scrobbles: artist.stats.playcount || null,
-      listeners: artist.stats.listeners || null,
-    } as ArtistType;
+      name: artist.name,
+      url: artist.url,
+      bio: artist.bio.summary,
+      scrobbles: artist.stats.playcount,
+      listeners: artist.stats.listeners,
+    };
   }
 
-  public async fetchTags(artistName: string) {
+  public async fetchTags(artistName: string): Promise<TagType[]> {
     const {
       toptags: { tag },
-    } = await request({
+    } = await request<ArtistGetTopTagsResponse>({
       method: 'artist.getTopTags',
       artist: artistName,
       api_key: this.token,
       format: 'json',
     });
 
-    return tag.map((tag: TagType) => {
+    return tag.map((tag) => {
       return {
-        name: tag.name || null,
-        link: tag.url || null,
-        timesRanked: tag.count || null,
+        name: tag.name,
+        url: tag.url,
+        timesRanked: tag.count,
       };
     });
   }
 
-  public async fetchTracks(artistName: string) {
+  public async fetchTracks(artistName: string): Promise<ArtistTrackType[]> {
     const {
       toptracks: { track },
-    } = await request({
+    } = await request<ArtistGetTopTracksResponse>({
       method: 'artist.getTopTracks',
       artist: artistName,
       api_key: this.token,
       format: 'json',
     });
 
-    return track.map((track: TrackType) => {
+    return track.map((track) => {
       return {
-        rank: track['@attr']?.rank,
-        name: track.name || null,
+        rank: track['@attr'].rank,
+        name: track.name,
         artist: {
-          name: track.artist.name || null,
-          url: track.artist.url || null,
+          name: track.artist.name,
+          url: track.artist.url,
         },
-        url: track.url || null,
-        scrobbles: track.playcount || null,
-        listeners: track.listeners || null,
-      } as TrackType;
+        url: track.url,
+        scrobbles: track.playcount,
+        listeners: track.listeners,
+      };
     });
   }
 }
