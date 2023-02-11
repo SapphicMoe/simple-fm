@@ -1,7 +1,6 @@
 import type { AlbumType } from './types';
 
-import { APIRequest } from './request.js';
-const request = new APIRequest();
+import { request } from './request.js';
 
 class Album {
   constructor(private token: string) {
@@ -12,7 +11,7 @@ class Album {
   public async fetch(albumName: string) {
     const {
       results: { albummatches },
-    } = await request.fetch({
+    } = await request({
       method: 'album.search',
       album: albumName,
       api_key: this.token,

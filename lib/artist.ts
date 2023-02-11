@@ -1,7 +1,6 @@
 import type { ArtistType, TagType, TrackType } from './types';
 
-import { APIRequest } from './request.js';
-const request = new APIRequest();
+import { request } from './request.js';
 
 class Artist {
   constructor(private token: string) {
@@ -10,7 +9,7 @@ class Artist {
   }
 
   public async fetch(artistName: string) {
-    const { artist } = await request.fetch({
+    const { artist } = await request({
       method: 'artist.getinfo',
       artist: artistName,
       api_key: this.token,
@@ -30,7 +29,7 @@ class Artist {
   public async fetchTags(artistName: string) {
     const {
       toptags: { tag },
-    } = await request.fetch({
+    } = await request({
       method: 'artist.getTopTags',
       artist: artistName,
       api_key: this.token,
@@ -49,7 +48,7 @@ class Artist {
   public async fetchTracks(artistName: string) {
     const {
       toptracks: { track },
-    } = await request.fetch({
+    } = await request({
       method: 'artist.getTopTracks',
       artist: artistName,
       api_key: this.token,

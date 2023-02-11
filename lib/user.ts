@@ -1,7 +1,6 @@
 import type { TrackType, UserType } from './types';
 
-import { APIRequest } from './request.js';
-const request = new APIRequest();
+import { request } from './request.js';
 
 class User {
   constructor(private token: string) {
@@ -10,7 +9,7 @@ class User {
   }
 
   public async fetch(userName: string) {
-    const { user } = await request.fetch({
+    const { user } = await request({
       method: 'user.getInfo',
       user: userName,
       api_key: this.token,
@@ -29,7 +28,7 @@ class User {
   }
 
   public async fetchRecentTrack(userName: string) {
-    const { recenttracks } = await request.fetch({
+    const { recenttracks } = await request({
       method: 'user.getRecentTracks',
       user: userName,
       api_key: this.token,

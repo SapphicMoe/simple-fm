@@ -1,7 +1,6 @@
 import type { TrackType } from './types';
 
-import { APIRequest } from './request.js';
-const request = new APIRequest();
+import { request } from './request.js';
 
 class Track {
   constructor(private token: string) {
@@ -12,7 +11,7 @@ class Track {
   public async fetch(trackName: string) {
     const {
       results: { trackmatches },
-    } = await request.fetch({
+    } = await request({
       method: 'track.search',
       track: trackName,
       api_key: this.token,

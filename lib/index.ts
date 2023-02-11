@@ -12,8 +12,6 @@ export default class LastFMClient {
   constructor(private token: string) {
     if (!token) throw new Error('You have not specified a Last.fm API key.');
 
-    this.token = token;
-
     this.album = new Album(token);
     this.artist = new Artist(token);
     this.track = new Track(token);
