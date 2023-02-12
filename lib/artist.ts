@@ -4,7 +4,7 @@ import type {
   ArtistGetTopTracksResponse,
   ArtistTrackType,
   ArtistType,
-  TagType,
+  ArtistTagType,
 } from './types';
 
 import { request } from './request.js';
@@ -15,6 +15,10 @@ class Artist {
     this.token = token;
   }
 
+  /**
+   * Fetches and returns metadata information on an artist.
+   * @param artistName - The name of the artist.
+   * */
   public async fetch(artistName: string): Promise<ArtistType> {
     const { artist } = await request<ArtistGetInfoResponse>({
       method: 'artist.getinfo',
@@ -33,7 +37,11 @@ class Artist {
     };
   }
 
-  public async fetchTags(artistName: string): Promise<TagType[]> {
+  /**
+   * Fetches and returns popular tags for an artist.
+   * @param artistName - The name of the artist.
+   * */
+  public async fetchTags(artistName: string): Promise<ArtistTagType[]> {
     const {
       toptags: { tag },
     } = await request<ArtistGetTopTagsResponse>({
@@ -52,6 +60,10 @@ class Artist {
     });
   }
 
+  /**
+   * Fetches and returns popular tracks for an artist.
+   * @param artistName - The name of the artist.
+   * */
   public async fetchTracks(artistName: string): Promise<ArtistTrackType[]> {
     const {
       toptracks: { track },

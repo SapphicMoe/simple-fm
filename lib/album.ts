@@ -8,6 +8,10 @@ class Album {
     this.token = token;
   }
 
+  /**
+   * Fetches and returns information on an album.
+   * @param albumName - The name of the album.
+   * */
   public async fetch(albumName: string): Promise<AlbumType> {
     const {
       results: { albummatches },

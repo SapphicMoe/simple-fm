@@ -8,6 +8,10 @@ class Track {
     this.token = token;
   }
 
+  /**
+   * Fetches and returns information on a track.
+   * @param trackName - The name of the track.
+   * */
   public async fetch(trackName: string): Promise<TrackType> {
     const {
       results: { trackmatches },

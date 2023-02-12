@@ -8,6 +8,10 @@ class User {
     this.token = token;
   }
 
+  /**
+   * Fetches and returns information about a user's profile.
+   * @param userName - The name of the user.
+   * */
   public async fetch(userName: string): Promise<UserType> {
     const { user } = await request<UserGetInfoResponse>({
       method: 'user.getInfo',
@@ -27,6 +31,10 @@ class User {
     };
   }
 
+  /**
+   * Fetches and returns the most recent track listened by the user.
+   * @param userName - The name of the user.
+   * */
   public async fetchRecentTrack(userName: string): Promise<UserTrackType> {
     const { recenttracks } = await request<UserGetRecentTracksResponse>({
       method: 'user.getRecentTracks',
