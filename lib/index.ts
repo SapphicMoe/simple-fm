@@ -1,13 +1,15 @@
 import Artist from './artist.js';
 import Album from './album.js';
-import User from './user.js';
+import Tag from './tag.js';
 import Track from './track.js';
+import User from './user.js';
 
 export * from './types.js';
 
 export default class LastFMClient {
   public readonly album: Album;
   public readonly artist: Artist;
+  public readonly tag: Tag;
   public readonly track: Track;
   public readonly user: User;
 
@@ -16,6 +18,7 @@ export default class LastFMClient {
 
     this.album = new Album(token);
     this.artist = new Artist(token);
+    this.tag = new Tag(token);
     this.track = new Track(token);
     this.user = new User(token);
   }

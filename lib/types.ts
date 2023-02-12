@@ -5,7 +5,6 @@ interface Image {
 
 interface APITrack {
   name: string;
-  listeners: string;
   url: string;
   streamable: string;
   image: Image[];
@@ -51,7 +50,38 @@ export interface ArtistGetTopTracksResponse {
   toptracks: {
     track: Array<
       APITrack & {
+        listeners: string;
         playcount: string;
+        artist: {
+          name: string;
+          mbid: string;
+          url: string;
+        };
+        '@attr': {
+          rank: string;
+        };
+      }
+    >;
+  };
+}
+
+export interface TagGetInfoResponse {
+  tag: {
+    name: string;
+    total: number;
+    reach: number;
+    wiki: {
+      summary: string;
+      content: string;
+    };
+  };
+}
+
+export interface TagGetTopTracksResponse {
+  tracks: {
+    track: Array<
+      APITrack & {
+        duration: string;
         artist: {
           name: string;
           mbid: string;
@@ -123,12 +153,6 @@ export interface ArtistType {
   listeners: string;
 }
 
-export interface TagType {
-  name: string;
-  url: string;
-  timesRanked: number;
-}
-
 export interface ArtistTrackType {
   rank: string;
   name: string;
@@ -139,6 +163,31 @@ export interface ArtistTrackType {
   url: string;
   scrobbles: string;
   listeners: string;
+}
+
+export interface ArtistTagType {
+  name: string;
+  url: string;
+  timesRanked: number;
+}
+
+export interface TagType {
+  name: string;
+  userReach: number;
+  totalReach: number;
+  description: string;
+}
+
+export interface TagTrackType {
+  rank: string;
+  name: string;
+  duration: string;
+  artist: {
+    name: string;
+    url: string;
+  };
+  url: string;
+  image?: string;
 }
 
 export interface TrackType {
