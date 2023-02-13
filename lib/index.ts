@@ -1,5 +1,5 @@
-import Artist from './artist.js';
 import Album from './album.js';
+import Artist from './artist.js';
 import Tag from './tag.js';
 import Track from './track.js';
 import User from './user.js';
@@ -7,13 +7,13 @@ import User from './user.js';
 export * from './types.js';
 
 export default class LastFMClient {
-  public readonly album: Album;
-  public readonly artist: Artist;
-  public readonly tag: Tag;
-  public readonly track: Track;
-  public readonly user: User;
+  readonly album: Album;
+  readonly artist: Artist;
+  readonly tag: Tag;
+  readonly track: Track;
+  readonly user: User;
 
-  constructor(private token: string) {
+  constructor(private readonly token: string) {
     if (!token) throw new Error('You have not specified a Last.fm API key.');
 
     this.album = new Album(token);

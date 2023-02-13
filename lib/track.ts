@@ -1,18 +1,15 @@
-import type { TrackSearchResponse, TrackType } from './types';
-
 import { request } from './request.js';
 
+import type { TrackSearchResponse, TrackType } from './types';
+
 class Track {
-  constructor(private token: string) {
-    if (!token) throw new Error('You have not specified a Last.fm API key.');
-    this.token = token;
-  }
+  constructor(private readonly token: string) {}
 
   /**
    * Fetches and returns information on a track.
    * @param trackName - The name of the track.
    * */
-  public async fetch(trackName: string): Promise<TrackType> {
+  async fetch(trackName: string): Promise<TrackType> {
     const {
       results: { trackmatches },
     } = await request<TrackSearchResponse>({
@@ -30,7 +27,7 @@ class Track {
       artist: track.artist,
       url: track.url,
       listeners: track.listeners,
-      image: track.image.find((i) => i.size == 'large')?.['#text'],
+      image: track.image.find((i) => i.size === 'large')?.['#text'],
     };
   }
 }

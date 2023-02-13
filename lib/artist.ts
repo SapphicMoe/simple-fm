@@ -1,3 +1,5 @@
+import { request } from './request.js';
+
 import type {
   ArtistGetInfoResponse,
   ArtistGetTopTagsResponse,
@@ -7,19 +9,14 @@ import type {
   ArtistTagType,
 } from './types';
 
-import { request } from './request.js';
-
 class Artist {
-  constructor(private token: string) {
-    if (!token) throw new Error('You have not specified a Last.fm API key.');
-    this.token = token;
-  }
+  constructor(private readonly token: string) {}
 
   /**
    * Fetches and returns metadata information on an artist.
    * @param artistName - The name of the artist.
    * */
-  public async fetch(artistName: string): Promise<ArtistType> {
+  async fetch(artistName: string): Promise<ArtistType> {
     const { artist } = await request<ArtistGetInfoResponse>({
       method: 'artist.getinfo',
       artist: artistName,
@@ -41,7 +38,7 @@ class Artist {
    * Fetches and returns popular tags for an artist.
    * @param artistName - The name of the artist.
    * */
-  public async fetchTags(artistName: string): Promise<ArtistTagType[]> {
+  async fetchTags(artistName: string): Promise<ArtistTagType[]> {
     const {
       toptags: { tag },
     } = await request<ArtistGetTopTagsResponse>({
@@ -64,7 +61,7 @@ class Artist {
    * Fetches and returns popular tracks for an artist.
    * @param artistName - The name of the artist.
    * */
-  public async fetchTracks(artistName: string): Promise<ArtistTrackType[]> {
+  async fetchTracks(artistName: string): Promise<ArtistTrackType[]> {
     const {
       toptracks: { track },
     } = await request<ArtistGetTopTracksResponse>({

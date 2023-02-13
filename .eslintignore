@@ -20,3 +20,5 @@ pnpm-debug.log*
 # OS-specific files
 .DS_Store
 desktop.ini
+
+.eslintrc.cjs

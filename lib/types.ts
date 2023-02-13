@@ -1,6 +1,6 @@
 interface Image {
   '#text': string;
-  size: 'small' | 'medium' | 'large' | 'extralarge';
+  size: 'extralarge' | 'large' | 'medium' | 'small';
 }
 
 interface APITrack {

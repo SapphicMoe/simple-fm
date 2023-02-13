@@ -1,18 +1,15 @@
-import type { AlbumSearchResponse, AlbumType } from './types';
-
 import { request } from './request.js';
 
+import type { AlbumSearchResponse, AlbumType } from './types';
+
 class Album {
-  constructor(private token: string) {
-    if (!token) throw new Error('You have not specified a Last.fm API key.');
-    this.token = token;
-  }
+  constructor(private readonly token: string) {}
 
   /**
    * Fetches and returns information on an album.
    * @param albumName - The name of the album.
    * */
-  public async fetch(albumName: string): Promise<AlbumType> {
+  async fetch(albumName: string): Promise<AlbumType> {
     const {
       results: { albummatches },
     } = await request<AlbumSearchResponse>({
@@ -30,7 +27,7 @@ class Album {
       artist: album.artist,
       url: album.url,
       // Just in case it's possible for it to not exist?
-      image: album.image.find((i) => i.size == 'large')?.['#text'],
+      image: album.image.find((i) => i.size === 'large')?.['#text'],
     };
   }
 }

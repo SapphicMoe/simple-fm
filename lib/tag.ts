@@ -1,18 +1,15 @@
-import type { TagType, TagGetInfoResponse, TagGetTopTracksResponse, TagTrackType } from './types';
-
 import { request } from './request.js';
 
+import type { TagType, TagGetInfoResponse, TagGetTopTracksResponse, TagTrackType } from './types';
+
 class Tag {
-  constructor(private token: string) {
-    if (!token) throw new Error('You have not specified a Last.fm API key.');
-    this.token = token;
-  }
+  constructor(private readonly token: string) {}
 
   /**
    * Fetches and returns metadata information on a tag.
    * @param tagName - The name of the tag.
    * */
-  public async fetch(tagName: string): Promise<TagType> {
+  async fetch(tagName: string): Promise<TagType> {
     const { tag } = await request<TagGetInfoResponse>({
       method: 'tag.getinfo',
       tag: tagName,
@@ -33,7 +30,7 @@ class Tag {
    * Fetches and returns popular tracks for a tag.
    * @param tagName - The name of the tag.
    * */
-  public async fetchTracks(tagName: string): Promise<TagTrackType[]> {
+  async fetchTracks(tagName: string): Promise<TagTrackType[]> {
     const {
       tracks: { track },
     } = await request<TagGetTopTracksResponse>({
@@ -53,7 +50,7 @@ class Tag {
           url: track.artist.url,
         },
         url: track.url,
-        image: track.image.find((i) => i.size == 'large')?.['#text'],
+        image: track.image.find((i) => i.size === 'large')?.['#text'],
       };
     });
   }

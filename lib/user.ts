@@ -1,18 +1,15 @@
-import type { UserGetInfoResponse, UserGetRecentTracksResponse, UserTrackType, UserType } from './types';
-
 import { request } from './request.js';
 
+import type { UserGetInfoResponse, UserGetRecentTracksResponse, UserTrackType, UserType } from './types';
+
 class User {
-  constructor(private token: string) {
-    if (!token) throw new Error('You have not specified a Last.fm API key.');
-    this.token = token;
-  }
+  constructor(private readonly token: string) {}
 
   /**
    * Fetches and returns information about a user's profile.
    * @param userName - The name of the user.
    * */
-  public async fetch(userName: string): Promise<UserType> {
+  async fetch(userName: string): Promise<UserType> {
     const { user } = await request<UserGetInfoResponse>({
       method: 'user.getInfo',
       user: userName,
@@ -27,7 +24,7 @@ class User {
       country: user.country,
       url: user.url,
       registered: new Date(user.registered['#text'] * 1000),
-      image: user.image.find((i) => i.size == 'large')?.['#text'],
+      image: user.image.find((i) => i.size === 'large')?.['#text'],
     };
   }
 
@@ -35,7 +32,7 @@ class User {
    * Fetches and returns the most recent track listened by the user.
    * @param userName - The name of the user.
    * */
-  public async fetchRecentTrack(userName: string): Promise<UserTrackType> {
+  async fetchRecentTrack(userName: string): Promise<UserTrackType> {
     const { recenttracks } = await request<UserGetRecentTracksResponse>({
       method: 'user.getRecentTracks',
       user: userName,

@@ -1,20 +1,6 @@
 module.exports = {
-  env: {
-    node: true,
-    es2022: true,
-    browser: true,
-  },
-  extends: ['eslint:recommended'],
+  extends: 'clarity/typescript',
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
+    project: './tsconfig.json',
   },
-  overrides: [
-    {
-      files: ['*.ts'],
-      parser: '@typescript-eslint/parser',
-      extends: ['plugin:@typescript-eslint/recommended'],
-      rules: {},
-    },
-  ],
 };
