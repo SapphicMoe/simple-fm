@@ -42,9 +42,9 @@ class Tag {
 
     return track.map((track) => {
       return {
-        rank: track['@attr'].rank,
+        rank: Number(track['@attr'].rank),
         name: track.name,
-        duration: track.duration,
+        duration: Number(track.duration),
         artist: {
           name: track.artist.name,
           url: track.artist.url,

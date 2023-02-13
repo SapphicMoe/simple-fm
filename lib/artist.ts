@@ -31,8 +31,8 @@ class Artist {
       name: artist.name,
       url: artist.url,
       bio: artist.bio.summary,
-      scrobbles: artist.stats.playcount,
-      listeners: artist.stats.listeners,
+      scrobbles: Number(artist.stats.playcount),
+      listeners: Number(artist.stats.listeners),
     };
   }
 
@@ -53,7 +53,7 @@ class Artist {
     return artist.map((artist) => {
       return {
         name: artist.name,
-        match: artist.match,
+        match: Number(artist.match),
         url: artist.url,
         image: artist.image.find((i) => i.size === 'large')?.['#text'],
       };
@@ -106,8 +106,8 @@ class Artist {
           url: track.artist.url,
         },
         url: track.url,
-        scrobbles: track.playcount,
-        listeners: track.listeners,
+        scrobbles: Number(track.playcount),
+        listeners: Number(track.listeners),
       };
     });
   }

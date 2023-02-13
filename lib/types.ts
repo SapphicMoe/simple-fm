@@ -192,13 +192,13 @@ export interface ArtistType {
   name: string;
   url: string;
   bio: string;
-  scrobbles: string;
-  listeners: string;
+  scrobbles: number;
+  listeners: number;
 }
 
 export interface ArtistSimilarType {
   name: string;
-  match: string;
+  match: number;
   url: string;
   image?: string;
 }
@@ -206,8 +206,8 @@ export interface ArtistSimilarType {
 export interface ArtistTrackType {
   rank: string;
   name: string;
-  scrobbles: string;
-  listeners: string;
+  scrobbles: number;
+  listeners: number;
   artist: {
     name: string;
     url: string;
@@ -223,7 +223,7 @@ export interface ArtistTagType {
 
 export interface GeoArtistType {
   name: string;
-  listeners: string;
+  listeners: number;
   url: string;
   image?: string;
 }
@@ -231,8 +231,8 @@ export interface GeoArtistType {
 export interface GeoTrackType {
   rank: string;
   name: string;
-  duration: string;
-  listeners: string;
+  duration: number;
+  listeners: number;
   artist: {
     name: string;
     url: string;
@@ -249,9 +249,9 @@ export interface TagType {
 }
 
 export interface TagTrackType {
-  rank: string;
+  rank: number;
   name: string;
-  duration: string;
+  duration: number;
   artist: {
     name: string;
     url: string;

@@ -21,7 +21,7 @@ class Geo {
     return artist.map((artist) => {
       return {
         name: artist.name,
-        listeners: artist.listeners,
+        listeners: Number(artist.listeners),
         url: artist.url,
         image: artist.image.find((i) => i.size === 'large')?.['#text'],
       };
@@ -46,8 +46,8 @@ class Geo {
       return {
         rank: track['@attr'].rank,
         name: track.name,
-        duration: track.duration,
-        listeners: track.listeners,
+        duration: Number(track.duration),
+        listeners: Number(track.listeners),
         artist: {
           name: track.artist.name,
           url: track.artist.url,
