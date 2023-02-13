@@ -6,7 +6,7 @@ interface Image {
 interface APITrack {
   name: string;
   url: string;
-  streamable: string;
+  streamable: object | string;
   image: Image[];
 }
 
@@ -63,6 +63,38 @@ export interface ArtistGetTopTracksResponse {
       APITrack & {
         listeners: string;
         playcount: string;
+        artist: {
+          name: string;
+          mbid: string;
+          url: string;
+        };
+        '@attr': {
+          rank: string;
+        };
+      }
+    >;
+  };
+}
+
+export interface GeoGetTopArtistsResponse {
+  topartists: {
+    artist: Array<{
+      name: string;
+      listeners: string;
+      mbid: string;
+      url: string;
+      streamable: string;
+      image: Image[];
+    }>;
+  };
+}
+
+export interface GeoGetTopTracksResponse {
+  tracks: {
+    track: Array<
+      APITrack & {
+        duration: string;
+        listeners: string;
         artist: {
           name: string;
           mbid: string;
@@ -174,19 +206,39 @@ export interface ArtistSimilarType {
 export interface ArtistTrackType {
   rank: string;
   name: string;
+  scrobbles: string;
+  listeners: string;
   artist: {
     name: string;
     url: string;
   };
   url: string;
-  scrobbles: string;
-  listeners: string;
 }
 
 export interface ArtistTagType {
   name: string;
   url: string;
   timesRanked: number;
+}
+
+export interface GeoArtistType {
+  name: string;
+  listeners: string;
+  url: string;
+  image?: string;
+}
+
+export interface GeoTrackType {
+  rank: string;
+  name: string;
+  duration: string;
+  listeners: string;
+  artist: {
+    name: string;
+    url: string;
+  };
+  url: string;
+  image?: string;
 }
 
 export interface TagType {
@@ -210,9 +262,9 @@ export interface TagTrackType {
 
 export interface TrackType {
   name: string;
+  listeners: string;
   artist: string;
   url: string;
-  listeners: string;
   image?: string;
 }
 
