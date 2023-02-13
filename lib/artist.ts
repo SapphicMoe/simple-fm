@@ -2,8 +2,10 @@ import { request } from './request.js';
 
 import type {
   ArtistGetInfoResponse,
+  ArtistGetSimilarResponse,
   ArtistGetTopTagsResponse,
   ArtistGetTopTracksResponse,
+  ArtistSimilarType,
   ArtistTrackType,
   ArtistType,
   ArtistTagType,
@@ -32,6 +34,30 @@ class Artist {
       scrobbles: artist.stats.playcount,
       listeners: artist.stats.listeners,
     };
+  }
+
+  /**
+   * Fetches and returns similar artists to this artist.
+   * @param artistName - The name of the artist.
+   * */
+  async fetchSimilar(artistName: string): Promise<ArtistSimilarType[]> {
+    const {
+      similarartists: { artist },
+    } = await request<ArtistGetSimilarResponse>({
+      method: 'artist.getSimilar',
+      artist: artistName,
+      api_key: this.token,
+      format: 'json',
+    });
+
+    return artist.map((artist) => {
+      return {
+        name: artist.name,
+        match: artist.match,
+        url: artist.url,
+        image: artist.image.find((i) => i.size === 'large')?.['#text'],
+      };
+    });
   }
 
   /**

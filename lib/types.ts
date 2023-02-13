@@ -36,6 +36,17 @@ export interface ArtistGetInfoResponse {
   };
 }
 
+export interface ArtistGetSimilarResponse {
+  similarartists: {
+    artist: Array<{
+      name: string;
+      match: string;
+      url: string;
+      image: Image[];
+    }>;
+  };
+}
+
 export interface ArtistGetTopTagsResponse {
   toptags: {
     tag: Array<{
@@ -151,6 +162,13 @@ export interface ArtistType {
   bio: string;
   scrobbles: string;
   listeners: string;
+}
+
+export interface ArtistSimilarType {
+  name: string;
+  match: string;
+  url: string;
+  image?: string;
 }
 
 export interface ArtistTrackType {
