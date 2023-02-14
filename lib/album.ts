@@ -16,7 +16,6 @@ class Album {
       method: 'album.search',
       album: albumName,
       api_key: this.token,
-      format: 'json',
       limit: 1,
     });
 
