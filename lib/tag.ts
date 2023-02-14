@@ -14,7 +14,6 @@ class Tag {
       method: 'tag.getinfo',
       tag: tagName,
       api_key: this.token,
-      format: 'json',
       limit: 1,
     });
 
@@ -37,7 +36,6 @@ class Tag {
       method: 'tag.getTopTracks',
       tag: tagName,
       api_key: this.token,
-      format: 'json',
     });
 
     return track.map((track) => {

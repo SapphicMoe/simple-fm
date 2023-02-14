@@ -15,7 +15,6 @@ class Geo {
       method: 'geo.getTopArtists',
       country,
       api_key: this.token,
-      format: 'json',
     });
 
     return artist.map((artist) => {
@@ -39,7 +38,6 @@ class Geo {
       method: 'geo.getTopTracks',
       country,
       api_key: this.token,
-      format: 'json',
     });
 
     return track.map((track) => {

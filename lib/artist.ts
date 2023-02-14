@@ -23,7 +23,6 @@ class Artist {
       method: 'artist.getinfo',
       artist: artistName,
       api_key: this.token,
-      format: 'json',
       limit: 1,
     });
 
@@ -47,7 +46,6 @@ class Artist {
       method: 'artist.getSimilar',
       artist: artistName,
       api_key: this.token,
-      format: 'json',
     });
 
     return artist.map((artist) => {
@@ -71,7 +69,6 @@ class Artist {
       method: 'artist.getTopTags',
       artist: artistName,
       api_key: this.token,
-      format: 'json',
     });
 
     return tag.map((tag) => {
@@ -94,7 +91,6 @@ class Artist {
       method: 'artist.getTopTracks',
       artist: artistName,
       api_key: this.token,
-      format: 'json',
     });
 
     return track.map((track) => {

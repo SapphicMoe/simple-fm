@@ -16,7 +16,6 @@ class Track {
       method: 'track.search',
       track: trackName,
       api_key: this.token,
-      format: 'json',
       limit: 1,
     });
 
