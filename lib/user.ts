@@ -14,7 +14,6 @@ class User {
       method: 'user.getInfo',
       user: userName,
       api_key: this.token,
-      format: 'json',
       limit: 1,
     });
 
@@ -37,7 +36,6 @@ class User {
       method: 'user.getRecentTracks',
       user: userName,
       api_key: this.token,
-      format: 'json',
     });
 
     const [track] = recenttracks.track;
