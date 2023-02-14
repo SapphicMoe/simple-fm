@@ -5,7 +5,9 @@ import type { GeoArtistType, GeoTrackType, GeoGetTopArtistsResponse, GeoGetTopTr
 class Geo {
   constructor(private readonly token: string) {}
   /**
-   * Fetches and returns the most popular artists by country
+   * Fetches and returns the most popular artists by country.
+   *
+   * Ordered by relevance.
    * @param country - The name of the country.
    * */
   async fetchTopArtists(country: string): Promise<GeoArtistType[]> {
@@ -20,15 +22,19 @@ class Geo {
     return artist.map((artist) => {
       return {
         name: artist.name,
-        listeners: Number(artist.listeners),
+        stats: {
+          listeners: Number(artist.listeners),
+        },
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'large')?.['#text'],
+        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'],
       };
     });
   }
 
   /**
    * Fetches and returns the most popular tracks by country
+   *
+   * Ordered by relevance.
    * @param country - The name of the country.
    * */
   async fetchTopTracks(country: string): Promise<GeoTrackType[]> {
@@ -42,10 +48,12 @@ class Geo {
 
     return track.map((track) => {
       return {
-        rank: track['@attr'].rank,
+        rank: Number(track['@attr'].rank),
         name: track.name,
-        duration: Number(track.duration),
-        listeners: Number(track.listeners),
+        stats: {
+          duration: Number(track.duration),
+          listeners: Number(track.listeners),
+        },
         artist: {
           name: track.artist.name,
           url: track.artist.url,

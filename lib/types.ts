@@ -31,6 +31,7 @@ export interface ArtistGetInfoResponse {
     stats: {
       listeners: string;
       playcount: string;
+      userplaycount?: string;
     };
     bio: { summary: string };
   };
@@ -73,6 +74,21 @@ export interface ArtistGetTopTracksResponse {
         };
       }
     >;
+  };
+}
+
+export interface ArtistSearchResponse {
+  results: {
+    artistmatches: {
+      artist: Array<{
+        name: string;
+        listeners: string;
+        mbid: string;
+        url: string;
+        streamable: string;
+        image: Image[];
+      }>;
+    };
   };
 }
 
@@ -190,10 +206,13 @@ export interface AlbumType {
 
 export interface ArtistType {
   name: string;
+  bio?: string;
+  stats?: {
+    scrobbles?: number;
+    listeners: number;
+    userPlayCount?: number | null;
+  };
   url: string;
-  bio: string;
-  scrobbles: number;
-  listeners: number;
 }
 
 export interface ArtistSimilarType {
@@ -204,10 +223,12 @@ export interface ArtistSimilarType {
 }
 
 export interface ArtistTrackType {
-  rank: string;
+  rank: number;
   name: string;
-  scrobbles: number;
-  listeners: number;
+  stats: {
+    scrobbles: number;
+    listeners: number;
+  };
   artist: {
     name: string;
     url: string;
@@ -223,16 +244,20 @@ export interface ArtistTagType {
 
 export interface GeoArtistType {
   name: string;
-  listeners: number;
+  stats: {
+    listeners: number;
+  };
   url: string;
   image?: string;
 }
 
 export interface GeoTrackType {
-  rank: string;
+  rank: number;
   name: string;
-  duration: number;
-  listeners: number;
+  stats: {
+    duration: number;
+    listeners: number;
+  };
   artist: {
     name: string;
     url: string;
@@ -251,7 +276,9 @@ export interface TagType {
 export interface TagTrackType {
   rank: number;
   name: string;
-  duration: number;
+  stats: {
+    duration: number;
+  };
   artist: {
     name: string;
     url: string;
@@ -262,7 +289,9 @@ export interface TagTrackType {
 
 export interface TrackType {
   name: string;
-  listeners: string;
+  stats: {
+    listeners: string;
+  };
   artist: string;
   url: string;
   image?: string;
@@ -272,16 +301,16 @@ export interface UserType {
   name: string;
   realName: string | null;
   country: string;
-  url: string;
   registered: Date;
+  url: string;
   image?: string;
 }
 
 export interface UserTrackType {
   currentlyPlaying: boolean;
   name: string;
-  artist: string;
   album: string;
+  artist: string;
   url: string;
   image?: string;
 }

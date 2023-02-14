@@ -42,7 +42,9 @@ class Tag {
       return {
         rank: Number(track['@attr'].rank),
         name: track.name,
-        duration: Number(track.duration),
+        stats: {
+          duration: Number(track.duration),
+        },
         artist: {
           name: track.artist.name,
           url: track.artist.url,

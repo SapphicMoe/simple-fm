@@ -25,7 +25,9 @@ class Track {
       name: track.name,
       artist: track.artist,
       url: track.url,
-      listeners: track.listeners,
+      stats: {
+        listeners: track.listeners,
+      },
       image: track.image.find((i) => i.size === 'large')?.['#text'],
     };
   }

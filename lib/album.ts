@@ -6,28 +6,32 @@ class Album {
   constructor(private readonly token: string) {}
 
   /**
-   * Fetches and returns information on an album.
+   * Search for an album by name.
    * @param albumName - The name of the album.
+   * @param limit - The number of results to fetch per page. Defaults to 30.
+   * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetch(albumName: string): Promise<AlbumType> {
+  async search(albumName: string, limit = 30, page = 1): Promise<AlbumType[]> {
     const {
       results: { albummatches },
     } = await request<AlbumSearchResponse>({
       method: 'album.search',
       album: albumName,
       api_key: this.token,
-      limit: 1,
+      limit,
+      page,
     });
 
-    const [album] = albummatches.album;
+    const { album } = albummatches;
 
-    return {
-      name: album.name,
-      artist: album.artist,
-      url: album.url,
-      // Just in case it's possible for it to not exist?
-      image: album.image.find((i) => i.size === 'large')?.['#text'],
-    };
+    return album.map((album) => {
+      return {
+        name: album.name,
+        artist: album.artist,
+        url: album.url,
+        image: album.image.find((i) => i.size === 'extralarge')?.['#text'],
+      };
+    });
   }
 }
 
