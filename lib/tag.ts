@@ -11,7 +11,7 @@ class Tag {
    * */
   async fetch(tagName: string): Promise<TagType> {
     const { tag } = await request<TagGetInfoResponse>({
-      method: 'tag.getinfo',
+      method: 'tag.getInfo',
       tag: tagName,
       api_key: this.token,
       limit: 1,
@@ -20,8 +20,10 @@ class Tag {
     return {
       name: tag.name,
       description: tag.wiki.summary,
-      userReach: tag.reach,
-      totalReach: tag.total,
+      stats: {
+        userReach: tag.reach,
+        totalReach: tag.total,
+      },
     };
   }
 

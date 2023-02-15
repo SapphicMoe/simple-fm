@@ -82,7 +82,9 @@ class Artist {
       return {
         name: tag.name,
         url: tag.url,
-        timesRanked: tag.count,
+        stats: {
+          timesRanked: tag.count,
+        },
       };
     });
   }

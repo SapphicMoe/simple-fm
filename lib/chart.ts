@@ -2,8 +2,10 @@ import { request } from './request.js';
 
 import type {
   ChartGetTopArtistsResponse,
+  ChartGetTopTagsResponse,
   ChartGetTopTracksResponse,
   ChartArtistType,
+  ChartTagsType,
   ChartTrackType,
 } from './types.js';
 
@@ -12,7 +14,8 @@ class Chart {
   /**
    * Fetches and returns the most popular artists.
    *
-   * @param country - The name of the country.
+   * @param limit - The number of results to fetch per page. Defaults to 30.
+   * @param page - The page number to fetch. Defaults to the first page.
    * */
   async fetchTopArtists(limit = 30, page = 1): Promise<ChartArtistType[]> {
     const {
@@ -28,7 +31,7 @@ class Chart {
       return {
         name: artist.name,
         stats: {
-          playcount: Number(artist.playcount),
+          playCount: Number(artist.playcount),
           listeners: Number(artist.listeners),
         },
         url: artist.url,
@@ -37,9 +40,31 @@ class Chart {
     });
   }
 
+  async fetchTopTags(limit = 30, page = 1): Promise<ChartTagsType[]> {
+    const {
+      tags: { tag },
+    } = await request<ChartGetTopTagsResponse>({
+      method: 'chart.getTopTags',
+      api_key: this.token,
+      limit,
+      page,
+    });
+
+    return tag.map((tag) => {
+      return {
+        name: tag.name,
+        url: tag.url,
+        stats: {
+          taggings: Number(tag.taggings),
+          totalReach: Number(tag.reach),
+        },
+      };
+    });
+  }
+
   /**
-   * Search for a track by name.
-   * @param trackName - The name of the track.
+   * Fetches and returns the most popular tracks.
+   *
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
@@ -57,7 +82,7 @@ class Chart {
       return {
         name: track.name,
         stats: {
-          playcount: Number(track.playcount),
+          playCount: Number(track.playcount),
           listeners: Number(track.listeners),
         },
         artist: {

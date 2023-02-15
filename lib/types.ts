@@ -18,7 +18,6 @@ interface Artist {
   image: Image[];
 }
 
-// Expand these as necessary in the future
 export interface AlbumSearchResponse {
   results: {
     albummatches: {
@@ -102,6 +101,17 @@ export interface ChartGetTopArtistsResponse {
         listeners: string;
       }
     >;
+  };
+}
+
+export interface ChartGetTopTagsResponse {
+  tags: {
+    tag: Array<{
+      name: string;
+      url: string;
+      reach: string;
+      taggings: string;
+    }>;
   };
 }
 
@@ -261,23 +271,34 @@ export interface ArtistTrackType {
 export interface ArtistTagType {
   name: string;
   url: string;
-  timesRanked: number;
+  stats: {
+    timesRanked: number;
+  };
 }
 
 export interface ChartArtistType {
   name: string;
   stats: {
-    playcount: number;
+    playCount: number;
     listeners: number;
   };
   url: string;
   image?: string;
 }
 
+export interface ChartTagsType {
+  name: string;
+  url: string;
+  stats: {
+    taggings: number;
+    totalReach: number;
+  };
+}
+
 export interface ChartTrackType {
   name: string;
   stats: {
-    playcount: number;
+    playCount: number;
     listeners: number;
   };
   artist: {
@@ -314,9 +335,11 @@ export interface GeoTrackType {
 
 export interface TagType {
   name: string;
-  userReach: number;
-  totalReach: number;
   description: string;
+  stats: {
+    userReach: number;
+    totalReach: number;
+  };
 }
 
 export interface TagTrackType {
