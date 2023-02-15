@@ -60,7 +60,7 @@ class Artist {
         name: artist.name,
         match: Number(artist.match),
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'large')?.['#text'],
+        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'],
       };
     });
   }
@@ -147,7 +147,7 @@ class Artist {
         stats: {
           listeners: Number(artist.listeners),
         },
-        image: artist.image.find((i) => i.size === 'large')?.['#text'] || null,
+        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
   }

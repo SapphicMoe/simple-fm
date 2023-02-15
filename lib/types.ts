@@ -10,6 +10,14 @@ interface APITrack {
   image: Image[];
 }
 
+interface Artist {
+  name: string;
+  mbid: string;
+  url: string;
+  streamable?: string;
+  image: Image[];
+}
+
 // Expand these as necessary in the future
 export interface AlbumSearchResponse {
   results: {
@@ -25,9 +33,7 @@ export interface AlbumSearchResponse {
 }
 
 export interface ArtistGetInfoResponse {
-  artist: {
-    name: string;
-    url: string;
+  artist: Artist & {
     stats: {
       listeners: string;
       playcount: string;
@@ -39,12 +45,11 @@ export interface ArtistGetInfoResponse {
 
 export interface ArtistGetSimilarResponse {
   similarartists: {
-    artist: Array<{
-      name: string;
-      match: string;
-      url: string;
-      image: Image[];
-    }>;
+    artist: Array<
+      Artist & {
+        match: string;
+      }
+    >;
   };
 }
 
@@ -80,28 +85,22 @@ export interface ArtistGetTopTracksResponse {
 export interface ArtistSearchResponse {
   results: {
     artistmatches: {
-      artist: Array<{
-        name: string;
-        listeners: string;
-        mbid: string;
-        url: string;
-        streamable: string;
-        image: Image[];
-      }>;
+      artist: Array<
+        Artist & {
+          listeners: string;
+        }
+      >;
     };
   };
 }
 
 export interface GeoGetTopArtistsResponse {
   topartists: {
-    artist: Array<{
-      name: string;
-      listeners: string;
-      mbid: string;
-      url: string;
-      streamable: string;
-      image: Image[];
-    }>;
+    artist: Array<
+      Artist & {
+        listeners: string;
+      }
+    >;
   };
 }
 
@@ -157,14 +156,12 @@ export interface TagGetTopTracksResponse {
 export interface TrackSearchResponse {
   results: {
     trackmatches: {
-      track: Array<{
-        name: string;
-        artist: string;
-        url: string;
-        streamable: string;
-        listeners: string;
-        image: Image[];
-      }>;
+      track: Array<
+        APITrack & {
+          artist: string;
+          listeners: string;
+        }
+      >;
     };
   };
 }
@@ -185,15 +182,13 @@ export interface UserGetInfoResponse {
 
 export interface UserGetRecentTracksResponse {
   recenttracks: {
-    track: Array<{
-      artist: { '#text': string };
-      streamable: string;
-      image: Image[];
-      album: { '#text': string };
-      name: string;
-      url: string;
-      '@attr'?: { nowplaying: string };
-    }>;
+    track: Array<
+      APITrack & {
+        artist: { '#text': string };
+        album: { '#text': string };
+        '@attr'?: { nowplaying: string };
+      }
+    >;
   };
 }
 

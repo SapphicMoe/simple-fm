@@ -2,7 +2,7 @@ import { request } from './request.js';
 
 import type { GeoArtistType, GeoTrackType, GeoGetTopArtistsResponse, GeoGetTopTracksResponse } from './types.js';
 
-class Geo {
+class Country {
   constructor(private readonly token: string) {}
   /**
    * Fetches and returns the most popular artists by country.
@@ -59,10 +59,10 @@ class Geo {
           url: track.artist.url,
         },
         url: track.url,
-        image: track.image.find((i) => i.size === 'large')?.['#text'],
+        image: track.image.find((i) => i.size === 'extralarge')?.['#text'],
       };
     });
   }
 }
 
-export default Geo;
+export default Country;

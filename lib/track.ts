@@ -28,7 +28,7 @@ class Track {
       stats: {
         listeners: track.listeners,
       },
-      image: track.image.find((i) => i.size === 'large')?.['#text'],
+      image: track.image.find((i) => i.size === 'extralarge')?.['#text'],
     };
   }
 }

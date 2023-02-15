@@ -1,6 +1,6 @@
 import Album from './album.js';
 import Artist from './artist.js';
-import Geo from './geo.js';
+import Country from './country.js';
 import Tag from './tag.js';
 import Track from './track.js';
 import User from './user.js';
@@ -10,7 +10,7 @@ export * from './types.js';
 export default class LastFMClient {
   readonly album: Album;
   readonly artist: Artist;
-  readonly geo: Geo;
+  readonly country: Country;
   readonly tag: Tag;
   readonly track: Track;
   readonly user: User;
@@ -20,7 +20,7 @@ export default class LastFMClient {
 
     this.album = new Album(token);
     this.artist = new Artist(token);
-    this.geo = new Geo(token);
+    this.country = new Country(token);
     this.tag = new Tag(token);
     this.track = new Track(token);
     this.user = new User(token);
