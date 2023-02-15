@@ -14,13 +14,14 @@ class Chart {
    *
    * @param country - The name of the country.
    * */
-  async fetchTopArtists(country: string): Promise<ChartArtistType[]> {
+  async fetchTopArtists(limit = 30, page = 1): Promise<ChartArtistType[]> {
     const {
       artists: { artist },
     } = await request<ChartGetTopArtistsResponse>({
-      method: 'geo.getTopArtists',
-      country,
+      method: 'chart.getTopArtists',
       api_key: this.token,
+      limit,
+      page,
     });
 
     return artist.map((artist) => {
@@ -42,12 +43,11 @@ class Chart {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(trackName: string, limit = 30, page = 1): Promise<ChartTrackType[]> {
+  async fetchTopTracks(limit = 30, page = 1): Promise<ChartTrackType[]> {
     const {
       tracks: { track },
     } = await request<ChartGetTopTracksResponse>({
       method: 'chart.getTopTracks',
-      track: trackName,
       api_key: this.token,
       limit,
       page,
