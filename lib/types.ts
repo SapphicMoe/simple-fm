@@ -94,6 +94,17 @@ export interface ArtistSearchResponse {
   };
 }
 
+export interface ChartGetTopArtistsResponse {
+  artists: {
+    artist: Array<
+      Artist & {
+        playcount: string;
+        listeners: string;
+      }
+    >;
+  };
+}
+
 export interface GeoGetTopArtistsResponse {
   topartists: {
     artist: Array<
@@ -235,6 +246,16 @@ export interface ArtistTagType {
   name: string;
   url: string;
   timesRanked: number;
+}
+
+export interface ChartArtistType {
+  name: string;
+  stats: {
+    playcount: number;
+    listeners: number;
+  };
+  url: string;
+  image?: string;
 }
 
 export interface GeoArtistType {
