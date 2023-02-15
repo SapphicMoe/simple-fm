@@ -1,6 +1,11 @@
 import { request } from './request.js';
 
-import type { ChartGetTopArtistsResponse, ChartArtistType } from './types.js';
+import type {
+  ChartGetTopArtistsResponse,
+  ChartGetTopTracksResponse,
+  ChartArtistType,
+  ChartTrackType,
+} from './types.js';
 
 class Chart {
   constructor(private readonly token: string) {}
@@ -27,6 +32,40 @@ class Chart {
         },
         url: artist.url,
         image: artist.image.find((i) => i.size === 'extralarge')?.['#text'],
+      };
+    });
+  }
+
+  /**
+   * Search for a track by name.
+   * @param trackName - The name of the track.
+   * @param limit - The number of results to fetch per page. Defaults to 30.
+   * @param page - The page number to fetch. Defaults to the first page.
+   * */
+  async fetchTopTracks(trackName: string, limit = 30, page = 1): Promise<ChartTrackType[]> {
+    const {
+      tracks: { track },
+    } = await request<ChartGetTopTracksResponse>({
+      method: 'chart.getTopTracks',
+      track: trackName,
+      api_key: this.token,
+      limit,
+      page,
+    });
+
+    return track.map((track) => {
+      return {
+        name: track.name,
+        stats: {
+          playcount: Number(track.playcount),
+          listeners: Number(track.listeners),
+        },
+        artist: {
+          name: track.artist.name,
+          url: track.artist.url,
+        },
+        url: track.url,
+        image: track.image.find((i) => i.size === 'extralarge')?.['#text'],
       };
     });
   }

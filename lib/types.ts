@@ -105,6 +105,22 @@ export interface ChartGetTopArtistsResponse {
   };
 }
 
+export interface ChartGetTopTracksResponse {
+  tracks: {
+    track: Array<
+      APITrack & {
+        playcount: string;
+        listeners: string;
+        artist: {
+          name: string;
+          url: string;
+        };
+        image: Image[];
+      }
+    >;
+  };
+}
+
 export interface GeoGetTopArtistsResponse {
   topartists: {
     artist: Array<
@@ -253,6 +269,20 @@ export interface ChartArtistType {
   stats: {
     playcount: number;
     listeners: number;
+  };
+  url: string;
+  image?: string;
+}
+
+export interface ChartTrackType {
+  name: string;
+  stats: {
+    playcount: number;
+    listeners: number;
+  };
+  artist: {
+    name: string;
+    url: string;
   };
   url: string;
   image?: string;
