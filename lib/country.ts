@@ -1,6 +1,6 @@
 import { request } from './request.js';
 
-import type { GeoArtistType, GeoTrackType, GeoGetTopArtistsResponse, GeoGetTopTracksResponse } from './types.js';
+import type { GeoArtistType, GeoTrackType, GeoGetTopArtistsResponse, GeoGetTopTracksResponse } from './types';
 
 class Country {
   constructor(private readonly token: string) {}

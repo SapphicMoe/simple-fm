@@ -7,13 +7,12 @@ import type {
   ChartArtistType,
   ChartTagsType,
   ChartTrackType,
-} from './types.js';
+} from './types';
 
 class Chart {
   constructor(private readonly token: string) {}
   /**
    * Fetches and returns the most popular artists.
-   *
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
@@ -40,6 +39,12 @@ class Chart {
     });
   }
 
+  /**
+   * Fetches and returns the most popular tags for tracks.
+   *
+   * @param limit - The number of results to fetch per page. Defaults to 30.
+   * @param page - The page number to fetch. Defaults to the first page.
+   * */
   async fetchTopTags(limit = 30, page = 1): Promise<ChartTagsType[]> {
     const {
       tags: { tag },
@@ -64,7 +69,6 @@ class Chart {
 
   /**
    * Fetches and returns the most popular tracks.
-   *
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */

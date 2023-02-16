@@ -6,7 +6,8 @@ import Tag from './tag.js';
 import Track from './track.js';
 import User from './user.js';
 
-export * from './types.js';
+// eslint-disable-next-line import/no-useless-path-segments
+export * from './types/index.js';
 
 export default class LastFMClient {
   readonly album: Album;
