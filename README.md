@@ -1,23 +1,30 @@
 # simple-fm
 
-[![CI][actions-image]][actions-link] [![npm-image]][npm-link] [![downloads-image]][npm-link]
+[![CI][actions-image]][actions-link] [![npm-image]][npm-link] [![downloads-image]][npm-link] [![license-image]][license]
 
-simple-fm is a simple, asynchronous Last.fm wrapper in TypeScript.
+_simple-fm is a simple, asynchronous Last.fm wrapper in TypeScript._
 
-Search for trending what someone has been listening to lately, what tracks are trending in a country, an artist's top
-tracks, and a lot more.
+Search for what someone has been listening to lately, what tracks are trending in a country, an artist's top tracks, and
+a lot more.
 
 # Install
 
-**Node.js 16+** is recommended.
+**Node.js 16+** is recommended for this package.
 
 - npm: `npm i @solely/simple-fm`
 - pnpm: `pnpm i @solely/simple-fm`
 - yarn: `yarn add @solely/simple-fm`
 
+# Notice
+
+`simple-fm` requires you to have a Last.fm API token.
+
+To obtain a Last.fm API token, click [here to register an API account][last-fm-api].
+
 # Usage
 
 ```ts
+// Import the simple-fm package.
 import client from '@solely/simple-fm';
 
 // Replace the token with your Last.fm token.
@@ -115,7 +122,7 @@ _Fetches and returns the most popular tracks._
 
 ## country
 
-### country.fetchTopAritists(country)
+### country.fetchTopArtists(country)
 
 _Fetches and returns the most popular artists by country._
 
@@ -170,11 +177,13 @@ This package is licensed under the [zlib][license] license.
 
 © 2023 Chloe Arciniega.
 
-[actions-image]: https://github.com/solelychloe/simple-fm/actions/workflows/push.yaml/badge.svg
+[actions-image]:
+  https://img.shields.io/github/actions/workflow/status/solelychloe/simple-fm/push.yaml?colorA=18181B&colorB=de3931
 [actions-link]: https://github.com/solelychloe/simple-fm/actions/workflows/push.yaml
 [deno-repo]: https://github.com/denoland/deno
 [license]: /LICENSE
-[license-image]: https://img.shields.io/npm/l/@solely/simple-fm.svg
-[downloads-image]: https://img.shields.io/npm/dm/@solely/simple-fm.svg
-[npm-image]: https://img.shields.io/npm/v/@solely/simple-fm.svg
+[downloads-image]: https://img.shields.io/npm/dm/@solely/simple-fm.svg?style=flat&colorA=18181B&colorB=de3931
+[last-fm-api]: https://www.last.fm/api/account/create
+[license-image]: https://img.shields.io/npm/l/@solely/simple-fm.svg?style=flat&colorA=18181B&colorB=de3931
+[npm-image]: https://img.shields.io/npm/v/@solely/simple-fm.svg?style=flat&colorA=18181B&colorB=de3931
 [npm-link]: https://npmjs.org/package/@solely/simple-fm

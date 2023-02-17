@@ -1,6 +1,6 @@
 {
   "name": "@solely/simple-fm",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "type": "module",
   "license": "Zlib",
   "author": "Chloe Arciniega <solely@riseup.net>",
@@ -20,6 +20,12 @@
     "./package.json": "./package.json"
   },
   "repository": "https://github.com/solelychloe/simple-fm",
+  "keywords": [
+    "lastfm",
+    "last.fm",
+    "lastfm-api",
+    "last.fm-api"
+  ],
   "packageManager": "yarn@3.3.1",
   "dependencies": {
     "ofetch": "^1.0.0"
