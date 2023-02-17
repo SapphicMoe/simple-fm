@@ -32,7 +32,7 @@ class Country {
   }
 
   /**
-   * Fetches and returns the most popular tracks by country
+   * Fetches and returns the most popular tracks by country.
    *
    * Ordered by relevance.
    * @param country - The name of the country.
