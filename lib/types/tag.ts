@@ -1,10 +1,8 @@
-import { APITrack } from '.';
+import { APITrack, Tag } from '.';
 
 export interface TagGetInfoResponse {
-  tag: {
-    name: string;
+  tag: Tag & {
     total: number;
-    reach: number;
     wiki: {
       summary: string;
       content: string;

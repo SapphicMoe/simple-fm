@@ -3,6 +3,14 @@ export interface Image {
   size: 'extralarge' | 'large' | 'medium' | 'small';
 }
 
+export interface Album {
+  name: string;
+  artist: object | string;
+  url: string;
+  image: Image[];
+  streamable?: string;
+}
+
 export interface APITrack {
   name: string;
   url: string;
@@ -15,6 +23,23 @@ export interface Artist {
   mbid: string;
   url: string;
   streamable?: string;
+  image: Image[];
+}
+
+export interface Tag {
+  name: string;
+  reach: number;
+}
+
+export interface User {
+  name: string;
+  realname: string;
+  country: string | null;
+  url: string;
+  registered: {
+    unixtime: string;
+    '#text': number;
+  };
   image: Image[];
 }
 

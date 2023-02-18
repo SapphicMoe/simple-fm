@@ -1,16 +1,22 @@
-import { APITrack, Image } from '.';
+import { Artist, APITrack, User } from '.';
 
 export interface UserGetInfoResponse {
-  user: {
-    name: string;
-    realname: string;
-    country: string;
-    url: string;
-    registered: {
-      unixtime: string;
-      '#text': number;
-    };
-    image: Image[];
+  user: User;
+}
+
+export interface UserGetFriendsResponse {
+  friends: {
+    user: User[];
+  };
+}
+
+export interface UserGetArtistsResponse {
+  artists: {
+    artist: Array<
+      Artist & {
+        playcount: string;
+      }
+    >;
   };
 }
 
@@ -29,8 +35,17 @@ export interface UserGetRecentTracksResponse {
 export interface UserType {
   name: string;
   realName: string | null;
-  country: string;
+  country: string | null;
   registered: Date;
+  url: string;
+  image?: string;
+}
+
+export interface UserArtistType {
+  name: string;
+  stats: {
+    scrobbles: number;
+  };
   url: string;
   image?: string;
 }

@@ -1,6 +1,14 @@
 import { request } from './request.js';
 
-import type { UserGetInfoResponse, UserGetRecentTracksResponse, UserTrackType, UserType } from './types';
+import type {
+  UserGetArtistsResponse,
+  UserGetInfoResponse,
+  UserGetRecentTracksResponse,
+  UserType,
+  UserArtistType,
+  UserTrackType,
+  UserGetFriendsResponse,
+} from './types';
 
 class User {
   constructor(private readonly token: string) {}
@@ -25,6 +33,64 @@ class User {
       registered: new Date(user.registered['#text'] * 1000),
       image: user.image.find((i) => i.size === 'extralarge')?.['#text'],
     };
+  }
+
+  /**
+   * Fetches and returns a list of all the artists in a user's library.
+   * @param userName - The name of the user.
+   * @param limit - The number of results to fetch per page. Defaults to 50.
+   * @param page - The page number to fetch. Defaults to the first page.
+   * */
+  async fetchArtists(userName: string, limit = 50, page = 1): Promise<UserArtistType[]> {
+    const {
+      artists: { artist },
+    } = await request<UserGetArtistsResponse>({
+      method: 'library.getArtists',
+      user: userName,
+      api_key: this.token,
+      limit,
+      page,
+    });
+
+    return artist.map((artist) => {
+      return {
+        name: artist.name,
+        stats: {
+          scrobbles: Number(artist.playcount),
+        },
+        url: artist.url,
+        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'],
+      };
+    });
+  }
+
+  /**
+   * Fetches and returns a list of the user's friends.
+   * @param userName - The name of the user.
+   * @param limit - The number of results to fetch per page. Defaults to 50.
+   * @param page - The page number to fetch. Defaults to the first page.
+   * */
+  async fetchFriends(userName: string, limit = 50, page = 1): Promise<UserType[]> {
+    const {
+      friends: { user },
+    } = await request<UserGetFriendsResponse>({
+      method: 'user.getfriends',
+      user: userName,
+      api_key: this.token,
+      limit,
+      page,
+    });
+
+    return user.map((user) => {
+      return {
+        name: user.name,
+        realName: user.realname || null,
+        country: user.country,
+        url: user.url,
+        registered: new Date(Number(user.registered.unixtime) * 1000),
+        image: user.image.find((i) => i.size === 'extralarge')?.['#text'],
+      };
+    });
   }
 
   /**

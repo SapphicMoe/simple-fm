@@ -1,4 +1,4 @@
-import { Artist, APITrack } from '.';
+import { Album, Artist, APITrack, Tag } from '.';
 
 export interface ArtistGetInfoResponse {
   artist: Artist & {
@@ -21,13 +21,29 @@ export interface ArtistGetSimilarResponse {
   };
 }
 
+export interface ArtistGetTopAlbumsResponse {
+  topalbums: {
+    album: Array<
+      Album & {
+        playcount: number;
+        artist: {
+          name: string;
+          mbid: string;
+          url: string;
+        };
+      }
+    >;
+  };
+}
+
 export interface ArtistGetTopTagsResponse {
   toptags: {
-    tag: Array<{
-      name: string;
-      url: string;
-      count: number;
-    }>;
+    tag: Array<
+      Tag & {
+        url: string;
+        count: number;
+      }
+    >;
   };
 }
 
@@ -65,12 +81,25 @@ export interface ArtistSearchResponse {
 export interface ArtistType {
   name: string;
   bio?: string;
-  stats?: {
+  stats: {
     scrobbles?: number;
     listeners: number;
     userPlayCount?: number | null;
   };
   url: string;
+}
+
+export interface ArtistAlbumType {
+  name: string;
+  stats?: {
+    scrobbles: number;
+  };
+  artist: {
+    name: string;
+    url: string;
+  };
+  url: string;
+  image?: string;
 }
 
 export interface ArtistSimilarType {

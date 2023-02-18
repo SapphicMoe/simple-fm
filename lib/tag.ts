@@ -1,6 +1,6 @@
 import { request } from './request.js';
 
-import type { TagType, TagGetInfoResponse, TagGetTopTracksResponse, TagTrackType } from './types';
+import type { TagGetInfoResponse, TagGetTopTracksResponse, TagType, TagTrackType } from './types';
 
 class Tag {
   constructor(private readonly token: string) {}

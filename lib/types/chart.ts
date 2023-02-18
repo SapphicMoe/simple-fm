@@ -1,4 +1,4 @@
-import type { Artist, APITrack, Image } from '.';
+import type { Artist, APITrack, Image, Tag } from '.';
 
 export interface ChartGetTopArtistsResponse {
   artists: {
@@ -13,12 +13,12 @@ export interface ChartGetTopArtistsResponse {
 
 export interface ChartGetTopTagsResponse {
   tags: {
-    tag: Array<{
-      name: string;
-      url: string;
-      reach: string;
-      taggings: string;
-    }>;
+    tag: Array<
+      Tag & {
+        url: string;
+        taggings: string;
+      }
+    >;
   };
 }
 

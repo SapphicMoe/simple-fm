@@ -67,12 +67,22 @@ _Fetches and returns metadata information for an artist._
 
 - #### `userName?`: The username for the context of the request. If supplied, the user's playcount for this artist is included in the response.
 
+### artist.fetchAlbums(artistName, limit?, page?)
+
+_Fetches and returns popular albums for an artist._
+
+- #### `artistName`: The artist's name.
+
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
 ### artist.fetchSimilar(artistName, limit?)
 
 _Fetches and returns similar artists to this artist._
 
 - #### `artistName`: The artist's name.
-
+  W
 - #### `limit?`: The number of results to fetch per page. Defaults to 30.
 
 ### artist.fetchTags(artistName)
@@ -168,6 +178,30 @@ _Search for a track by name._
 ### user.fetch(userName)
 
 _Fetches and returns information about a user's profile._
+
+- #### `userName`: The name of the user.
+
+### user.fetchArtists(userName, limit?, page?)
+
+_Fetches and returns a list of all the artists in a user's library._
+
+- #### `userName`: The name of the user.
+
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
+### user.fetchFriends(userName, limit?, page?)
+
+_Fetches and returns a list of the user's friends._
+
+- #### `userName`: The name of the user.
+
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
+### user.fetchRecentTrack(userName)
+
+_Fetches and returns the most recent track listened by the user._
 
 - #### `userName`: The name of the user.
 

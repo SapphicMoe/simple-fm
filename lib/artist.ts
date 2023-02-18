@@ -1,15 +1,16 @@
 import { request } from './request.js';
-
-import type {
+import {
   ArtistGetInfoResponse,
   ArtistGetSimilarResponse,
+  ArtistGetTopAlbumsResponse,
   ArtistGetTopTagsResponse,
   ArtistGetTopTracksResponse,
   ArtistSearchResponse,
-  ArtistSimilarType,
-  ArtistTrackType,
   ArtistType,
+  ArtistAlbumType,
+  ArtistSimilarType,
   ArtistTagType,
+  ArtistTrackType,
 } from './types';
 
 class Artist {
@@ -22,22 +23,61 @@ class Artist {
    * */
   async fetch(artistName: string, username?: string): Promise<ArtistType> {
     const { artist } = await request<ArtistGetInfoResponse>({
-      method: 'artist.getinfo',
+      method: 'artist.getInfo',
       artist: artistName,
       username,
       api_key: this.token,
     });
 
-    return {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!artist) throw new Error('This artist could not be found.');
+
+    const response = {
       name: artist.name,
       url: artist.url,
       bio: artist.bio.summary,
       stats: {
         scrobbles: Number(artist.stats.playcount),
         listeners: Number(artist.stats.listeners),
-        userPlayCount: Number(artist.stats.userplaycount) || null,
       },
-    };
+    } as ArtistType;
+
+    if (username) response.stats.userPlayCount = Number(artist.stats.userplaycount);
+
+    return response;
+  }
+
+  /**
+   * Fetches and returns popular albums for an artist.
+   * @param artistName - The name of the artist.
+   * @param limit - The number of results to fetch per page. Defaults to 50.
+   * @param page - The page number to fetch. Defaults to the first page.
+   * */
+  async fetchAlbums(artistName: string, limit = 50, page = 1): Promise<ArtistAlbumType[]> {
+    const {
+      topalbums: { album },
+    } = await request<ArtistGetTopAlbumsResponse>({
+      method: 'artist.getTopAlbums',
+      artist: artistName,
+      api_key: this.token,
+      limit,
+      page,
+    });
+
+    return album.map((album) => {
+      return {
+        name: album.name,
+        stats: {
+          scrobbles: Number(album.playcount),
+        },
+        artist: {
+          name: album.artist.name,
+          url: album.artist.url,
+        },
+        url: album.url,
+        image: album.image.find((i) => i.size === 'extralarge')?.['#text'],
+      };
+    });
   }
 
   /**

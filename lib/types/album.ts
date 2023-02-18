@@ -1,14 +1,13 @@
-import type { Image } from '.';
+import type { Album } from '.';
 
 export interface AlbumSearchResponse {
   results: {
     albummatches: {
-      album: Array<{
-        name: string;
-        artist: string;
-        url: string;
-        image: Image[];
-      }>;
+      album: Array<
+        Album & {
+          artist: string;
+        }
+      >;
     };
   };
 }
