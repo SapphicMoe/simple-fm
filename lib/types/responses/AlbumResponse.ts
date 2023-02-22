@@ -13,6 +13,7 @@ export declare interface AlbumGetInfoResponse {
     artist: string;
     listeners: string;
     playcount: string;
+    userplaycount?: number;
     tracks: {
       track: Array<
         Track & {

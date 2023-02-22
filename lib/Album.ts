@@ -36,12 +36,16 @@ class Album {
       };
     });
 
-    return {
+    const response = {
       name: album.name,
       artist: album.artist,
       tags,
       tracks,
-    };
+    } as AlbumGetInfoType;
+
+    if (userName) response.userPlayCount = Number(album.userplaycount);
+
+    return response;
   }
 
   /**
