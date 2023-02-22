@@ -47,6 +47,14 @@ import client from 'https://esm.sh/@solely/simple-fm';
 
 ## album
 
+### album.fetch(artistName, albumName, userName?)
+
+_Fetches and returns metadata information for an artist._
+
+- #### `artistName`: The name of the artist.
+- #### `albumName`: The name of the album.
+- #### `userName`: The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
+
 ### album.search(albumName, limit?, page?)
 
 _Search for an album by name._
