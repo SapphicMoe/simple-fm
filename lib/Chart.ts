@@ -34,7 +34,7 @@ class Chart {
           listeners: Number(artist.listeners),
         },
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'],
+        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
   }
@@ -94,7 +94,7 @@ class Chart {
           url: track.artist.url,
         },
         url: track.url,
-        image: track.image.find((i) => i.size === 'extralarge')?.['#text'],
+        image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
   }

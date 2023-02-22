@@ -13,7 +13,9 @@ class Track {
    * */
   async search(trackName: string, limit = 30, page = 1): Promise<TrackType[]> {
     const {
-      results: { trackmatches },
+      results: {
+        trackmatches: { track },
+      },
     } = await request<TrackSearchResponse>({
       method: 'track.search',
       track: trackName,
@@ -22,17 +24,15 @@ class Track {
       page,
     });
 
-    const { track } = trackmatches;
-
     return track.map((track) => {
       return {
         name: track.name,
         artist: track.artist,
         url: track.url,
         stats: {
-          listeners: track.listeners,
+          listeners: Number(track.listeners),
         },
-        image: track.image.find((i) => i.size === 'extralarge')?.['#text'],
+        image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
   }

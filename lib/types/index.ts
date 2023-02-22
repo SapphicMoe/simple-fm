@@ -11,13 +11,6 @@ export interface Album {
   streamable?: string;
 }
 
-export interface APITrack {
-  name: string;
-  url: string;
-  streamable: object | string;
-  image: Image[];
-}
-
 export interface Artist {
   name: string;
   mbid: string;
@@ -28,12 +21,20 @@ export interface Artist {
 
 export interface Tag {
   name: string;
-  reach: number;
+  url?: string;
+  reach?: number;
+}
+
+export interface Track {
+  name: string;
+  url: string;
+  streamable: object | string;
+  image: Image[];
 }
 
 export interface User {
   name: string;
-  realname: string;
+  realname: string | null;
   country: string | null;
   url: string;
   registered: {
@@ -43,10 +44,13 @@ export interface User {
   image: Image[];
 }
 
-export * from './album.js';
-export * from './artist.js';
-export * from './chart.js';
-export * from './country.js';
-export * from './tag.js';
-export * from './track.js';
-export * from './user.js';
+export * from './AlbumType.js';
+export * from './ArtistType.js';
+export * from './ChartType.js';
+export * from './CountryType.js';
+export * from './TagType.js';
+export * from './TrackType.js';
+export * from './UserType.js';
+
+// eslint-disable-next-line import/no-useless-path-segments
+export * from './responses/index.js';

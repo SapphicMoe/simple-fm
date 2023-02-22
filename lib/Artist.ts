@@ -1,5 +1,6 @@
 import { request } from './request.js';
-import {
+
+import type {
   ArtistGetInfoResponse,
   ArtistGetSimilarResponse,
   ArtistGetTopAlbumsResponse,
@@ -75,7 +76,7 @@ class Artist {
           url: album.artist.url,
         },
         url: album.url,
-        image: album.image.find((i) => i.size === 'extralarge')?.['#text'],
+        image: album.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
   }
@@ -100,7 +101,7 @@ class Artist {
         name: artist.name,
         match: Number(artist.match),
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'],
+        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
   }
@@ -171,7 +172,9 @@ class Artist {
    * */
   async search(artistName: string, limit = 30, page = 1): Promise<ArtistType[]> {
     const {
-      results: { artistmatches },
+      results: {
+        artistmatches: { artist },
+      },
     } = await request<ArtistSearchResponse>({
       method: 'artist.search',
       artist: artistName,
@@ -179,8 +182,6 @@ class Artist {
       limit,
       page,
     });
-
-    const { artist } = artistmatches;
 
     return artist.map((artist) => {
       return {

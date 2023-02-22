@@ -1,10 +1,10 @@
-import Album from './album.js';
-import Artist from './artist.js';
-import Chart from './chart.js';
-import Country from './country.js';
-import Tag from './tag.js';
-import Track from './track.js';
-import User from './user.js';
+import Album from './Album.js';
+import Artist from './Artist.js';
+import Chart from './Chart.js';
+import Country from './Country.js';
+import Tag from './Tag.js';
+import Track from './Track.js';
+import User from './User.js';
 
 // eslint-disable-next-line import/no-useless-path-segments
 export * from './types/index.js';

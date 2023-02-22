@@ -52,7 +52,7 @@ class Tag {
           url: track.artist.url,
         },
         url: track.url,
-        image: track.image.find((i) => i.size === 'extralarge')?.['#text'],
+        image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
   }

@@ -31,7 +31,7 @@ class User {
       country: user.country,
       url: user.url,
       registered: new Date(user.registered['#text'] * 1000),
-      image: user.image.find((i) => i.size === 'extralarge')?.['#text'],
+      image: user.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
     };
   }
 
@@ -59,7 +59,7 @@ class User {
           scrobbles: Number(artist.playcount),
         },
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'],
+        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
   }
@@ -74,7 +74,7 @@ class User {
     const {
       friends: { user },
     } = await request<UserGetFriendsResponse>({
-      method: 'user.getfriends',
+      method: 'user.getFriends',
       user: userName,
       api_key: this.token,
       limit,
@@ -86,9 +86,9 @@ class User {
         name: user.name,
         realName: user.realname || null,
         country: user.country,
-        url: user.url,
         registered: new Date(Number(user.registered.unixtime) * 1000),
-        image: user.image.find((i) => i.size === 'extralarge')?.['#text'],
+        url: user.url,
+        image: user.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
   }
