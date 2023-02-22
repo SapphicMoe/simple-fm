@@ -21,4 +21,4 @@ pnpm-debug.log*
 .DS_Store
 desktop.ini
 
-.eslintrc.cjs
+.eslintrc.json
