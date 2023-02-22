@@ -53,7 +53,7 @@ _Fetches and returns metadata information for an artist._
 
 - #### `artistName`: The name of the artist.
 - #### `albumName`: The name of the album.
-- #### `userName`: The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
+- #### `userName?`: The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
 
 ### album.search(albumName, limit?, page?)
 
@@ -90,7 +90,6 @@ _Fetches and returns popular albums for an artist._
 _Fetches and returns similar artists to this artist._
 
 - #### `artistName`: The artist's name.
-  W
 - #### `limit?`: The number of results to fetch per page. Defaults to 30.
 
 ### artist.fetchTags(artistName)
@@ -114,6 +113,8 @@ _Fetches and returns popular tracks for an artist._
 _Search for an artist by name._
 
 - #### `artistName`: The artist's name.
+- #### `limit?`: The number of results to fetch per page. Defaults to 30.
+- #### `page?`: The page number to fetch. Defaults to the first page.
 
 ## chart
 
@@ -144,7 +145,7 @@ _Fetches and returns the most popular tracks._
 
 _Fetches and returns the most popular artists by country._
 
-Ordered by relevance.
+_Ordered by relevance._
 
 - #### `country`: The name of the country.
 
