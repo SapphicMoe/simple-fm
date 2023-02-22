@@ -5,11 +5,18 @@ import type { AlbumGetInfoResponse, AlbumGetInfoType, AlbumSearchResponse, Album
 class Album {
   constructor(private readonly token: string) {}
 
-  async fetch(artistName: string, albumName: string): Promise<AlbumGetInfoType> {
+  /**
+   * Fetches and returns metadata information for an artist.
+   * @param artistName - The name of the artist.
+   * @param albumName - The name of the album.
+   * @param userName - The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
+   */
+  async fetch(artistName: string, albumName: string, userName?: string): Promise<AlbumGetInfoType> {
     const { album } = await request<AlbumGetInfoResponse>({
       method: 'album.getInfo',
       artist: artistName,
       album: albumName,
+      username: userName,
       api_key: this.token,
     });
 
@@ -24,9 +31,7 @@ class Album {
       return {
         rank: Number(track['@attr'].rank),
         name: track.name,
-        stats: {
-          duration: Number(track.duration),
-        },
+        duration: Number(track.duration),
         url: track.url,
       };
     });
