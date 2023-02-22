@@ -41,7 +41,6 @@ class Chart {
 
   /**
    * Fetches and returns the most popular tags for tracks.
-   *
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */

@@ -10,9 +10,7 @@ export declare interface TagType {
 export declare interface TagTrackType {
   rank: number;
   name: string;
-  stats: {
-    duration: number;
-  };
+  duration: number;
   artist: {
     name: string;
     url: string;

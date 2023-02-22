@@ -55,9 +55,7 @@ class User {
     return artist.map((artist) => {
       return {
         name: artist.name,
-        stats: {
-          scrobbles: Number(artist.playcount),
-        },
+        scrobbles: Number(artist.playcount),
         url: artist.url,
         image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };

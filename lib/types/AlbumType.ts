@@ -8,6 +8,7 @@ export declare interface AlbumType {
 export declare interface AlbumGetInfoType {
   name: string;
   artist: string;
+  userPlayCount?: number;
   tags: Array<{
     name: string;
     url: string;
@@ -15,9 +16,7 @@ export declare interface AlbumGetInfoType {
   tracks: Array<{
     rank: number;
     name: string;
-    stats: {
-      duration: number;
-    };
+    duration: number;
     url: string;
   }>;
 }

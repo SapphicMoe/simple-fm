@@ -29,9 +29,7 @@ class Track {
         name: track.name,
         artist: track.artist,
         url: track.url,
-        stats: {
-          listeners: Number(track.listeners),
-        },
+        listeners: Number(track.listeners),
         image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });

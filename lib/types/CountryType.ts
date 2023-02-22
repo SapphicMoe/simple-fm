@@ -1,8 +1,6 @@
 export declare interface GeoArtistType {
   name: string;
-  stats: {
-    listeners: number;
-  };
+  listeners: number;
   url: string;
   image?: string | null;
 }

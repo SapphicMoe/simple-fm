@@ -11,9 +11,7 @@ export declare interface ArtistType {
 
 export declare interface ArtistAlbumType {
   name: string;
-  stats?: {
-    scrobbles: number;
-  };
+  scrobbles: number;
   artist: {
     name: string;
     url: string;
@@ -45,8 +43,6 @@ export declare interface ArtistTrackType {
 
 export declare interface ArtistTagType {
   name: string;
-  stats: {
-    timesRanked: number;
-  };
+  timesRanked: number;
   url: string;
 }

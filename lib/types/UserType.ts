@@ -9,9 +9,7 @@ export declare interface UserType {
 
 export declare interface UserArtistType {
   name: string;
-  stats: {
-    scrobbles: number;
-  };
+  scrobbles: number;
   url: string;
   image?: string | null;
 }

@@ -22,11 +22,11 @@ class Artist {
    * @param artistName - The name of the artist.
    * @param username - The username for the context of the request. If supplied, the user's playcount for this artist is included in the response.
    * */
-  async fetch(artistName: string, username?: string): Promise<ArtistType> {
+  async fetch(artistName: string, userName?: string): Promise<ArtistType> {
     const { artist } = await request<ArtistGetInfoResponse>({
       method: 'artist.getInfo',
       artist: artistName,
-      username,
+      username: userName,
       api_key: this.token,
     });
 
@@ -43,7 +43,7 @@ class Artist {
       },
     } as ArtistType;
 
-    if (username) response.stats.userPlayCount = Number(artist.stats.userplaycount);
+    if (userName) response.stats.userPlayCount = Number(artist.stats.userplaycount);
 
     return response;
   }
@@ -68,9 +68,7 @@ class Artist {
     return album.map((album) => {
       return {
         name: album.name,
-        stats: {
-          scrobbles: Number(album.playcount),
-        },
+        scrobbles: Number(album.playcount),
         artist: {
           name: album.artist.name,
           url: album.artist.url,
@@ -123,9 +121,7 @@ class Artist {
       return {
         name: tag.name,
         url: tag.url,
-        stats: {
-          timesRanked: tag.count,
-        },
+        timesRanked: tag.count,
       };
     });
   }

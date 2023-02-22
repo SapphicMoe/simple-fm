@@ -22,9 +22,7 @@ class Country {
     return artist.map((artist) => {
       return {
         name: artist.name,
-        stats: {
-          listeners: Number(artist.listeners),
-        },
+        listeners: Number(artist.listeners),
         url: artist.url,
         image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
