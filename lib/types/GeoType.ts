@@ -8,10 +8,8 @@ export declare interface GeoArtistType {
 export declare interface GeoTrackType {
   rank: number;
   name: string;
-  stats: {
-    duration: number;
-    listeners: number;
-  };
+  duration: number | null;
+  listeners: number;
   artist: {
     name: string;
     url: string;

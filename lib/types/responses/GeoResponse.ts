@@ -18,7 +18,6 @@ export declare interface GeoGetTopTracksResponse {
         listeners: string;
         artist: {
           name: string;
-          mbid: string;
           url: string;
         };
         '@attr': {
