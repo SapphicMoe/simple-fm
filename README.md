@@ -49,20 +49,25 @@ import client from 'https://esm.sh/@solely/simple-fm';
 
 ### album.fetch(artistName, albumName, userName?)
 
-_Fetches and returns metadata information for an artist._
+_Fetches and returns metadata information for an album._
 
 - #### `artistName`: The name of the artist.
 - #### `albumName`: The name of the album.
 - #### `userName?`: The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
+
+### album.fetchTopTags(artistName, albumName)
+
+_Fetches and returns popular tags for an album._
+
+- #### `artistName`: The name of the artist.
+- #### `albumName`: The name of the album.
 
 ### album.search(albumName, limit?, page?)
 
 _Search for an album by name._
 
 - #### `albumName`: The name of the album.
-
 - #### `limit?`: The number of results to fetch per page. Defaults to 30.
-
 - #### `page?`: The page number to fetch. Defaults to the first page.
 
 ## artist
@@ -72,18 +77,7 @@ _Search for an album by name._
 _Fetches and returns metadata information for an artist._
 
 - #### `artistName`: The artist's name.
-
 - #### `userName?`: The username for the context of the request. If supplied, the user's playcount for this artist is included in the response.
-
-### artist.fetchAlbums(artistName, limit?, page?)
-
-_Fetches and returns popular albums for an artist._
-
-- #### `artistName`: The artist's name.
-
-- #### `limit?`: The number of results to fetch per page. Defaults to 50.
-
-- #### `page?`: The page number to fetch. Defaults to the first page.
 
 ### artist.fetchSimilar(artistName, limit?)
 
@@ -92,20 +86,26 @@ _Fetches and returns similar artists to this artist._
 - #### `artistName`: The artist's name.
 - #### `limit?`: The number of results to fetch per page. Defaults to 30.
 
-### artist.fetchTags(artistName)
+### artist.fetchTopAlbums(artistName, limit?, page?)
+
+_Fetches and returns popular albums for an artist._
+
+- #### `artistName`: The artist's name.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
+### artist.fetchTopTags(artistName)
 
 _Fetches and returns popular tags for an artist._
 
 - #### `artistName`: The artist's name.
 
-### artist.fetchTracks(artistName, limit?, page?)
+### artist.fetchTopTracks(artistName, limit?, page?)
 
 _Fetches and returns popular tracks for an artist._
 
 - #### `artistName`: The artist's name.
-
 - #### `limit?`: The number of results to fetch per page. Defaults to 50.
-
 - #### `page?`: The page number to fetch. Defaults to the first page.
 
 ### artist.search(artistName, limit?, page?)
@@ -139,23 +139,27 @@ _Fetches and returns the most popular tracks._
 - #### `limit?`: The number of results to fetch per page. Defaults to 30.
 - #### `page?`: The page number to fetch. Defaults to the first page.
 
-## country
+## geo
 
-### country.fetchTopArtists(country)
+### geo.fetchTopArtists(country, limit?, page?)
 
 _Fetches and returns the most popular artists by country._
 
 _Ordered by relevance._
 
 - #### `country`: The name of the country.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
 
-### country.fetchTopTracks(country)
+### geo.fetchTopTracks(country, limit?, page?)
 
 _Fetches and returns the most popular tracks by country._
 
 Ordered by relevance.
 
 - #### `country`: The name of the country.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
 
 ## tag
 
@@ -165,20 +169,65 @@ _Fetches and returns metadata information on a tag._
 
 - #### `tagName`: The name of the tag.
 
-### tag.fetchTracks(tagName)
+### tag.fetchTopAlbums(tagName, limit?, page?)
+
+- #### `tagName`: The name of the tag.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
+### tag.fetchTopArtists(tagName, limit?, page?)
+
+- #### `tagName`: The name of the tag.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
+### tag.fetchTopTags()
+
+_Fetches and returns popular albums that are tagged by a tag name._
+
+### tag.fetchTopTracks(tagName, limit?, page?)
 
 _Fetches and returns popular tracks for a tag._
 
 - #### `tagName`: The name of the tag.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
+### tag.fetchWeeklyChartList(tagName)
+
+_Fetches and returns a list of available charts for a tag._
+
+- #### `tagName`: The name of the tag.
 
 ## track
+
+### track.fetch(artistName, trackName, userName?)
+
+_Fetches and returns metadata information for a track._
+
+- #### `artistName`: The name of the artist.
+- #### `trackName`: The name of the track.
+
+### track.fetchSimilar(artistName, trackName, limit?)
+
+_Fetches and returns similar tracks for this track._
+
+- #### `artistName`: The name of the artist.
+- #### `trackName`: The name of the track.
+- #### `limit?`: The number of results to fetch per page. Defaults to 30.
+
+### track.fetchTopTags(artistName, trackName)
+
+_Fetches and returns popular tags for a track._
+
+- #### `artistName`: The name of the artist.
+- #### `trackName`: The name of the track.
 
 ### track.search(trackName, limit?, page?)
 
 _Search for a track by name._
 
 - #### `trackName`: The name of the track.
-
 - #### `limit?`: The number of results to fetch per page. Defaults to 30.
 - #### `page?`: The page number to fetch. Defaults to the first page.
 
@@ -190,12 +239,11 @@ _Fetches and returns information about a user's profile._
 
 - #### `userName`: The name of the user.
 
-### user.fetchArtists(userName, limit?, page?)
+### user.fetchAllArtists(userName, limit?, page?)
 
 _Fetches and returns a list of all the artists in a user's library._
 
 - #### `userName`: The name of the user.
-
 - #### `limit?`: The number of results to fetch per page. Defaults to 50.
 - #### `page?`: The page number to fetch. Defaults to the first page.
 
@@ -204,15 +252,53 @@ _Fetches and returns a list of all the artists in a user's library._
 _Fetches and returns a list of the user's friends._
 
 - #### `userName`: The name of the user.
-
 - #### `limit?`: The number of results to fetch per page. Defaults to 50.
 - #### `page?`: The page number to fetch. Defaults to the first page.
 
-### user.fetchRecentTrack(userName)
+### user.fetchLovedTracks(userName, limit?, page?)
+
+_Fetches and returns the loved tracks as set by the user._
+
+- #### `userName`: The name of the user.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
+### user.fetchPersonalTags(userName, tagName, tagType)
+
+_Fetches and returns a list of the user's personal tags._
+
+- #### `userName`: The name of the user.
+- #### `tagName`: The name of the tag.
+- ### `tagType`: The type of items which have been tagged. Accepted options: `album`, `artist`, `track`
+
+### user.fetchRecentTracks(userName, limit?, page?)
 
 _Fetches and returns the most recent track listened by the user._
 
 - #### `userName`: The name of the user.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50. Maximum is 200.
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
+### user.fetchTopAlbums
+
+_Fetches and returns a list of popular albums in a user's library._
+
+- #### `userName`: The name of the user.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
+
+### user.fetchTopTags(userName, limit?)
+
+- #### `userName`: The name of the user.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+
+### user.fetchTopTracks(userName, limit?, page?)
+
+_Fetches and returns a list of popular tracks in a user's library._
+
+- #### `userName`: The name of the user.
+- #### `limit?`: The number of results to fetch per page. Defaults to 50.
+- #### `page?`: The page number to fetch. Defaults to the first page.
 
 # License
 
