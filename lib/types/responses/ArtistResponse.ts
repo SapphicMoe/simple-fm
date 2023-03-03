@@ -28,7 +28,6 @@ export declare interface ArtistGetTopAlbumsResponse {
         playcount: number;
         artist: {
           name: string;
-          mbid: string;
           url: string;
         };
       }
@@ -55,7 +54,6 @@ export declare interface ArtistGetTopTracksResponse {
         playcount: string;
         artist: {
           name: string;
-          mbid: string;
           url: string;
         };
         '@attr': {

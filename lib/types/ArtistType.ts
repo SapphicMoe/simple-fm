@@ -1,6 +1,6 @@
-export declare interface ArtistType {
+export declare interface ArtistGetInfoType {
   name: string;
-  bio?: string;
+  description?: string;
   stats: {
     scrobbles?: number;
     listeners: number;
@@ -9,7 +9,14 @@ export declare interface ArtistType {
   url: string;
 }
 
-export declare interface ArtistAlbumType {
+export declare interface ArtistSimilarType {
+  name: string;
+  match: number;
+  url: string;
+  image?: string | null;
+}
+
+export declare interface ArtistTopAlbumsType {
   name: string;
   scrobbles: number;
   artist: {
@@ -20,14 +27,7 @@ export declare interface ArtistAlbumType {
   image?: string | null;
 }
 
-export declare interface ArtistSimilarType {
-  name: string;
-  match: number;
-  url: string;
-  image?: string | null;
-}
-
-export declare interface ArtistTrackType {
+export declare interface ArtistTopTracksType {
   rank: number;
   name: string;
   stats: {
@@ -41,7 +41,7 @@ export declare interface ArtistTrackType {
   url: string;
 }
 
-export declare interface ArtistTagType {
+export declare interface ArtistTopTagsType {
   name: string;
   timesRanked: number;
   url: string;

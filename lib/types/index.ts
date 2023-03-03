@@ -1,6 +1,23 @@
+export type PersonalTagTypes = 'album' | 'artist' | 'track';
+
 export interface Image {
   '#text': string;
   size: 'extralarge' | 'large' | 'medium' | 'small';
+}
+
+export interface Registered {
+  '#text': number;
+  unixtime: string;
+}
+
+export interface PersonalTagType {
+  name: string;
+  artist?: {
+    name: string;
+    url: string;
+  };
+  url: string;
+  image?: string | null;
 }
 
 export interface Album {
@@ -8,27 +25,26 @@ export interface Album {
   artist: object | string;
   url: string;
   image: Image[];
-  streamable?: string;
 }
 
 export interface Artist {
   name: string;
-  mbid: string;
   url: string;
-  streamable?: string;
   image: Image[];
 }
 
 export interface Tag {
   name: string;
   url?: string;
+  count?: number;
+  total?: number;
   reach?: number;
 }
 
 export interface Track {
   name: string;
+  artist: object | string;
   url: string;
-  streamable: object | string;
   image: Image[];
 }
 
@@ -36,18 +52,15 @@ export interface User {
   name: string;
   realname: string | null;
   country: string | null;
+  registered: Registered;
   url: string;
-  registered: {
-    unixtime: string;
-    '#text': number;
-  };
   image: Image[];
 }
 
 export * from './AlbumType.js';
 export * from './ArtistType.js';
 export * from './ChartType.js';
-export * from './CountryType.js';
+export * from './GeoType.js';
 export * from './TagType.js';
 export * from './TrackType.js';
 export * from './UserType.js';

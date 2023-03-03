@@ -1,13 +1,9 @@
-export declare interface AlbumType {
-  name: string;
-  artist: string;
-  url: string;
-  image?: string | null;
-}
-
 export declare interface AlbumGetInfoType {
   name: string;
-  artist: string;
+  artist: {
+    name: string;
+    url: string;
+  };
   userPlayCount?: number;
   tags: Array<{
     name: string;
@@ -16,7 +12,32 @@ export declare interface AlbumGetInfoType {
   tracks: Array<{
     rank: number;
     name: string;
-    duration: number;
+    duration: number | null;
+    url: string;
+  }>;
+  url: string;
+  image?: string | null;
+}
+
+export declare interface AlbumSearchType {
+  name: string;
+  artist: {
+    name: string;
+    url: string;
+  };
+  url: string;
+  image?: string | null;
+}
+
+export declare interface AlbumGetTopTagsType {
+  name: string;
+  artist: {
+    name: string;
+    url: string;
+  };
+  tags: Array<{
+    count: number;
+    name: string;
     url: string;
   }>;
 }

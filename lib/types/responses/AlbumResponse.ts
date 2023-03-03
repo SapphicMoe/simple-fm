@@ -1,14 +1,9 @@
-import type { Album, Tag, Track } from '..';
+import type { Album, Image, Tag, Track } from '..';
 
 export declare interface AlbumGetInfoResponse {
   album: Album & {
     tags: {
-      tag: Array<
-        Tag & {
-          url: string;
-          name: string;
-        }
-      >;
+      tag: Tag[];
     };
     artist: string;
     listeners: string;
@@ -27,6 +22,18 @@ export declare interface AlbumGetInfoResponse {
           };
         }
       >;
+    };
+    url: string;
+    image: Image[];
+  };
+}
+
+export declare interface AlbumGetTopTagsResponse {
+  toptags: {
+    tag: Tag[];
+    '@attr': {
+      artist: string;
+      album: string;
     };
   };
 }

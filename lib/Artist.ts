@@ -7,11 +7,11 @@ import type {
   ArtistGetTopTagsResponse,
   ArtistGetTopTracksResponse,
   ArtistSearchResponse,
-  ArtistType,
-  ArtistAlbumType,
+  ArtistGetInfoType,
   ArtistSimilarType,
-  ArtistTagType,
-  ArtistTrackType,
+  ArtistTopAlbumsType,
+  ArtistTopTagsType,
+  ArtistTopTracksType,
 } from './types';
 
 class Artist {
@@ -20,9 +20,10 @@ class Artist {
   /**
    * Fetches and returns metadata information for an artist.
    * @param artistName - The name of the artist.
-   * @param username - The username for the context of the request. If supplied, the user's playcount for this artist is included in the response.
+   * @param userName - The username for the context of the request.
+   * If supplied, the user's playcount for this artist is included in the response.
    * */
-  async fetch(artistName: string, userName?: string): Promise<ArtistType> {
+  async fetch(artistName: string, userName?: string): Promise<ArtistGetInfoType> {
     const { artist } = await request<ArtistGetInfoResponse>({
       method: 'artist.getInfo',
       artist: artistName,
@@ -35,17 +36,42 @@ class Artist {
 
     const response = {
       name: artist.name,
-      url: artist.url,
-      bio: artist.bio.summary,
+      description: artist.bio.summary,
       stats: {
         scrobbles: Number(artist.stats.playcount),
         listeners: Number(artist.stats.listeners),
       },
-    } as ArtistType;
+      url: artist.url,
+    } as ArtistGetInfoType;
 
     if (userName) response.stats.userPlayCount = Number(artist.stats.userplaycount);
 
     return response;
+  }
+
+  /**
+   * Fetches and returns similar artists to this artist.
+   * @param artistName - The name of the artist.
+   * @param limit - The number of results to fetch per page. Defaults to 30.
+   * */
+  async fetchSimilar(artistName: string, limit = 30): Promise<ArtistSimilarType[]> {
+    const {
+      similarartists: { artist },
+    } = await request<ArtistGetSimilarResponse>({
+      method: 'artist.getSimilar',
+      artist: artistName,
+      api_key: this.token,
+      limit,
+    });
+
+    return artist.map((artist) => {
+      return {
+        match: Number(artist.match),
+        name: artist.name,
+        url: artist.url,
+        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+      };
+    });
   }
 
   /**
@@ -54,7 +80,7 @@ class Artist {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchAlbums(artistName: string, limit = 50, page = 1): Promise<ArtistAlbumType[]> {
+  async fetchTopAlbums(artistName: string, limit = 50, page = 1): Promise<ArtistTopAlbumsType[]> {
     const {
       topalbums: { album },
     } = await request<ArtistGetTopAlbumsResponse>({
@@ -80,35 +106,10 @@ class Artist {
   }
 
   /**
-   * Fetches and returns similar artists to this artist.
-   * @param artistName - The name of the artist.
-   * @param limit - The number of results to fetch per page. Defaults to 30.
-   * */
-  async fetchSimilar(artistName: string, limit = 30): Promise<ArtistSimilarType[]> {
-    const {
-      similarartists: { artist },
-    } = await request<ArtistGetSimilarResponse>({
-      method: 'artist.getSimilar',
-      artist: artistName,
-      api_key: this.token,
-      limit,
-    });
-
-    return artist.map((artist) => {
-      return {
-        name: artist.name,
-        match: Number(artist.match),
-        url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
-      };
-    });
-  }
-
-  /**
    * Fetches and returns popular tags for an artist.
    * @param artistName - The name of the artist.
    * */
-  async fetchTags(artistName: string): Promise<ArtistTagType[]> {
+  async fetchTopTags(artistName: string): Promise<ArtistTopTagsType[]> {
     const {
       toptags: { tag },
     } = await request<ArtistGetTopTagsResponse>({
@@ -119,9 +120,9 @@ class Artist {
 
     return tag.map((tag) => {
       return {
+        timesRanked: tag.count,
         name: tag.name,
         url: tag.url,
-        timesRanked: tag.count,
       };
     });
   }
@@ -132,7 +133,7 @@ class Artist {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTracks(artistName: string, limit = 50, page = 1): Promise<ArtistTrackType[]> {
+  async fetchTopTracks(artistName: string, limit = 50, page = 1): Promise<ArtistTopTracksType[]> {
     const {
       toptracks: { track },
     } = await request<ArtistGetTopTracksResponse>({
@@ -151,11 +152,11 @@ class Artist {
           name: track.artist.name,
           url: track.artist.url,
         },
-        url: track.url,
         stats: {
           scrobbles: Number(track.playcount),
           listeners: Number(track.listeners),
         },
+        url: track.url,
       };
     });
   }
@@ -166,7 +167,7 @@ class Artist {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async search(artistName: string, limit = 30, page = 1): Promise<ArtistType[]> {
+  async search(artistName: string, limit = 30, page = 1): Promise<ArtistGetInfoType[]> {
     const {
       results: {
         artistmatches: { artist },
@@ -182,10 +183,10 @@ class Artist {
     return artist.map((artist) => {
       return {
         name: artist.name,
-        url: artist.url,
         stats: {
           listeners: Number(artist.listeners),
         },
+        url: artist.url,
         image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });

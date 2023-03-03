@@ -1,26 +1,26 @@
-export declare interface ChartArtistType {
+export declare interface ChartTopArtistsType {
   name: string;
   stats: {
-    playCount: number;
+    scrobbles: number;
     listeners: number;
   };
   url: string;
   image?: string | null;
 }
 
-export declare interface ChartTagsType {
+export declare interface ChartTopTagsType {
   name: string;
   stats: {
     taggings: number;
-    totalReach: number;
+    reach: number;
   };
-  url: string;
+  url?: string;
 }
 
-export declare interface ChartTrackType {
+export declare interface ChartTopTracksType {
   name: string;
   stats: {
-    playCount: number;
+    scrobbles: number;
     listeners: number;
   };
   artist: {

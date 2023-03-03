@@ -4,19 +4,20 @@ import type {
   ChartGetTopArtistsResponse,
   ChartGetTopTagsResponse,
   ChartGetTopTracksResponse,
-  ChartArtistType,
-  ChartTagsType,
-  ChartTrackType,
+  ChartTopArtistsType,
+  ChartTopTagsType,
+  ChartTopTracksType,
 } from './types';
 
 class Chart {
   constructor(private readonly token: string) {}
+
   /**
    * Fetches and returns the most popular artists.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopArtists(limit = 30, page = 1): Promise<ChartArtistType[]> {
+  async fetchTopArtists(limit = 30, page = 1): Promise<ChartTopArtistsType[]> {
     const {
       artists: { artist },
     } = await request<ChartGetTopArtistsResponse>({
@@ -30,7 +31,7 @@ class Chart {
       return {
         name: artist.name,
         stats: {
-          playCount: Number(artist.playcount),
+          scrobbles: Number(artist.playcount),
           listeners: Number(artist.listeners),
         },
         url: artist.url,
@@ -44,7 +45,7 @@ class Chart {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTags(limit = 30, page = 1): Promise<ChartTagsType[]> {
+  async fetchTopTags(limit = 30, page = 1): Promise<ChartTopTagsType[]> {
     const {
       tags: { tag },
     } = await request<ChartGetTopTagsResponse>({
@@ -57,11 +58,11 @@ class Chart {
     return tag.map((tag) => {
       return {
         name: tag.name,
-        url: tag.url,
         stats: {
           taggings: Number(tag.taggings),
-          totalReach: Number(tag.reach),
+          reach: Number(tag.reach),
         },
+        url: tag.url,
       };
     });
   }
@@ -71,7 +72,7 @@ class Chart {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(limit = 30, page = 1): Promise<ChartTrackType[]> {
+  async fetchTopTracks(limit = 30, page = 1): Promise<ChartTopTracksType[]> {
     const {
       tracks: { track },
     } = await request<ChartGetTopTracksResponse>({
@@ -85,7 +86,7 @@ class Chart {
       return {
         name: track.name,
         stats: {
-          playCount: Number(track.playcount),
+          scrobbles: Number(track.playcount),
           listeners: Number(track.listeners),
         },
         artist: {

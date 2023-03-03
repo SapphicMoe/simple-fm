@@ -1,4 +1,4 @@
-import type { Artist, Track, Image, Tag } from '..';
+import type { Artist, Track, Tag } from '..';
 
 export declare interface ChartGetTopArtistsResponse {
   artists: {
@@ -15,7 +15,6 @@ export declare interface ChartGetTopTagsResponse {
   tags: {
     tag: Array<
       Tag & {
-        url: string;
         taggings: string;
       }
     >;
@@ -32,7 +31,6 @@ export declare interface ChartGetTopTracksResponse {
           name: string;
           url: string;
         };
-        image: Image[];
       }
     >;
   };
