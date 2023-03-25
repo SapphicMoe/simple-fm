@@ -3,6 +3,7 @@
     "declaration": true,
     "strict": true,
     "moduleResolution": "node",
+    "declarationMap": true,
     "module": "CommonJS",
     "target": "ES2022",
     "outDir": "./dist"
