@@ -63,7 +63,7 @@ class Tag {
           name: album.artist.name,
           url: album.artist.url,
         },
-        url: album.url,
+        url: `https://www.last.fm/music/${encodeURIComponent(album.artist.name)}/${encodeURIComponent(album.name)}`,
         image: album.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
       };
     });
