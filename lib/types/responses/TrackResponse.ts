@@ -12,7 +12,7 @@ export declare interface TrackGetInfoResponse {
     toptags: {
       tag: Tag[];
     };
-    album: Album & { title: string; '@attr': { position: string } };
+    album?: Album & { title: string; '@attr'?: { position: string } };
     userplaycount?: string;
     userloved?: string;
   };

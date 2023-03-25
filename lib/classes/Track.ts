@@ -54,13 +54,13 @@ class Track {
         url: track.artist.url,
       },
       album: {
-        position: Number(album['@attr'].position),
-        name: album.title,
-        url: album.url,
+        position: Number(album?.['@attr']?.position) || null,
+        name: album?.title || null,
+        url: album?.url || null,
       },
       tags,
       url: track.url,
-      image: track.album.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+      image: track.album?.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
     } as TrackGetInfoType;
 
     if (userName) {
@@ -89,8 +89,8 @@ class Track {
 
     return track.map((track) => {
       return {
-        name: track.name,
         match: Number(track.match),
+        name: track.name,
         duration: Number(track.duration) || null,
         scrobbles: Number(track.playcount),
         artist: {

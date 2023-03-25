@@ -84,7 +84,7 @@ export declare interface UserTopTracksType {
   rank: number;
   name: string;
   stats: {
-    duration: number;
+    duration: number | null;
     userPlayCount: number;
   };
   artist: {

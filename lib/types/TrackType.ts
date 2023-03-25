@@ -12,9 +12,9 @@ export declare interface TrackGetInfoType {
     url: string;
   };
   album: {
-    position: number;
-    name: string;
-    url: string;
+    position: number | null;
+    name: string | null;
+    url: string | null;
   };
   tags?: object[];
   url: string;
@@ -33,8 +33,8 @@ export declare interface TrackSearchType {
 }
 
 export declare interface TrackSimilarType {
-  name: string;
   match: number;
+  name: string;
   duration: number | null;
   scrobbles: number;
   artist: {
