@@ -43,6 +43,6 @@ export declare interface ArtistTopTracksType {
 
 export declare interface ArtistTopTagsType {
   name: string;
-  timesRanked: number;
+  count: number;
   url: string;
 }

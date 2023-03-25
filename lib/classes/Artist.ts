@@ -116,7 +116,7 @@ class Artist {
 
     return tag.map((tag) => {
       return {
-        timesRanked: tag.count,
+        count: tag.count,
         name: tag.name,
         url: tag.url,
       };
