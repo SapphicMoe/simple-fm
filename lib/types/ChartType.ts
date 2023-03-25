@@ -11,7 +11,7 @@ export declare interface ChartTopArtistsType {
 export declare interface ChartTopTagsType {
   name: string;
   stats: {
-    taggings: number;
+    count: number;
     reach: number;
   };
   url?: string;

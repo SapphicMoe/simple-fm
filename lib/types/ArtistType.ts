@@ -10,8 +10,8 @@ export declare interface ArtistGetInfoType {
 }
 
 export declare interface ArtistSimilarType {
-  name: string;
   match: number;
+  name: string;
   url: string;
   image?: string | null;
 }

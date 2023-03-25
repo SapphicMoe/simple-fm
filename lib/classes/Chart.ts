@@ -57,7 +57,7 @@ class Chart {
       return {
         name: tag.name,
         stats: {
-          taggings: Number(tag.taggings),
+          count: Number(tag.taggings),
           reach: Number(tag.reach),
         },
         url: tag.url,
