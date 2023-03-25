@@ -1,4 +1,4 @@
-import { request } from './request.js';
+import { request } from '../request.js';
 
 import type {
   TagGetInfoResponse,
@@ -13,7 +13,7 @@ import type {
   TagTopTagsType,
   TagTopTracksType,
   TagWeeklyChartListType,
-} from './types';
+} from '../types';
 
 class Tag {
   constructor(private readonly token: string) {}

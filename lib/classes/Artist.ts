@@ -1,4 +1,4 @@
-import { request } from './request.js';
+import { request } from '../request.js';
 
 import type {
   ArtistGetInfoResponse,
@@ -12,7 +12,7 @@ import type {
   ArtistTopAlbumsType,
   ArtistTopTagsType,
   ArtistTopTracksType,
-} from './types';
+} from '../types';
 
 class Artist {
   constructor(private readonly token: string) {}

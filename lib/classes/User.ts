@@ -1,4 +1,4 @@
-import { request } from './request.js';
+import { request } from '../request.js';
 
 import type {
   PersonalTagTypes,
@@ -19,7 +19,7 @@ import type {
   UserTopAlbumsType,
   UserTopTagsType,
   UserTopTracksType,
-} from './types';
+} from '../types';
 
 class User {
   constructor(private readonly token: string) {}
