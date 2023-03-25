@@ -1,5 +1,40 @@
 export type PersonalTagTypes = 'album' | 'artist' | 'track';
 
+export type requestMethods =
+  | 'album.getInfo'
+  | 'album.getTopTags'
+  | 'album.search'
+  | 'artist.getInfo'
+  | 'artist.getSimilar'
+  | 'artist.getTopAlbums'
+  | 'artist.getTopTags'
+  | 'artist.getTopTracks'
+  | 'artist.search'
+  | 'chart.getTopArtists'
+  | 'chart.getTopTags'
+  | 'chart.getTopTracks'
+  | 'geo.getTopArtists'
+  | 'geo.getTopTracks'
+  | 'library.getArtists'
+  | 'tag.getInfo'
+  | 'tag.getTopAlbums'
+  | 'tag.getTopArtists'
+  | 'tag.getTopTags'
+  | 'tag.getTopTracks'
+  | 'tag.getWeeklyChartList'
+  | 'track.getInfo'
+  | 'track.getSimilar'
+  | 'track.getTopTags'
+  | 'track.search'
+  | 'user.getFriends'
+  | 'user.getInfo'
+  | 'user.getLovedTracks'
+  | 'user.getPersonalTags'
+  | 'user.getRecentTracks'
+  | 'user.getTopAlbums'
+  | 'user.getTopTags'
+  | 'user.getTopTracks';
+
 export interface Image {
   '#text': string;
   size: 'extralarge' | 'large' | 'medium' | 'small';

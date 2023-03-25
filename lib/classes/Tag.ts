@@ -23,8 +23,7 @@ class Tag {
    * @param tagName - The name of the tag.
    * */
   async fetch(tagName: string): Promise<TagGetInfoType> {
-    const { tag } = await request<TagGetInfoResponse>({
-      method: 'tag.getInfo',
+    const { tag } = await request<TagGetInfoResponse>('tag.getInfo', {
       tag: tagName,
       api_key: this.token,
     });
@@ -49,8 +48,7 @@ class Tag {
   async fetchTopAlbums(tagName: string, limit = 50, page = 1): Promise<TagTopAlbumsType[]> {
     const {
       albums: { album },
-    } = await request<TagGetTopAlbumsResponse>({
-      method: 'tag.getTopAlbums',
+    } = await request<TagGetTopAlbumsResponse>('tag.getTopAlbums', {
       tag: tagName,
       api_key: this.token,
       limit,
@@ -80,8 +78,7 @@ class Tag {
   async fetchTopArtists(tagName: string, limit = 50, page = 1): Promise<TagTopArtistsType[]> {
     const {
       topartists: { artist },
-    } = await request<TagGetTopArtistsResponse>({
-      method: 'tag.getTopArtists',
+    } = await request<TagGetTopArtistsResponse>('tag.getTopArtists', {
       tag: tagName,
       api_key: this.token,
       limit,
@@ -104,8 +101,7 @@ class Tag {
   async fetchTopTags(): Promise<TagTopTagsType[]> {
     const {
       toptags: { tag },
-    } = await request<TagGetTopTagsResponse>({
-      method: 'tag.getTopTags',
+    } = await request<TagGetTopTagsResponse>('tag.getTopTags', {
       api_key: this.token,
     });
 
@@ -129,8 +125,7 @@ class Tag {
   async fetchTopTracks(tagName: string, limit = 50, page = 1): Promise<TagTopTracksType[]> {
     const {
       tracks: { track },
-    } = await request<TagGetTopTracksResponse>({
-      method: 'tag.getTopTracks',
+    } = await request<TagGetTopTracksResponse>('tag.getTopTracks', {
       tag: tagName,
       api_key: this.token,
       limit,
@@ -159,8 +154,7 @@ class Tag {
   async fetchWeeklyChartList(tagName: string): Promise<TagWeeklyChartListType> {
     const {
       weeklychartlist: { chart, '@attr': attr },
-    } = await request<TagGetWeeklyChartListResponse>({
-      method: 'tag.getWeeklyChartList',
+    } = await request<TagGetWeeklyChartListResponse>('tag.getWeeklyChartList', {
       tag: tagName,
       api_key: this.token,
     });

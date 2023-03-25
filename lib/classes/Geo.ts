@@ -16,8 +16,7 @@ class Geo {
   async fetchTopArtists(country: string, limit = 50, page = 1): Promise<GeoArtistType[]> {
     const {
       topartists: { artist },
-    } = await request<GeoGetTopArtistsResponse>({
-      method: 'geo.getTopArtists',
+    } = await request<GeoGetTopArtistsResponse>('geo.getTopArtists', {
       country,
       api_key: this.token,
       limit,
@@ -45,8 +44,7 @@ class Geo {
   async fetchTopTracks(country: string, limit = 50, page = 1): Promise<GeoTrackType[]> {
     const {
       tracks: { track },
-    } = await request<GeoGetTopTracksResponse>({
-      method: 'geo.getTopTracks',
+    } = await request<GeoGetTopTracksResponse>('geo.getTopTracks', {
       country,
       api_key: this.token,
       limit,

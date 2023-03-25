@@ -1,10 +1,13 @@
 import { $fetch, SearchParameters } from 'ofetch';
 
-export async function request<T = unknown>(params: SearchParameters): Promise<T> {
+import { requestMethods } from './types';
+
+export async function request<T = unknown, M = requestMethods>(method: M, params: SearchParameters): Promise<T> {
   const baseURL = 'https://ws.audioscrobbler.com/2.0';
 
   const data = await $fetch<T>(baseURL, {
     params: {
+      method,
       ...params,
       format: 'json',
     },

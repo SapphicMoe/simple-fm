@@ -28,8 +28,7 @@ class Track {
         album,
         toptags: { tag },
       },
-    } = await request<TrackGetInfoResponse>({
-      method: 'track.getInfo',
+    } = await request<TrackGetInfoResponse>('track.getInfo', {
       artist: artistName,
       track: trackName,
       username: userName,
@@ -81,8 +80,7 @@ class Track {
   async fetchSimilar(artistName: string, trackName: string, limit = 30): Promise<TrackSimilarType[]> {
     const {
       similartracks: { track },
-    } = await request<TrackGetSimilarResponse>({
-      method: 'track.getSimilar',
+    } = await request<TrackGetSimilarResponse>('track.getSimilar', {
       artist: artistName,
       track: trackName,
       api_key: this.token,
@@ -113,8 +111,7 @@ class Track {
   async fetchTopTags(artistName: string, trackName: string): Promise<TrackTopTagsType> {
     const {
       toptags: { tag, '@attr': attr },
-    } = await request<TrackGetTopTagsResponse>({
-      method: 'track.getTopTags',
+    } = await request<TrackGetTopTagsResponse>('track.getTopTags', {
       artist: artistName,
       track: trackName,
       api_key: this.token,
@@ -149,8 +146,7 @@ class Track {
       results: {
         trackmatches: { track },
       },
-    } = await request<TrackSearchResponse>({
-      method: 'track.search',
+    } = await request<TrackSearchResponse>('track.search', {
       track: trackName,
       api_key: this.token,
       limit,

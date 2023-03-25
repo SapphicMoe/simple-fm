@@ -24,8 +24,7 @@ class Artist {
    * If supplied, the user's playcount for this artist is included in the response.
    * */
   async fetch(artistName: string, userName?: string): Promise<ArtistGetInfoType> {
-    const { artist } = await request<ArtistGetInfoResponse>({
-      method: 'artist.getInfo',
+    const { artist } = await request<ArtistGetInfoResponse>('artist.getInfo', {
       artist: artistName,
       username: userName,
       api_key: this.token,
@@ -57,8 +56,7 @@ class Artist {
   async fetchSimilar(artistName: string, limit = 30): Promise<ArtistSimilarType[]> {
     const {
       similarartists: { artist },
-    } = await request<ArtistGetSimilarResponse>({
-      method: 'artist.getSimilar',
+    } = await request<ArtistGetSimilarResponse>('artist.getSimilar', {
       artist: artistName,
       api_key: this.token,
       limit,
@@ -83,8 +81,7 @@ class Artist {
   async fetchTopAlbums(artistName: string, limit = 50, page = 1): Promise<ArtistTopAlbumsType[]> {
     const {
       topalbums: { album },
-    } = await request<ArtistGetTopAlbumsResponse>({
-      method: 'artist.getTopAlbums',
+    } = await request<ArtistGetTopAlbumsResponse>('artist.getTopAlbums', {
       artist: artistName,
       api_key: this.token,
       limit,
@@ -112,8 +109,7 @@ class Artist {
   async fetchTopTags(artistName: string): Promise<ArtistTopTagsType[]> {
     const {
       toptags: { tag },
-    } = await request<ArtistGetTopTagsResponse>({
-      method: 'artist.getTopTags',
+    } = await request<ArtistGetTopTagsResponse>('artist.getTopTags', {
       artist: artistName,
       api_key: this.token,
     });
@@ -136,8 +132,7 @@ class Artist {
   async fetchTopTracks(artistName: string, limit = 50, page = 1): Promise<ArtistTopTracksType[]> {
     const {
       toptracks: { track },
-    } = await request<ArtistGetTopTracksResponse>({
-      method: 'artist.getTopTracks',
+    } = await request<ArtistGetTopTracksResponse>('artist.getTopTracks', {
       artist: artistName,
       api_key: this.token,
       limit,
@@ -172,8 +167,7 @@ class Artist {
       results: {
         artistmatches: { artist },
       },
-    } = await request<ArtistSearchResponse>({
-      method: 'artist.search',
+    } = await request<ArtistSearchResponse>('artist.search', {
       artist: artistName,
       api_key: this.token,
       limit,

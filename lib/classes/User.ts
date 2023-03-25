@@ -29,8 +29,7 @@ class User {
    * @param userName - The name of the user.
    * */
   async fetch(userName: string): Promise<UserGetInfoType> {
-    const { user } = await request<UserGetInfoResponse>({
-      method: 'user.getInfo',
+    const { user } = await request<UserGetInfoResponse>('user.getInfo', {
       user: userName,
       api_key: this.token,
     });
@@ -54,8 +53,7 @@ class User {
   async fetchAllArtists(userName: string, limit = 50, page = 1): Promise<UserArtistsType[]> {
     const {
       artists: { artist },
-    } = await request<UserGetArtistsResponse>({
-      method: 'library.getArtists',
+    } = await request<UserGetArtistsResponse>('library.getArtists', {
       user: userName,
       api_key: this.token,
       limit,
@@ -81,8 +79,7 @@ class User {
   async fetchFriends(userName: string, limit = 50, page = 1): Promise<UserGetInfoType[]> {
     const {
       friends: { user },
-    } = await request<UserGetFriendsResponse>({
-      method: 'user.getFriends',
+    } = await request<UserGetFriendsResponse>('user.getFriends', {
       user: userName,
       api_key: this.token,
       limit,
@@ -110,8 +107,7 @@ class User {
   async fetchLovedTracks(userName: string, limit = 50, page = 1): Promise<UserLovedTracksType[]> {
     const {
       lovedtracks: { track },
-    } = await request<UserGetLovedTracksResponse>({
-      method: 'user.getLovedTracks',
+    } = await request<UserGetLovedTracksResponse>('user.getLovedTracks', {
       user: userName,
       api_key: this.token,
       limit,
@@ -138,8 +134,7 @@ class User {
    * @param tagType - The type of items which have been tagged.
    * */
   async fetchPersonalTags(userName: string, tagName: string, tagType: PersonalTagTypes): Promise<UserPersonalTagsType> {
-    const { taggings } = await request<UserGetPersonalTagsResponse>({
-      method: 'user.getPersonalTags',
+    const { taggings } = await request<UserGetPersonalTagsResponse>('user.getPersonalTags', {
       user: userName,
       tag: tagName,
       taggingtype: tagType,
@@ -196,8 +191,7 @@ class User {
   async fetchRecentTracks(userName: string, limit = 50, page = 1): Promise<UserRecentTrackType> {
     const {
       recenttracks: { track, '@attr': attr },
-    } = await request<UserGetRecentTracksResponse>({
-      method: 'user.getRecentTracks',
+    } = await request<UserGetRecentTracksResponse>('user.getRecentTracks', {
       user: userName,
       api_key: this.token,
       limit,
@@ -236,8 +230,7 @@ class User {
   async fetchTopAlbums(userName: string, limit = 50, page = 1): Promise<UserTopAlbumsType[]> {
     const {
       topalbums: { album },
-    } = await request<UserGetTopAlbumsResponse>({
-      method: 'user.getTopAlbums',
+    } = await request<UserGetTopAlbumsResponse>('user.getTopAlbums', {
       user: userName,
       api_key: this.token,
       limit,
@@ -267,8 +260,7 @@ class User {
   async fetchTopTags(userName: string, limit = 50): Promise<UserTopTagsType[]> {
     const {
       toptags: { tag },
-    } = await request<UserGetTopTagsResponse>({
-      method: 'user.getTopTags',
+    } = await request<UserGetTopTagsResponse>('user.getTopTags', {
       user: userName,
       api_key: this.token,
       limit,
@@ -292,8 +284,7 @@ class User {
   async fetchTopTracks(userName: string, limit = 50, page = 1): Promise<UserTopTracksType[]> {
     const {
       toptracks: { track },
-    } = await request<UserGetTopTracksResponse>({
-      method: 'user.getTopTracks',
+    } = await request<UserGetTopTracksResponse>('user.getTopTracks', {
       user: userName,
       api_key: this.token,
       limit,

@@ -25,8 +25,7 @@ class Album {
       album: {
         tags: { tag },
       },
-    } = await request<AlbumGetInfoResponse>({
-      method: 'album.getInfo',
+    } = await request<AlbumGetInfoResponse>('album.getInfo', {
       artist: artistName,
       album: albumName,
       username: userName,
@@ -81,8 +80,7 @@ class Album {
   async fetchTopTags(artistName: string, albumName: string): Promise<AlbumGetTopTagsType> {
     const {
       toptags: { tag, '@attr': attr },
-    } = await request<AlbumGetTopTagsResponse>({
-      method: 'album.getTopTags',
+    } = await request<AlbumGetTopTagsResponse>('album.getTopTags', {
       artist: artistName,
       album: albumName,
       api_key: this.token,
@@ -117,8 +115,7 @@ class Album {
       results: {
         albummatches: { album },
       },
-    } = await request<AlbumSearchResponse>({
-      method: 'album.search',
+    } = await request<AlbumSearchResponse>('album.search', {
       album: albumName,
       api_key: this.token,
       limit,

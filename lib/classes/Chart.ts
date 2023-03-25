@@ -20,8 +20,7 @@ class Chart {
   async fetchTopArtists(limit = 30, page = 1): Promise<ChartTopArtistsType[]> {
     const {
       artists: { artist },
-    } = await request<ChartGetTopArtistsResponse>({
-      method: 'chart.getTopArtists',
+    } = await request<ChartGetTopArtistsResponse>('chart.getTopArtists', {
       api_key: this.token,
       limit,
       page,
@@ -48,8 +47,7 @@ class Chart {
   async fetchTopTags(limit = 30, page = 1): Promise<ChartTopTagsType[]> {
     const {
       tags: { tag },
-    } = await request<ChartGetTopTagsResponse>({
-      method: 'chart.getTopTags',
+    } = await request<ChartGetTopTagsResponse>('chart.getTopTags', {
       api_key: this.token,
       limit,
       page,
@@ -75,8 +73,7 @@ class Chart {
   async fetchTopTracks(limit = 30, page = 1): Promise<ChartTopTracksType[]> {
     const {
       tracks: { track },
-    } = await request<ChartGetTopTracksResponse>({
-      method: 'chart.getTopTracks',
+    } = await request<ChartGetTopTracksResponse>('chart.getTopTracks', {
       api_key: this.token,
       limit,
       page,
