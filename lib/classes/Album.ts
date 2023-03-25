@@ -23,7 +23,6 @@ class Album {
     const {
       album,
       album: {
-        tracks: { track },
         tags: { tag },
       },
     } = await request<AlbumGetInfoResponse>({
@@ -34,19 +33,26 @@ class Album {
       api_key: this.token,
     });
 
+    const tracks = Array.isArray(album.tracks.track)
+      ? album.tracks.track.map((track) => {
+          return {
+            rank: Number(track['@attr'].rank),
+            name: track.name,
+            duration: Number(track.duration) || null,
+            url: track.url,
+          };
+        })
+      : {
+          rank: Number(album.tracks.track['@attr'].rank),
+          name: album.tracks.track.name,
+          duration: Number(album.tracks.track.duration) || null,
+          url: album.tracks.track.url,
+        };
+
     const tags = tag.map((tag) => {
       return {
         name: tag.name,
         url: tag.url,
-      };
-    });
-
-    const tracks = track.map((track) => {
-      return {
-        rank: Number(track['@attr'].rank),
-        name: track.name,
-        duration: Number(track.duration) || null,
-        url: track.url,
       };
     });
 

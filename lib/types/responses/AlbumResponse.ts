@@ -1,5 +1,7 @@
 import type { Album, Image, Tag, Track } from '..';
 
+type ObjArray<T> = T | T[];
+
 export declare interface AlbumGetInfoResponse {
   album: Album & {
     tags: {
@@ -10,7 +12,7 @@ export declare interface AlbumGetInfoResponse {
     playcount: string;
     userplaycount?: number;
     tracks: {
-      track: Array<
+      track: ObjArray<
         Track & {
           duration: string;
           '@attr': {
