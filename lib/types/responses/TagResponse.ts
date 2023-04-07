@@ -38,12 +38,6 @@ export declare interface TagGetTopArtistsResponse {
   };
 }
 
-export declare interface TagGetTopTagsResponse {
-  toptags: {
-    tag: Tag[];
-  };
-}
-
 export declare interface TagGetTopTracksResponse {
   tracks: {
     track: Array<
