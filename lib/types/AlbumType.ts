@@ -1,3 +1,5 @@
+import type { ImageType } from '.';
+
 export declare interface AlbumGetInfoType {
   name: string;
   artist: {
@@ -16,7 +18,7 @@ export declare interface AlbumGetInfoType {
     url: string;
   }>;
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface AlbumSearchType {
@@ -26,7 +28,7 @@ export declare interface AlbumSearchType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface AlbumGetTopTagsType {

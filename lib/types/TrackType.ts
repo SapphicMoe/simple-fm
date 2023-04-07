@@ -1,3 +1,5 @@
+import type { ImageType } from '.';
+
 export declare interface TrackGetInfoType {
   name: string;
   duration: number | null;
@@ -18,7 +20,7 @@ export declare interface TrackGetInfoType {
   };
   tags?: object[];
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface TrackSearchType {
@@ -29,7 +31,7 @@ export declare interface TrackSearchType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface TrackSimilarType {
@@ -42,7 +44,7 @@ export declare interface TrackSimilarType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface TrackTopTagsType {

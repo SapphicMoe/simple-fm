@@ -21,7 +21,7 @@ import type {
   UserTopTracksType,
 } from '../types';
 
-class User {
+export default class User {
   constructor(private readonly token: string) {}
 
   /**
@@ -34,13 +34,20 @@ class User {
       api_key: this.token,
     });
 
+    const image = user.image.map((i) => {
+      return {
+        size: i.size,
+        url: i['#text'],
+      };
+    });
+
     return {
       name: user.name,
       realName: user.realname || null,
       country: user.country,
       registered: new Date(user.registered['#text'] * 1000),
       url: user.url,
-      image: user.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+      image,
     };
   }
 
@@ -61,11 +68,18 @@ class User {
     });
 
     return artist.map((artist) => {
+      const image = artist.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         name: artist.name,
         scrobbles: Number(artist.playcount),
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -87,13 +101,20 @@ class User {
     });
 
     return user.map((user) => {
+      const image = user.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         name: user.name,
         realName: user.realname || null,
         country: user.country,
         registered: new Date(Number(user.registered.unixtime) * 1000),
         url: user.url,
-        image: user.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -146,6 +167,13 @@ class User {
 
     const responseTypes = {
       album: taggings.albums?.album.map((album) => {
+        const image = album.image.map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          };
+        });
+
         return {
           name: album.name,
           artist: {
@@ -153,18 +181,32 @@ class User {
             url: album.artist.url,
           },
           url: album.url,
-          image: album.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+          image,
         };
       }),
 
       artist: taggings.artists?.artist.map((artist) => {
+        const image = artist.image.map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          };
+        });
+
         return {
           name: artist.name,
           url: artist.url,
-          image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+          image,
         };
       }),
       track: taggings.tracks?.track.map((track) => {
+        const image = track.image.map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          };
+        });
+
         return {
           name: track.name,
           artist: {
@@ -172,7 +214,7 @@ class User {
             url: track.artist.url,
           },
           url: track.url,
-          image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+          image,
         };
       }),
     };
@@ -199,6 +241,13 @@ class User {
     });
 
     const tracks = track.map((track) => {
+      const image = track.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         name: track.name,
         artist: {
@@ -207,7 +256,7 @@ class User {
         },
         album: track.album['#text'] || null,
         url: track.url,
-        image: track.image[3]['#text'] || null,
+        image,
       };
     });
 
@@ -238,6 +287,13 @@ class User {
     });
 
     return album.map((album) => {
+      const image = album.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         rank: Number(album['@attr'].rank),
         name: album.name,
@@ -247,7 +303,7 @@ class User {
           url: album.artist.url,
         },
         url: album.url,
-        image: album.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -292,6 +348,13 @@ class User {
     });
 
     return track.map((track) => {
+      const image = track.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         rank: Number(track['@attr'].rank),
         name: track.name,
@@ -304,10 +367,8 @@ class User {
           url: track.artist.url,
         },
         url: track.url,
-        image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
 }
-
-export default User;

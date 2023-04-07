@@ -1,3 +1,5 @@
+import type { ImageType } from '.';
+
 export declare interface ChartTopArtistsType {
   name: string;
   stats: {
@@ -5,7 +7,7 @@ export declare interface ChartTopArtistsType {
     listeners: number;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface ChartTopTagsType {
@@ -28,5 +30,5 @@ export declare interface ChartTopTracksType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }

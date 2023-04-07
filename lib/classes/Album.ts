@@ -9,7 +9,7 @@ import type {
   AlbumSearchType,
 } from '../types';
 
-class Album {
+export default class Album {
   constructor(private readonly token: string) {}
 
   /**
@@ -55,6 +55,13 @@ class Album {
       };
     });
 
+    const image = album.image.map((i) => {
+      return {
+        size: i.size,
+        url: i['#text'],
+      };
+    });
+
     const response = {
       name: album.name,
       artist: {
@@ -64,7 +71,7 @@ class Album {
       tags,
       tracks,
       url: album.url,
-      image: album.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+      image,
     } as AlbumGetInfoType;
 
     if (userName) response.userPlayCount = Number(album.userplaycount);
@@ -123,6 +130,13 @@ class Album {
     });
 
     return album.map((album) => {
+      const image = album.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         name: album.name,
         artist: {
@@ -130,10 +144,8 @@ class Album {
           url: `https://www.last.fm/music/${encodeURIComponent(album.artist)}`,
         },
         url: album.url,
-        image: album.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
 }
-
-export default Album;

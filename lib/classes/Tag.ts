@@ -4,18 +4,16 @@ import type {
   TagGetInfoResponse,
   TagGetTopAlbumsResponse,
   TagGetTopArtistsResponse,
-  TagGetTopTagsResponse,
   TagGetTopTracksResponse,
   TagGetWeeklyChartListResponse,
   TagGetInfoType,
   TagTopAlbumsType,
   TagTopArtistsType,
-  TagTopTagsType,
   TagTopTracksType,
   TagWeeklyChartListType,
 } from '../types';
 
-class Tag {
+export default class Tag {
   constructor(private readonly token: string) {}
 
   /**
@@ -56,6 +54,13 @@ class Tag {
     });
 
     return album.map((album) => {
+      const image = album.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         rank: Number(album['@attr'].rank),
         name: album.name,
@@ -64,7 +69,7 @@ class Tag {
           url: album.artist.url,
         },
         url: `https://www.last.fm/music/${encodeURIComponent(album.artist.name)}/${encodeURIComponent(album.name)}`,
-        image: album.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -86,32 +91,18 @@ class Tag {
     });
 
     return artist.map((artist) => {
+      const image = artist.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         rank: Number(artist['@attr'].rank),
         name: artist.name,
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
-      };
-    });
-  }
-
-  /**
-   * Fetches and returns popular albums that are tagged by a tag name.
-   * */
-  async fetchTopTags(): Promise<TagTopTagsType[]> {
-    const {
-      toptags: { tag },
-    } = await request<TagGetTopTagsResponse>('tag.getTopTags', {
-      api_key: this.token,
-    });
-
-    return tag.map((tag) => {
-      return {
-        name: tag.name,
-        stats: {
-          count: tag.count,
-          reach: tag.reach,
-        },
+        image,
       };
     });
   }
@@ -133,6 +124,13 @@ class Tag {
     });
 
     return track.map((track) => {
+      const image = track.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         rank: Number(track['@attr'].rank),
         name: track.name,
@@ -142,7 +140,7 @@ class Tag {
           url: track.artist.url,
         },
         url: track.url,
-        image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -174,5 +172,3 @@ class Tag {
     return response as TagWeeklyChartListType;
   }
 }
-
-export default Tag;

@@ -36,8 +36,13 @@ export type requestMethods =
   | 'user.getTopTracks';
 
 export interface Image {
+  size: string;
   '#text': string;
-  size: 'extralarge' | 'large' | 'medium' | 'small';
+}
+
+export interface ImageType {
+  size: string;
+  url: string;
 }
 
 export interface Registered {
@@ -52,7 +57,7 @@ export interface PersonalTagType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: Image[];
 }
 
 export interface Album {

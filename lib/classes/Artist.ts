@@ -14,7 +14,7 @@ import type {
   ArtistTopTracksType,
 } from '../types';
 
-class Artist {
+export default class Artist {
   constructor(private readonly token: string) {}
 
   /**
@@ -63,11 +63,18 @@ class Artist {
     });
 
     return artist.map((artist) => {
+      const image = artist.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         match: Number(artist.match),
         name: artist.name,
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -89,6 +96,13 @@ class Artist {
     });
 
     return album.map((album) => {
+      const image = album.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         name: album.name,
         scrobbles: Number(album.playcount),
@@ -97,7 +111,7 @@ class Artist {
           url: album.artist.url,
         },
         url: album.url,
-        image: album.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -175,16 +189,21 @@ class Artist {
     });
 
     return artist.map((artist) => {
+      const image = artist.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         name: artist.name,
         stats: {
           listeners: Number(artist.listeners),
         },
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
 }
-
-export default Artist;

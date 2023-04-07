@@ -1,8 +1,10 @@
+import type { ImageType } from '.';
+
 export declare interface GeoArtistType {
   name: string;
   listeners: number;
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface GeoTrackType {
@@ -15,5 +17,5 @@ export declare interface GeoTrackType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }

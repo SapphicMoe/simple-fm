@@ -2,7 +2,7 @@ import { request } from '../request.js';
 
 import type { GeoGetTopArtistsResponse, GeoGetTopTracksResponse, GeoArtistType, GeoTrackType } from '../types';
 
-class Geo {
+export default class Geo {
   constructor(private readonly token: string) {}
 
   /**
@@ -24,11 +24,18 @@ class Geo {
     });
 
     return artist.map((artist) => {
+      const image = artist.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         name: artist.name,
         listeners: Number(artist.listeners),
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -52,6 +59,12 @@ class Geo {
     });
 
     return track.map((track) => {
+      const image = track.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
       return {
         rank: Number(track['@attr'].rank),
         name: track.name,
@@ -62,10 +75,8 @@ class Geo {
           url: track.artist.url,
         },
         url: track.url,
-        image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
 }
-
-export default Geo;

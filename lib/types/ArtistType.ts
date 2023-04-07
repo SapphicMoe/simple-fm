@@ -1,3 +1,5 @@
+import type { ImageType } from '.';
+
 export declare interface ArtistGetInfoType {
   name: string;
   description?: string;
@@ -13,7 +15,7 @@ export declare interface ArtistSimilarType {
   match: number;
   name: string;
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface ArtistTopAlbumsType {
@@ -24,7 +26,7 @@ export declare interface ArtistTopAlbumsType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface ArtistTopTracksType {

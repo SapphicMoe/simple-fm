@@ -11,7 +11,7 @@ import type {
   TrackTopTagsType,
 } from '../types';
 
-class Track {
+export default class Track {
   constructor(private readonly token: string) {}
 
   /**
@@ -42,6 +42,13 @@ class Track {
       };
     });
 
+    const image = track.album?.image.map((i) => {
+      return {
+        size: i.size,
+        url: i['#text'],
+      };
+    });
+
     const response = {
       name: track.name,
       duration: Number(track.duration) || null,
@@ -60,7 +67,7 @@ class Track {
       },
       tags,
       url: track.url,
-      image: track.album?.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+      image,
     } as TrackGetInfoType;
 
     if (userName) {
@@ -88,6 +95,13 @@ class Track {
     });
 
     return track.map((track) => {
+      const image = track.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         match: Number(track.match),
         name: track.name,
@@ -98,7 +112,7 @@ class Track {
           url: track.artist.url,
         },
         url: track.url,
-        image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -154,18 +168,23 @@ class Track {
     });
 
     return track.map((track) => {
+      const image = track.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
       return {
         name: track.name,
+        listeners: Number(track.listeners),
         artist: {
           name: track.artist,
           url: `https://www.last.fm/music/${encodeURIComponent(track.artist)}`,
         },
-        listeners: Number(track.listeners),
+
         url: track.url,
-        image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
 }
-
-export default Track;

@@ -1,3 +1,5 @@
+import type { ImageType } from '.';
+
 export declare interface TagGetInfoType {
   name: string;
   description?: string;
@@ -16,22 +18,14 @@ export declare interface TagTopAlbumsType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface TagTopArtistsType {
   rank: number;
   name: string;
   url: string;
-  image?: string | null;
-}
-
-export declare interface TagTopTagsType {
-  name: string;
-  stats: {
-    count?: number;
-    reach?: number;
-  };
+  image?: ImageType[] | null;
 }
 
 export declare interface TagTopTracksType {
@@ -43,7 +37,7 @@ export declare interface TagTopTracksType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface TagWeeklyChartListType {

@@ -1,10 +1,10 @@
-import type { PersonalTagType } from '.';
+import type { ImageType, PersonalTagType } from '.';
 
 export declare interface UserArtistsType {
   name: string;
   scrobbles: number;
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface UserGetInfoType {
@@ -13,7 +13,7 @@ export declare interface UserGetInfoType {
   country: string | null;
   registered: Date;
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface UserLovedTracksType {
@@ -58,7 +58,7 @@ export declare interface UserRecentTrackType {
       url: string;
     };
     url: string;
-    image?: string | null;
+    image?: ImageType[] | null;
   }>;
 }
 
@@ -71,7 +71,7 @@ export declare interface UserTopAlbumsType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }
 
 export declare interface UserTopTagsType {
@@ -92,5 +92,5 @@ export declare interface UserTopTracksType {
     url: string;
   };
   url: string;
-  image?: string | null;
+  image?: ImageType[] | null;
 }

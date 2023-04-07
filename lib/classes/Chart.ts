@@ -9,7 +9,7 @@ import type {
   ChartTopTracksType,
 } from '../types';
 
-class Chart {
+export default class Chart {
   constructor(private readonly token: string) {}
 
   /**
@@ -27,6 +27,13 @@ class Chart {
     });
 
     return artist.map((artist) => {
+      const image = artist.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         name: artist.name,
         stats: {
@@ -34,7 +41,7 @@ class Chart {
           listeners: Number(artist.listeners),
         },
         url: artist.url,
-        image: artist.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
@@ -80,6 +87,13 @@ class Chart {
     });
 
     return track.map((track) => {
+      const image = track.image.map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        };
+      });
+
       return {
         name: track.name,
         stats: {
@@ -91,10 +105,8 @@ class Chart {
           url: track.artist.url,
         },
         url: track.url,
-        image: track.image.find((i) => i.size === 'extralarge')?.['#text'] || null,
+        image,
       };
     });
   }
 }
-
-export default Chart;
