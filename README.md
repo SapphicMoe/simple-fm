@@ -31,7 +31,7 @@ import client from '@solely/simple-fm';
 const lastFM = new client('last.fm token');
 
 // Fetch the recent track from a user.
-const json = await lastFM.user.fetchRecentTrack('solelychloe');
+const json = await lastFM.user.fetchRecentTracks('solelychloe');
 
 console.log(json);
 // => { currentlyPlaying: true, name: 'Dark World', artist: 'Mikel', album: 'Zelda & Chill', ...}
@@ -180,10 +180,6 @@ _Fetches and returns metadata information on a tag._
 - #### `tagName`: The name of the tag.
 - #### `limit?`: The number of results to fetch per page. Defaults to 50.
 - #### `page?`: The page number to fetch. Defaults to the first page.
-
-### tag.fetchTopTags()
-
-_Fetches and returns popular albums that are tagged by a tag name._
 
 ### tag.fetchTopTracks(tagName, limit?, page?)
 
