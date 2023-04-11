@@ -21,3 +21,8 @@ pnpm-debug.log*
 # OS-specific files
 .DS_Store
 desktop.ini
+
+/config.ts
+/index.mjs
+/package/
+/package.tgz

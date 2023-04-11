@@ -1,6 +1,10 @@
 {
   "extends": "clarity/typescript",
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.eslint.json"
+  },
+  "rules": {
+    "import/extensions": "off",
+    "import/no-useless-path-segments": "off"
   }
 }
