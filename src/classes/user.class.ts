@@ -19,7 +19,7 @@ import type {
   UserTopAlbumsType,
   UserTopTagsType,
   UserTopTracksType,
-} from '../types';
+} from '../types/index.js';
 
 export default class User {
   constructor(private readonly token: string) {}

@@ -1,4 +1,4 @@
-import { Album, Artist, Track, Tag } from '..';
+import { Album, Artist, Track, Tag } from '../index.js';
 
 export declare interface ArtistGetInfoResponse {
   artist: Artist & {

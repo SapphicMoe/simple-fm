@@ -1,4 +1,4 @@
-import type { Album, Tag, Track } from '..';
+import type { Album, Tag, Track } from '../index.js';
 
 export declare interface TrackGetInfoResponse {
   track: Track & {

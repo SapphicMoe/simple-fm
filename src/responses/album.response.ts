@@ -1,4 +1,4 @@
-import type { Album, Image, Tag, Track } from '..';
+import type { Album, Image, Tag, Track } from '../index.js';
 
 type ObjArray<T> = T | T[];
 

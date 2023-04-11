@@ -2,12 +2,12 @@ import { request } from '../request.js';
 
 import type {
   AlbumGetInfoResponse,
-  AlbumSearchResponse,
   AlbumGetTopTagsResponse,
+  AlbumSearchResponse,
   AlbumGetInfoType,
   AlbumGetTopTagsType,
   AlbumSearchType,
-} from '../types';
+} from '../types/index.js';
 
 export default class Album {
   constructor(private readonly token: string) {}
@@ -23,6 +23,7 @@ export default class Album {
     const {
       album,
       album: {
+        tracks: { track },
         tags: { tag },
       },
     } = await request<AlbumGetInfoResponse>('album.getInfo', {
@@ -32,8 +33,8 @@ export default class Album {
       api_key: this.token,
     });
 
-    const tracks = Array.isArray(album.tracks.track)
-      ? album.tracks.track.map((track) => {
+    const tracks = Array.isArray(track)
+      ? track.map((track) => {
           return {
             rank: Number(track['@attr'].rank),
             name: track.name,
@@ -42,10 +43,10 @@ export default class Album {
           };
         })
       : {
-          rank: Number(album.tracks.track['@attr'].rank),
-          name: album.tracks.track.name,
-          duration: Number(album.tracks.track.duration) || null,
-          url: album.tracks.track.url,
+          rank: Number(track['@attr'].rank),
+          name: track.name,
+          duration: Number(track.duration) || null,
+          url: track.url,
         };
 
     const tags = tag.map((tag) => {

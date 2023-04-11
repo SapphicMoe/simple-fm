@@ -9,7 +9,7 @@ import type {
   TrackSearchType,
   TrackSimilarType,
   TrackTopTagsType,
-} from '../types';
+} from '../types/index.js';
 
 export default class Track {
   constructor(private readonly token: string) {}

@@ -12,7 +12,7 @@ import type {
   ArtistTopAlbumsType,
   ArtistTopTagsType,
   ArtistTopTracksType,
-} from '../types';
+} from '../types/index.js';
 
 export default class Artist {
   constructor(private readonly token: string) {}

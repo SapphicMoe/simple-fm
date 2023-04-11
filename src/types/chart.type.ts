@@ -1,4 +1,4 @@
-import type { ImageType } from '.';
+import type { ImageType } from './index.js';
 
 export declare interface ChartTopArtistsType {
   name: string;

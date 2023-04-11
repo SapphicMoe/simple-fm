@@ -11,7 +11,7 @@ import type {
   TagTopArtistsType,
   TagTopTracksType,
   TagWeeklyChartListType,
-} from '../types';
+} from '../types/index.js';
 
 export default class Tag {
   constructor(private readonly token: string) {}

@@ -97,13 +97,12 @@ export interface User {
   image: Image[];
 }
 
-export * from './AlbumType.js';
-export * from './ArtistType.js';
-export * from './ChartType.js';
-export * from './GeoType.js';
-export * from './TagType.js';
-export * from './TrackType.js';
-export * from './UserType.js';
+export * from './album.type.js';
+export * from './artist.type.js';
+export * from './chart.type.js';
+export * from './geo.type.js';
+export * from './tag.type.js';
+export * from './track.type.js';
+export * from './user.type.js';
 
-// eslint-disable-next-line import/no-useless-path-segments
-export * from './responses/index.js';
+export * from '../responses/index.js';

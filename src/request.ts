@@ -1,6 +1,6 @@
 import { $fetch, SearchParameters } from 'ofetch';
 
-import { requestMethods } from './types';
+import { requestMethods } from './types/index.js';
 
 export async function request<T = unknown, M = requestMethods>(method: M, params: SearchParameters): Promise<T> {
   const baseURL = 'https://ws.audioscrobbler.com/2.0';

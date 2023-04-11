@@ -1,15 +1,14 @@
-import Album from './classes/Album.js';
-import Artist from './classes/Artist.js';
-import Chart from './classes/Chart.js';
-import Geo from './classes/Geo.js';
-import Tag from './classes/Tag.js';
-import Track from './classes/Track.js';
-import User from './classes/User.js';
+import Album from './classes/album.class.js';
+import Artist from './classes/artist.class.js';
+import Chart from './classes/chart.class.js';
+import Geo from './classes/geo.class.js';
+import Tag from './classes/tag.class.js';
+import Track from './classes/track.class.js';
+import User from './classes/user.class.js';
 
-// eslint-disable-next-line import/no-useless-path-segments
 export * from './types/index.js';
 
-export default class LastFMClient {
+export default class SimpleFMClient {
   readonly album: Album;
   readonly artist: Artist;
   readonly chart: Chart;
