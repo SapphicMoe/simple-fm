@@ -69,13 +69,17 @@ export default class Album {
         name: album.artist,
         url: `https://www.last.fm/music/${encodeURIComponent(album.artist)}`,
       },
+      stats: {
+        scrobbles: Number(album.playcount),
+        listeners: Number(album.listeners),
+      },
       tags,
       tracks,
       url: album.url,
       image,
     } as AlbumGetInfoType;
 
-    if (userName) response.userPlayCount = Number(album.userplaycount);
+    if (userName) response.stats.userPlayCount = Number(album.userplaycount);
 
     return response;
   }
@@ -118,8 +122,9 @@ export default class Album {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async search(albumName: string, limit = 30, page = 1): Promise<AlbumSearchType[]> {
+  async search(albumName: string, limit = 30, page = 1): Promise<AlbumSearchType> {
     const {
+      results,
       results: {
         albummatches: { album },
       },
@@ -130,7 +135,7 @@ export default class Album {
       page,
     });
 
-    return album.map((album) => {
+    const albums = album.map((album) => {
       const image = album.image.map((i) => {
         return {
           size: i.size,
@@ -148,5 +153,15 @@ export default class Album {
         image,
       };
     });
+
+    return {
+      search: {
+        query: results['opensearch:Query'].searchTerms,
+        page: Number(results['opensearch:Query'].startPage),
+        itemsPerPage: Number(results['opensearch:itemsPerPage']),
+        totalResults: Number(results['opensearch:totalResults']),
+      },
+      albums,
+    } as AlbumSearchType;
   }
 }

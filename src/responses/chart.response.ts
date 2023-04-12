@@ -8,6 +8,12 @@ export declare interface ChartGetTopArtistsResponse {
         listeners: string;
       }
     >;
+    '@attr': {
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
@@ -18,6 +24,12 @@ export declare interface ChartGetTopTagsResponse {
         taggings: string;
       }
     >;
+    '@attr': {
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
@@ -33,5 +45,11 @@ export declare interface ChartGetTopTracksResponse {
         };
       }
     >;
+    '@attr': {
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }

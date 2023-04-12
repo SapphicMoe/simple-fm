@@ -7,6 +7,7 @@ export declare interface ArtistGetInfoResponse {
       playcount: string;
       userplaycount?: string;
     };
+    ontour: string;
     bio: { summary: string };
   };
 }
@@ -18,6 +19,9 @@ export declare interface ArtistGetSimilarResponse {
         match: string;
       }
     >;
+    '@attr': {
+      artist: string;
+    };
   };
 }
 
@@ -32,6 +36,13 @@ export declare interface ArtistGetTopAlbumsResponse {
         };
       }
     >;
+    '@attr': {
+      artist: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
@@ -43,6 +54,9 @@ export declare interface ArtistGetTopTagsResponse {
         count: number;
       }
     >;
+    '@attr': {
+      artist: string;
+    };
   };
 }
 
@@ -61,11 +75,24 @@ export declare interface ArtistGetTopTracksResponse {
         };
       }
     >;
+    '@attr': {
+      artist: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
 export declare interface ArtistSearchResponse {
   results: {
+    'opensearch:Query': {
+      searchTerms: string;
+      startPage: string;
+    };
+    'opensearch:totalResults': string;
+    'opensearch:itemsPerPage': string;
     artistmatches: {
       artist: Array<
         Artist & {

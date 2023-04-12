@@ -43,9 +43,9 @@ export default class Tag {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopAlbums(tagName: string, limit = 50, page = 1): Promise<TagTopAlbumsType[]> {
+  async fetchTopAlbums(tagName: string, limit = 50, page = 1): Promise<TagTopAlbumsType> {
     const {
-      albums: { album },
+      albums: { album, '@attr': attr },
     } = await request<TagGetTopAlbumsResponse>('tag.getTopAlbums', {
       tag: tagName,
       api_key: this.token,
@@ -53,7 +53,7 @@ export default class Tag {
       page,
     });
 
-    return album.map((album) => {
+    const albums = album.map((album) => {
       const image = album.image.map((i) => {
         return {
           size: i.size,
@@ -72,6 +72,17 @@ export default class Tag {
         image,
       };
     });
+
+    return {
+      search: {
+        tag: attr.tag,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      albums,
+    } as TagTopAlbumsType;
   }
 
   /**
@@ -80,9 +91,9 @@ export default class Tag {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopArtists(tagName: string, limit = 50, page = 1): Promise<TagTopArtistsType[]> {
+  async fetchTopArtists(tagName: string, limit = 50, page = 1): Promise<TagTopArtistsType> {
     const {
-      topartists: { artist },
+      topartists: { artist, '@attr': attr },
     } = await request<TagGetTopArtistsResponse>('tag.getTopArtists', {
       tag: tagName,
       api_key: this.token,
@@ -90,21 +101,24 @@ export default class Tag {
       page,
     });
 
-    return artist.map((artist) => {
-      const image = artist.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
-
+    const artists = artist.map((artist) => {
       return {
         rank: Number(artist['@attr'].rank),
         name: artist.name,
         url: artist.url,
-        image,
       };
     });
+
+    return {
+      search: {
+        tag: attr.tag,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      artists,
+    } as TagTopArtistsType;
   }
 
   /**
@@ -113,9 +127,9 @@ export default class Tag {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(tagName: string, limit = 50, page = 1): Promise<TagTopTracksType[]> {
+  async fetchTopTracks(tagName: string, limit = 50, page = 1): Promise<TagTopTracksType> {
     const {
-      tracks: { track },
+      tracks: { track, '@attr': attr },
     } = await request<TagGetTopTracksResponse>('tag.getTopTracks', {
       tag: tagName,
       api_key: this.token,
@@ -123,14 +137,7 @@ export default class Tag {
       page,
     });
 
-    return track.map((track) => {
-      const image = track.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
-
+    const tracks = track.map((track) => {
       return {
         rank: Number(track['@attr'].rank),
         name: track.name,
@@ -140,9 +147,19 @@ export default class Tag {
           url: track.artist.url,
         },
         url: track.url,
-        image,
       };
     });
+
+    return {
+      search: {
+        tag: attr.tag,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tracks,
+    } as TagTopTracksType;
   }
 
   /**
@@ -165,7 +182,9 @@ export default class Tag {
     });
 
     const response = {
-      name: attr.tag,
+      search: {
+        tag: attr.tag,
+      },
       positions,
     };
 

@@ -13,9 +13,9 @@ export default class Geo {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopArtists(country: string, limit = 50, page = 1): Promise<GeoArtistType[]> {
+  async fetchTopArtists(country: string, limit = 50, page = 1): Promise<GeoArtistType> {
     const {
-      topartists: { artist },
+      topartists: { artist, '@attr': attr },
     } = await request<GeoGetTopArtistsResponse>('geo.getTopArtists', {
       country,
       api_key: this.token,
@@ -23,21 +23,24 @@ export default class Geo {
       page,
     });
 
-    return artist.map((artist) => {
-      const image = artist.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
-
+    const artists = artist.map((artist) => {
       return {
         name: artist.name,
         listeners: Number(artist.listeners),
         url: artist.url,
-        image,
       };
     });
+
+    return {
+      search: {
+        country: attr.country,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      artists,
+    } as GeoArtistType;
   }
 
   /**
@@ -48,9 +51,9 @@ export default class Geo {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(country: string, limit = 50, page = 1): Promise<GeoTrackType[]> {
+  async fetchTopTracks(country: string, limit = 50, page = 1): Promise<GeoTrackType> {
     const {
-      tracks: { track },
+      tracks: { track, '@attr': attr },
     } = await request<GeoGetTopTracksResponse>('geo.getTopTracks', {
       country,
       api_key: this.token,
@@ -58,13 +61,7 @@ export default class Geo {
       page,
     });
 
-    return track.map((track) => {
-      const image = track.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
+    const tracks = track.map((track) => {
       return {
         rank: Number(track['@attr'].rank),
         name: track.name,
@@ -75,8 +72,18 @@ export default class Geo {
           url: track.artist.url,
         },
         url: track.url,
-        image,
       };
     });
+
+    return {
+      search: {
+        country: attr.country,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tracks,
+    } as GeoTrackType;
   }
 }

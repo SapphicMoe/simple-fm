@@ -8,6 +8,7 @@ import type {
   ArtistGetTopTracksResponse,
   ArtistSearchResponse,
   ArtistGetInfoType,
+  ArtistSearchType,
   ArtistSimilarType,
   ArtistTopAlbumsType,
   ArtistTopTagsType,
@@ -36,6 +37,7 @@ export default class Artist {
     const response = {
       name: artist.name,
       description: artist.bio.summary,
+      onTour: Boolean(Number(artist.ontour)).valueOf(),
       stats: {
         scrobbles: Number(artist.stats.playcount),
         listeners: Number(artist.stats.listeners),
@@ -53,30 +55,32 @@ export default class Artist {
    * @param artistName - The name of the artist.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * */
-  async fetchSimilar(artistName: string, limit = 30): Promise<ArtistSimilarType[]> {
+  async fetchSimilar(artistName: string, limit = 30): Promise<ArtistSimilarType> {
     const {
-      similarartists: { artist },
+      similarartists: { artist, '@attr': attr },
     } = await request<ArtistGetSimilarResponse>('artist.getSimilar', {
       artist: artistName,
       api_key: this.token,
       limit,
     });
 
-    return artist.map((artist) => {
-      const image = artist.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
-
+    const artists = artist.map((artist) => {
       return {
         match: Number(artist.match),
         name: artist.name,
         url: artist.url,
-        image,
       };
     });
+
+    return {
+      search: {
+        artist: {
+          name: attr.artist,
+          url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+        },
+      },
+      artists,
+    } as ArtistSimilarType;
   }
 
   /**
@@ -85,9 +89,9 @@ export default class Artist {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopAlbums(artistName: string, limit = 50, page = 1): Promise<ArtistTopAlbumsType[]> {
+  async fetchTopAlbums(artistName: string, limit = 50, page = 1): Promise<ArtistTopAlbumsType> {
     const {
-      topalbums: { album },
+      topalbums: { album, '@attr': attr },
     } = await request<ArtistGetTopAlbumsResponse>('artist.getTopAlbums', {
       artist: artistName,
       api_key: this.token,
@@ -95,7 +99,7 @@ export default class Artist {
       page,
     });
 
-    return album.map((album) => {
+    const albums = album.map((album) => {
       const image = album.image.map((i) => {
         return {
           size: i.size,
@@ -114,27 +118,49 @@ export default class Artist {
         image,
       };
     });
+
+    return {
+      search: {
+        artist: {
+          name: attr.artist,
+          url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+        },
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      albums,
+    } as ArtistTopAlbumsType;
   }
 
   /**
    * Fetches and returns popular tags for an artist.
    * @param artistName - The name of the artist.
    * */
-  async fetchTopTags(artistName: string): Promise<ArtistTopTagsType[]> {
+  async fetchTopTags(artistName: string): Promise<ArtistTopTagsType> {
     const {
-      toptags: { tag },
+      toptags: { tag, '@attr': attr },
     } = await request<ArtistGetTopTagsResponse>('artist.getTopTags', {
       artist: artistName,
       api_key: this.token,
     });
 
-    return tag.map((tag) => {
+    const tags = tag.map((tag) => {
       return {
         count: tag.count,
         name: tag.name,
         url: tag.url,
       };
     });
+
+    return {
+      artist: {
+        name: attr.artist,
+        url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+      },
+      tags,
+    } as ArtistTopTagsType;
   }
 
   /**
@@ -143,9 +169,9 @@ export default class Artist {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(artistName: string, limit = 50, page = 1): Promise<ArtistTopTracksType[]> {
+  async fetchTopTracks(artistName: string, limit = 50, page = 1): Promise<ArtistTopTracksType> {
     const {
-      toptracks: { track },
+      toptracks: { track, '@attr': attr },
     } = await request<ArtistGetTopTracksResponse>('artist.getTopTracks', {
       artist: artistName,
       api_key: this.token,
@@ -153,7 +179,7 @@ export default class Artist {
       page,
     });
 
-    return track.map((track) => {
+    const tracks = track.map((track) => {
       return {
         rank: Number(track['@attr'].rank),
         name: track.name,
@@ -168,6 +194,20 @@ export default class Artist {
         url: track.url,
       };
     });
+
+    return {
+      search: {
+        artist: {
+          name: attr.artist,
+          url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+        },
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tracks,
+    } as ArtistTopTracksType;
   }
 
   /**
@@ -176,8 +216,9 @@ export default class Artist {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async search(artistName: string, limit = 30, page = 1): Promise<ArtistGetInfoType[]> {
+  async search(artistName: string, limit = 30, page = 1): Promise<ArtistSearchType> {
     const {
+      results,
       results: {
         artistmatches: { artist },
       },
@@ -188,22 +229,22 @@ export default class Artist {
       page,
     });
 
-    return artist.map((artist) => {
-      const image = artist.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
-
+    const artists = artist.map((artist) => {
       return {
         name: artist.name,
-        stats: {
-          listeners: Number(artist.listeners),
-        },
+        listeners: Number(artist.listeners),
         url: artist.url,
-        image,
       };
     });
+
+    return {
+      search: {
+        query: results['opensearch:Query'].searchTerms,
+        page: Number(results['opensearch:Query'].startPage),
+        itemsPerPage: Number(results['opensearch:itemsPerPage']),
+        totalResults: Number(results['opensearch:totalResults']),
+      },
+      artists,
+    } as ArtistSearchType;
   }
 }

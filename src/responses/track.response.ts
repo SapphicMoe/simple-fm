@@ -31,6 +31,9 @@ export declare interface TrackGetSimilarResponse {
         };
       }
     >;
+    '@attr': {
+      artist: string;
+    };
   };
 }
 
@@ -46,6 +49,11 @@ export declare interface TrackGetTopTagsResponse {
 
 export declare interface TrackSearchResponse {
   results: {
+    'opensearch:Query': {
+      startPage: string;
+    };
+    'opensearch:totalResults': string;
+    'opensearch:itemsPerPage': string;
     trackmatches: {
       track: Array<
         Track & {

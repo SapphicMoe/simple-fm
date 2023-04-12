@@ -1,21 +1,35 @@
-import type { ImageType } from './index.js';
-
 export declare interface GeoArtistType {
-  name: string;
-  listeners: number;
-  url: string;
-  image?: ImageType[] | null;
+  search: {
+    country: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
+  };
+  artists: Array<{
+    name: string;
+    listeners: number;
+    url: string;
+  }>;
 }
 
 export declare interface GeoTrackType {
-  rank: number;
-  name: string;
-  duration: number | null;
-  listeners: number;
-  artist: {
-    name: string;
-    url: string;
+  search: {
+    country: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
   };
-  url: string;
-  image?: ImageType[] | null;
+  tracks: Array<{
+    rank: number;
+    name: string;
+    duration: number | null;
+    listeners: number;
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+  }>;
 }

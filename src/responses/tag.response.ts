@@ -23,6 +23,13 @@ export declare interface TagGetTopAlbumsResponse {
         };
       }
     >;
+    '@attr': {
+      tag: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
@@ -35,6 +42,13 @@ export declare interface TagGetTopArtistsResponse {
         };
       }
     >;
+    '@attr': {
+      tag: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
@@ -52,6 +66,13 @@ export declare interface TagGetTopTracksResponse {
         };
       }
     >;
+    '@attr': {
+      tag: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 

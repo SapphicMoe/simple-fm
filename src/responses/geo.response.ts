@@ -7,6 +7,13 @@ export declare interface GeoGetTopArtistsResponse {
         listeners: string;
       }
     >;
+    '@attr': {
+      country: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
@@ -25,5 +32,12 @@ export declare interface GeoGetTopTracksResponse {
         };
       }
     >;
+    '@attr': {
+      country: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }

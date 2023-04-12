@@ -3,48 +3,100 @@ import type { ImageType } from './index.js';
 export declare interface ArtistGetInfoType {
   name: string;
   description?: string;
+  onTour: boolean;
   stats: {
-    scrobbles?: number;
+    scrobbles: number;
     listeners: number;
     userPlayCount?: number | null;
   };
   url: string;
 }
 
+export declare interface ArtistSearchType {
+  search: {
+    query: string;
+    page: number;
+    itemsPerPage: number;
+    totalResults: number;
+  };
+  artists: Array<{
+    name: string;
+    listeners: number;
+    url: string;
+  }>;
+}
+
 export declare interface ArtistSimilarType {
-  match: number;
-  name: string;
-  url: string;
-  image?: ImageType[] | null;
+  search: {
+    artist: {
+      name: string;
+      url: string;
+    };
+  };
+  artists: Array<{
+    match: number;
+    name: string;
+    url: string;
+  }>;
 }
 
 export declare interface ArtistTopAlbumsType {
-  name: string;
-  scrobbles: number;
-  artist: {
-    name: string;
-    url: string;
+  search: {
+    artist: {
+      name: string;
+      url: string;
+    };
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
   };
-  url: string;
-  image?: ImageType[] | null;
+  albums: Array<{
+    name: string;
+    scrobbles: number;
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+    image?: ImageType[] | null;
+  }>;
 }
 
 export declare interface ArtistTopTracksType {
-  rank: number;
-  name: string;
-  stats: {
-    scrobbles: number;
-    listeners: number;
+  search: {
+    artist: {
+      name: string;
+      url: string;
+    };
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
   };
+  tracks: Array<{
+    rank: number;
+    name: string;
+    stats: {
+      scrobbles: number;
+      listeners: number;
+    };
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+  }>;
+}
+
+export declare interface ArtistTopTagsType {
   artist: {
     name: string;
     url: string;
   };
-  url: string;
-}
-
-export declare interface ArtistTopTagsType {
-  name: string;
-  count: number;
-  url: string;
+  tags: Array<{
+    name: string;
+    count: number;
+    url: string;
+  }>;
 }

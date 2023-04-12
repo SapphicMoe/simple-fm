@@ -42,6 +42,12 @@ export declare interface AlbumGetTopTagsResponse {
 
 export declare interface AlbumSearchResponse {
   results: {
+    'opensearch:Query': {
+      searchTerms: string;
+      startPage: string;
+    };
+    'opensearch:totalResults': string;
+    'opensearch:itemsPerPage': string;
     albummatches: {
       album: Array<
         Album & {

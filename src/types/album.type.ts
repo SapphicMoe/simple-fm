@@ -6,7 +6,11 @@ export declare interface AlbumGetInfoType {
     name: string;
     url: string;
   };
-  userPlayCount?: number;
+  stats: {
+    scrobbles: number;
+    listeners: number;
+    userPlayCount?: number;
+  };
   tags: Array<{
     name: string;
     url: string;
@@ -35,11 +39,19 @@ export declare interface AlbumGetTopTagsType {
 }
 
 export declare interface AlbumSearchType {
-  name: string;
-  artist: {
-    name: string;
-    url: string;
+  search: {
+    query: string;
+    page: number;
+    itemsPerPage: number;
+    totalResults: number;
   };
-  url: string;
-  image?: ImageType[] | null;
+  albums: Array<{
+    name: string;
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+    image?: ImageType[] | null;
+  }>;
 }

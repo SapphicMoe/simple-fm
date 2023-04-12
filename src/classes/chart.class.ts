@@ -17,23 +17,16 @@ export default class Chart {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopArtists(limit = 30, page = 1): Promise<ChartTopArtistsType[]> {
+  async fetchTopArtists(limit = 30, page = 1): Promise<ChartTopArtistsType> {
     const {
-      artists: { artist },
+      artists: { artist, '@attr': attr },
     } = await request<ChartGetTopArtistsResponse>('chart.getTopArtists', {
       api_key: this.token,
       limit,
       page,
     });
 
-    return artist.map((artist) => {
-      const image = artist.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
-
+    const artists = artist.map((artist) => {
       return {
         name: artist.name,
         stats: {
@@ -41,9 +34,18 @@ export default class Chart {
           listeners: Number(artist.listeners),
         },
         url: artist.url,
-        image,
       };
     });
+
+    return {
+      search: {
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      artists,
+    } as ChartTopArtistsType;
   }
 
   /**
@@ -51,16 +53,16 @@ export default class Chart {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTags(limit = 30, page = 1): Promise<ChartTopTagsType[]> {
+  async fetchTopTags(limit = 30, page = 1): Promise<ChartTopTagsType> {
     const {
-      tags: { tag },
+      tags: { tag, '@attr': attr },
     } = await request<ChartGetTopTagsResponse>('chart.getTopTags', {
       api_key: this.token,
       limit,
       page,
     });
 
-    return tag.map((tag) => {
+    const tags = tag.map((tag) => {
       return {
         name: tag.name,
         stats: {
@@ -70,6 +72,16 @@ export default class Chart {
         url: tag.url,
       };
     });
+
+    return {
+      search: {
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tags,
+    } as ChartTopTagsType;
   }
 
   /**
@@ -77,23 +89,16 @@ export default class Chart {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(limit = 30, page = 1): Promise<ChartTopTracksType[]> {
+  async fetchTopTracks(limit = 30, page = 1): Promise<ChartTopTracksType> {
     const {
-      tracks: { track },
+      tracks: { track, '@attr': attr },
     } = await request<ChartGetTopTracksResponse>('chart.getTopTracks', {
       api_key: this.token,
       limit,
       page,
     });
 
-    return track.map((track) => {
-      const image = track.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
-
+    const tracks = track.map((track) => {
       return {
         name: track.name,
         stats: {
@@ -105,8 +110,17 @@ export default class Chart {
           url: track.artist.url,
         },
         url: track.url,
-        image,
       };
     });
+
+    return {
+      search: {
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tracks,
+    } as ChartTopTracksType;
   }
 }

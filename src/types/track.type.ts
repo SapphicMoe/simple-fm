@@ -16,35 +16,48 @@ export declare interface TrackGetInfoType {
   album: {
     position: number | null;
     name: string | null;
+    image?: ImageType[] | null;
     url: string | null;
   };
   tags?: object[];
   url: string;
-  image?: ImageType[] | null;
 }
 
 export declare interface TrackSearchType {
-  name: string;
-  listeners: number;
-  artist: {
-    name: string;
-    url: string;
+  search: {
+    query: string;
+    page: number;
+    itemsPerPage: number;
+    totalResults: number;
   };
-  url: string;
-  image?: ImageType[] | null;
+  tracks: Array<{
+    name: string;
+    listeners: number;
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+    image?: ImageType[] | null;
+  }>;
 }
 
 export declare interface TrackSimilarType {
-  match: number;
   name: string;
-  duration: number | null;
-  scrobbles: number;
-  artist: {
-    name: string;
-    url: string;
-  };
+  artist: { name: string; url: string };
   url: string;
-  image?: ImageType[] | null;
+  tracks: Array<{
+    match: number;
+    name: string;
+    duration: number | null;
+    scrobbles: number;
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+    image?: ImageType[] | null;
+  }>;
 }
 
 export declare interface TrackTopTagsType {
@@ -53,6 +66,7 @@ export declare interface TrackTopTagsType {
     name: string;
     url: string;
   };
+  url: string;
   tags: Array<{
     count: number;
     name: string;

@@ -11,37 +11,64 @@ export declare interface TagGetInfoType {
 }
 
 export declare interface TagTopAlbumsType {
-  rank: number;
-  name: string;
-  artist: {
-    name: string;
-    url: string;
+  search: {
+    tag: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
   };
-  url: string;
-  image?: ImageType[] | null;
+  albums: Array<{
+    rank: number;
+    name: string;
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+    image?: ImageType[] | null;
+  }>;
 }
 
 export declare interface TagTopArtistsType {
-  rank: number;
-  name: string;
-  url: string;
-  image?: ImageType[] | null;
+  search: {
+    tag: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
+  };
+  artists: Array<{
+    rank: number;
+    name: string;
+    url: string;
+  }>;
 }
 
 export declare interface TagTopTracksType {
-  rank: number;
-  name: string;
-  duration: number | null;
-  artist: {
-    name: string;
-    url: string;
+  search: {
+    tag: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
   };
-  url: string;
-  image?: ImageType[] | null;
+  tracks: Array<{
+    rank: number;
+    name: string;
+    duration: number | null;
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+  }>;
 }
 
 export declare interface TagWeeklyChartListType {
-  name: string;
+  search: {
+    tag: string;
+  };
   positions: Array<{
     from: Date;
     to: Date;

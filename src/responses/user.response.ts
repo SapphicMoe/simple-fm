@@ -7,6 +7,13 @@ export declare interface UserGetArtistsResponse {
         playcount: string;
       }
     >;
+    '@attr': {
+      user: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 export declare interface UserGetInfoResponse {
@@ -16,6 +23,13 @@ export declare interface UserGetInfoResponse {
 export declare interface UserGetFriendsResponse {
   friends: {
     user: User[];
+    '@attr': {
+      user: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
@@ -33,6 +47,13 @@ export declare interface UserGetLovedTracksResponse {
         };
       }
     >;
+    '@attr': {
+      user: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
@@ -67,6 +88,14 @@ export declare interface UserGetPersonalTagsResponse {
         image: Image[];
       }>;
     };
+    '@attr': {
+      user: string;
+      tag: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
@@ -81,6 +110,10 @@ export declare interface UserGetRecentTracksResponse {
     >;
     '@attr': {
       user: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
     };
   };
 }
@@ -98,12 +131,22 @@ export declare interface UserGetTopAlbumsResponse {
         };
       }
     >;
+    '@attr': {
+      user: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }
 
 export declare interface UserGetTopTagsResponse {
   toptags: {
     tag: Tag[];
+    '@attr': {
+      user: string;
+    };
   };
 }
 
@@ -122,5 +165,12 @@ export declare interface UserGetTopTracksResponse {
         playcount: string;
       }
     >;
+    '@attr': {
+      user: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
   };
 }

@@ -1,10 +1,36 @@
 import type { ImageType, PersonalTagType } from './index.js';
 
 export declare interface UserArtistsType {
-  name: string;
-  scrobbles: number;
-  url: string;
-  image?: ImageType[] | null;
+  search: {
+    user: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
+  };
+  artists: Array<{
+    name: string;
+    scrobbles: number;
+    url: string;
+  }>;
+}
+
+export declare interface UserFriendsType {
+  search: {
+    user: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
+  };
+  friends: Array<{
+    name: string;
+    realName: string | null;
+    country: string | null;
+    registered: Date;
+    url: string;
+    image?: ImageType[] | null;
+  }>;
 }
 
 export declare interface UserGetInfoType {
@@ -17,39 +43,45 @@ export declare interface UserGetInfoType {
 }
 
 export declare interface UserLovedTracksType {
-  name: string;
-  date: Date;
-  artist: {
-    name: string;
-    url: string;
+  search: {
+    user: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
   };
-  url: string;
+  tracks: Array<{
+    name: string;
+    date: Date;
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+  }>;
 }
 
 export declare interface UserPersonalTagsType {
-  album?: Array<
-    PersonalTagType & {
-      artist: {
-        name: string;
-        url: string;
-      };
-    }
-  >;
-  artist?: PersonalTagType[];
-  track?: Array<
-    PersonalTagType & {
-      artist: {
-        name: string;
-        url: string;
-      };
-    }
-  >;
+  search: {
+    user: string;
+    tag: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
+  };
+  response: PersonalTagType[];
 }
 
 export declare interface UserRecentTrackType {
-  currentlyPlaying: boolean;
-  user: string;
-  url: string;
+  search: {
+    user: string;
+    nowPlaying: boolean;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
+  };
   tracks: Array<{
     name: string;
     album: string;
@@ -63,34 +95,57 @@ export declare interface UserRecentTrackType {
 }
 
 export declare interface UserTopAlbumsType {
-  rank: number;
-  name: string;
-  playCount: number;
-  artist: {
-    name: string;
-    url: string;
+  search: {
+    user: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
   };
-  url: string;
-  image?: ImageType[] | null;
+  albums: Array<{
+    rank: number;
+    name: string;
+    playCount: number;
+    artist: {
+      name: string;
+      url: string;
+    };
+    url: string;
+    image?: ImageType[] | null;
+  }>;
 }
 
 export declare interface UserTopTagsType {
-  count: number;
-  name: string;
-  url?: string;
+  search: {
+    user: string;
+  };
+  tags: Array<{
+    count: number;
+    name: string;
+    url?: string;
+  }>;
 }
 
 export declare interface UserTopTracksType {
-  rank: number;
-  name: string;
-  stats: {
-    duration: number | null;
-    userPlayCount: number;
+  search: {
+    user: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
   };
-  artist: {
+  tracks: Array<{
+    rank: number;
     name: string;
+    stats: {
+      duration: number | null;
+      userPlayCount: number;
+    };
+    artist: {
+      name: string;
+      url: string;
+    };
     url: string;
-  };
-  url: string;
-  image?: ImageType[] | null;
+    image?: ImageType[] | null;
+  }>;
 }

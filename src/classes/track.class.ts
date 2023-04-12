@@ -63,11 +63,11 @@ export default class Track {
       album: {
         position: Number(album?.['@attr']?.position) || null,
         name: album?.title || null,
+        image,
         url: album?.url || null,
       },
       tags,
       url: track.url,
-      image,
     } as TrackGetInfoType;
 
     if (userName) {
@@ -84,9 +84,9 @@ export default class Track {
    * @param trackName - The name of the track.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    */
-  async fetchSimilar(artistName: string, trackName: string, limit = 30): Promise<TrackSimilarType[]> {
+  async fetchSimilar(artistName: string, trackName: string, limit = 30): Promise<TrackSimilarType> {
     const {
-      similartracks: { track },
+      similartracks: { track, '@attr': attr },
     } = await request<TrackGetSimilarResponse>('track.getSimilar', {
       artist: artistName,
       track: trackName,
@@ -94,7 +94,7 @@ export default class Track {
       limit,
     });
 
-    return track.map((track) => {
+    const tracks = track.map((track) => {
       const image = track.image.map((i) => {
         return {
           size: i.size,
@@ -115,6 +115,16 @@ export default class Track {
         image,
       };
     });
+
+    return {
+      name: trackName,
+      artist: {
+        name: attr.artist,
+        url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+      },
+      url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}/_/${encodeURIComponent(trackName)}`,
+      tracks,
+    } as TrackSimilarType;
   }
 
   /**
@@ -145,6 +155,7 @@ export default class Track {
         name: attr.artist,
         url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
       },
+      url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}/_/${encodeURIComponent(attr.track)}`,
       tags,
     } as TrackTopTagsType;
   }
@@ -155,8 +166,9 @@ export default class Track {
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async search(trackName: string, limit = 30, page = 1): Promise<TrackSearchType[]> {
+  async search(trackName: string, limit = 30, page = 1): Promise<TrackSearchType> {
     const {
+      results,
       results: {
         trackmatches: { track },
       },
@@ -167,7 +179,7 @@ export default class Track {
       page,
     });
 
-    return track.map((track) => {
+    const tracks = track.map((track) => {
       const image = track.image.map((i) => {
         return {
           size: i.size,
@@ -186,5 +198,15 @@ export default class Track {
         image,
       };
     });
+
+    return {
+      search: {
+        query: trackName,
+        page: Number(results['opensearch:Query'].startPage),
+        itemsPerPage: Number(results['opensearch:itemsPerPage']),
+        totalResults: Number(results['opensearch:totalResults']),
+      },
+      tracks,
+    } as TrackSearchType;
   }
 }

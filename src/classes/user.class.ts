@@ -19,6 +19,7 @@ import type {
   UserTopAlbumsType,
   UserTopTagsType,
   UserTopTracksType,
+  UserFriendsType,
 } from '../types/index.js';
 
 export default class User {
@@ -57,9 +58,9 @@ export default class User {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchAllArtists(userName: string, limit = 50, page = 1): Promise<UserArtistsType[]> {
+  async fetchAllArtists(userName: string, limit = 50, page = 1): Promise<UserArtistsType> {
     const {
-      artists: { artist },
+      artists: { artist, '@attr': attr },
     } = await request<UserGetArtistsResponse>('library.getArtists', {
       user: userName,
       api_key: this.token,
@@ -67,21 +68,24 @@ export default class User {
       page,
     });
 
-    return artist.map((artist) => {
-      const image = artist.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
-
+    const artists = artist.map((artist) => {
       return {
         name: artist.name,
         scrobbles: Number(artist.playcount),
         url: artist.url,
-        image,
       };
     });
+
+    return {
+      search: {
+        user: attr.user,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      artists,
+    } as UserArtistsType;
   }
 
   /**
@@ -90,9 +94,9 @@ export default class User {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchFriends(userName: string, limit = 50, page = 1): Promise<UserGetInfoType[]> {
+  async fetchFriends(userName: string, limit = 50, page = 1): Promise<UserFriendsType> {
     const {
-      friends: { user },
+      friends: { user, '@attr': attr },
     } = await request<UserGetFriendsResponse>('user.getFriends', {
       user: userName,
       api_key: this.token,
@@ -100,7 +104,7 @@ export default class User {
       page,
     });
 
-    return user.map((user) => {
+    const friends = user.map((user) => {
       const image = user.image.map((i) => {
         return {
           size: i.size,
@@ -117,6 +121,17 @@ export default class User {
         image,
       };
     });
+
+    return {
+      search: {
+        user: attr.user,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      friends,
+    } as UserFriendsType;
   }
 
   /**
@@ -125,9 +140,9 @@ export default class User {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchLovedTracks(userName: string, limit = 50, page = 1): Promise<UserLovedTracksType[]> {
+  async fetchLovedTracks(userName: string, limit = 50, page = 1): Promise<UserLovedTracksType> {
     const {
-      lovedtracks: { track },
+      lovedtracks: { track, '@attr': attr },
     } = await request<UserGetLovedTracksResponse>('user.getLovedTracks', {
       user: userName,
       api_key: this.token,
@@ -135,7 +150,7 @@ export default class User {
       page,
     });
 
-    return track.map((track) => {
+    const tracks = track.map((track) => {
       return {
         name: track.name,
         date: new Date(Number(track.date.uts) * 1000),
@@ -146,6 +161,17 @@ export default class User {
         url: track.url,
       };
     });
+
+    return {
+      search: {
+        user: attr.user,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tracks,
+    } as UserLovedTracksType;
   }
 
   /**
@@ -155,7 +181,10 @@ export default class User {
    * @param tagType - The type of items which have been tagged.
    * */
   async fetchPersonalTags(userName: string, tagName: string, tagType: PersonalTagTypes): Promise<UserPersonalTagsType> {
-    const { taggings } = await request<UserGetPersonalTagsResponse>('user.getPersonalTags', {
+    const {
+      taggings,
+      taggings: { '@attr': attr },
+    } = await request<UserGetPersonalTagsResponse>('user.getPersonalTags', {
       user: userName,
       tag: tagName,
       taggingtype: tagType,
@@ -167,13 +196,6 @@ export default class User {
 
     const responseTypes = {
       album: taggings.albums?.album.map((album) => {
-        const image = album.image.map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          };
-        });
-
         return {
           name: album.name,
           artist: {
@@ -181,32 +203,17 @@ export default class User {
             url: album.artist.url,
           },
           url: album.url,
-          image,
         };
       }),
 
       artist: taggings.artists?.artist.map((artist) => {
-        const image = artist.image.map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          };
-        });
-
         return {
           name: artist.name,
           url: artist.url,
-          image,
         };
       }),
-      track: taggings.tracks?.track.map((track) => {
-        const image = track.image.map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          };
-        });
 
+      track: taggings.tracks?.track.map((track) => {
         return {
           name: track.name,
           artist: {
@@ -214,14 +221,23 @@ export default class User {
             url: track.artist.url,
           },
           url: track.url,
-          image,
         };
       }),
     };
 
     const response = responseTypes[tagType];
 
-    return response as UserPersonalTagsType;
+    return {
+      search: {
+        user: attr.user,
+        tag: attr.tag,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      response,
+    } as UserPersonalTagsType;
   }
 
   /**
@@ -261,9 +277,15 @@ export default class User {
     });
 
     const response = {
-      currentlyPlaying: track[0]['@attr']?.nowplaying === 'true',
-      user: attr.user,
-      url: `https://www.last.fm/user/${encodeURIComponent(attr.user)}`,
+      search: {
+        user: attr.user,
+        nowPlaying: track[0]['@attr']?.nowplaying === 'true',
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+
       tracks,
     };
 
@@ -276,9 +298,9 @@ export default class User {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopAlbums(userName: string, limit = 50, page = 1): Promise<UserTopAlbumsType[]> {
+  async fetchTopAlbums(userName: string, limit = 50, page = 1): Promise<UserTopAlbumsType> {
     const {
-      topalbums: { album },
+      topalbums: { album, '@attr': attr },
     } = await request<UserGetTopAlbumsResponse>('user.getTopAlbums', {
       user: userName,
       api_key: this.token,
@@ -286,7 +308,7 @@ export default class User {
       page,
     });
 
-    return album.map((album) => {
+    const albums = album.map((album) => {
       const image = album.image.map((i) => {
         return {
           size: i.size,
@@ -306,6 +328,17 @@ export default class User {
         image,
       };
     });
+
+    return {
+      search: {
+        user: attr.user,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      albums,
+    } as UserTopAlbumsType;
   }
 
   /**
@@ -313,22 +346,29 @@ export default class User {
    * @param userName - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * */
-  async fetchTopTags(userName: string, limit = 50): Promise<UserTopTagsType[]> {
+  async fetchTopTags(userName: string, limit = 50): Promise<UserTopTagsType> {
     const {
-      toptags: { tag },
+      toptags: { tag, '@attr': attr },
     } = await request<UserGetTopTagsResponse>('user.getTopTags', {
       user: userName,
       api_key: this.token,
       limit,
     });
 
-    return tag.map((tag) => {
+    const tags = tag.map((tag) => {
       return {
         count: Number(tag.count),
         name: tag.name,
         url: tag.url,
       };
     });
+
+    return {
+      search: {
+        user: attr.user,
+      },
+      tags,
+    } as UserTopTagsType;
   }
 
   /**
@@ -337,9 +377,9 @@ export default class User {
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(userName: string, limit = 50, page = 1): Promise<UserTopTracksType[]> {
+  async fetchTopTracks(userName: string, limit = 50, page = 1): Promise<UserTopTracksType> {
     const {
-      toptracks: { track },
+      toptracks: { track, '@attr': attr },
     } = await request<UserGetTopTracksResponse>('user.getTopTracks', {
       user: userName,
       api_key: this.token,
@@ -347,7 +387,7 @@ export default class User {
       page,
     });
 
-    return track.map((track) => {
+    const tracks = track.map((track) => {
       const image = track.image.map((i) => {
         return {
           size: i.size,
@@ -370,5 +410,16 @@ export default class User {
         image,
       };
     });
+
+    return {
+      search: {
+        user: attr.user,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tracks,
+    } as UserTopTracksType;
   }
 }
