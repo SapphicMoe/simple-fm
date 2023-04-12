@@ -9,17 +9,17 @@ describe('Chart', () => {
   it('Should return top artists', async () => {
     const data = await client.chart.fetchTopArtists();
 
-    expect(() => ChartTopArtistsSchema.parse(data)).not.toThrow();
+    expect(() => ChartTopArtistsSchema.parse(data.artists)).not.toThrow();
   });
 
   it('Should return top tags', async () => {
     const data = await client.chart.fetchTopTags();
-    expect(() => ChartTopTagsSchema.parse(data)).not.toThrow();
+    expect(() => ChartTopTagsSchema.parse(data.tags)).not.toThrow();
   });
 
   it('Should return top tracks', async () => {
     const data = await client.chart.fetchTopTracks();
 
-    expect(() => ChartTopTracksSchema.parse(data)).not.toThrow();
+    expect(() => ChartTopTracksSchema.parse(data.tracks)).not.toThrow();
   });
 });

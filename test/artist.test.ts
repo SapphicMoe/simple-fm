@@ -21,24 +21,24 @@ describe('Artist', () => {
   it('Should return similar artists from a query', async () => {
     const data = await client.artist.fetchSimilar('Paramore');
 
-    expect(() => ArtistSimilarSchema.parse(data)).not.toThrow();
+    expect(() => ArtistSimilarSchema.parse(data.artists)).not.toThrow();
   });
 
   it("Should return an artist's top albums", async () => {
     const data = await client.artist.fetchTopAlbums('blink-182');
 
-    expect(() => ArtistTopAlbumsSchema.parse(data)).not.toThrow();
+    expect(() => ArtistTopAlbumsSchema.parse(data.albums)).not.toThrow();
   });
 
   it("Should return an artist's top tags", async () => {
     const data = await client.artist.fetchTopTags('Porter Robinson');
 
-    expect(() => ArtistTopTagsSchema.parse(data)).not.toThrow();
+    expect(() => ArtistTopTagsSchema.parse(data.tags)).not.toThrow();
   });
 
   it("Should return an artist's top tracks", async () => {
     const data = await client.artist.fetchTopTracks('Muse');
 
-    expect(() => ArtistTopTracksSchema.parse(data)).not.toThrow();
+    expect(() => ArtistTopTracksSchema.parse(data.tracks)).not.toThrow();
   });
 });

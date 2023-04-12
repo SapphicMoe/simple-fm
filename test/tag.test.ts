@@ -21,19 +21,19 @@ describe('Tag', () => {
   it('Should return top albums for a tag', async () => {
     const data = await client.tag.fetchTopAlbums('pop punk');
 
-    expect(() => TagTopAlbumsSchema.parse(data)).not.toThrow();
+    expect(() => TagTopAlbumsSchema.parse(data.albums)).not.toThrow();
   });
 
   it('Should return top artists for a tag', async () => {
     const data = await client.tag.fetchTopArtists('progressive house');
 
-    expect(() => TagTopArtistsSchema.parse(data)).not.toThrow();
+    expect(() => TagTopArtistsSchema.parse(data.artists)).not.toThrow();
   });
 
   it('Should return top tracks for a tag', async () => {
     const data = await client.tag.fetchTopTracks('emo');
 
-    expect(() => TagTopTracksSchema.parse(data)).not.toThrow();
+    expect(() => TagTopTracksSchema.parse(data.tracks)).not.toThrow();
   });
 
   it("Should return a tag's weekly chart list", async () => {

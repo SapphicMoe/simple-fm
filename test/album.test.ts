@@ -15,12 +15,12 @@ describe('Album', () => {
   it("Should return an album's top tags", async () => {
     const data = await client.album.fetchTopTags('Fall Out Boy', 'Save Rock and Roll');
 
-    expect(() => AlbumGetTopTagsSchema.parse(data)).not.toThrow();
+    expect(() => AlbumGetTopTagsSchema.parse(data.tags)).not.toThrow();
   });
 
   it('Should search and return albums from a query', async () => {
     const data = await client.album.search('RIOT!');
 
-    expect(() => AlbumSearchSchema.parse(data)).not.toThrow();
+    expect(() => AlbumSearchSchema.parse(data.albums)).not.toThrow();
   });
 });
