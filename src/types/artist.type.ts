@@ -59,7 +59,7 @@ export declare interface ArtistTopAlbumsType {
       url: string;
     };
     url: string;
-    image?: ImageType[] | null;
+    image: ImageType[];
   }>;
 }
 

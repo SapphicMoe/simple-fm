@@ -22,7 +22,7 @@ export declare interface AlbumGetInfoType {
     url: string;
   }>;
   url: string;
-  image?: ImageType[] | null;
+  image: ImageType[];
 }
 
 export declare interface AlbumGetTopTagsType {
@@ -52,6 +52,6 @@ export declare interface AlbumSearchType {
       url: string;
     };
     url: string;
-    image?: ImageType[] | null;
+    image: ImageType[];
   }>;
 }

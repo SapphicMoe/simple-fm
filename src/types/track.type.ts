@@ -16,7 +16,7 @@ export declare interface TrackGetInfoType {
   album: {
     position: number | null;
     name: string | null;
-    image?: ImageType[] | null;
+    image: ImageType[];
     url: string | null;
   };
   tags?: object[];
@@ -38,7 +38,6 @@ export declare interface TrackSearchType {
       url: string;
     };
     url: string;
-    image?: ImageType[] | null;
   }>;
 }
 
@@ -56,7 +55,7 @@ export declare interface TrackSimilarType {
       url: string;
     };
     url: string;
-    image?: ImageType[] | null;
+    image: ImageType[];
   }>;
 }
 

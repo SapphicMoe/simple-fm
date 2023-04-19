@@ -1,6 +1,6 @@
 export type PersonalTagTypes = 'album' | 'artist' | 'track';
-
-export type requestMethods =
+export type ImageSizes = 'extralarge' | 'large' | 'medium' | 'mega' | 'small';
+export type RequestMethods =
   | 'album.getInfo'
   | 'album.getTopTags'
   | 'album.search'

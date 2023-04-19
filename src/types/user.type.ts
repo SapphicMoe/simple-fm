@@ -29,7 +29,7 @@ export declare interface UserFriendsType {
     country: string | null;
     registered: Date;
     url: string;
-    image?: ImageType[] | null;
+    image: ImageType[];
   }>;
 }
 
@@ -39,7 +39,7 @@ export declare interface UserGetInfoType {
   country: string | null;
   registered: Date;
   url: string;
-  image?: ImageType[] | null;
+  image: ImageType[];
 }
 
 export declare interface UserLovedTracksType {
@@ -90,7 +90,7 @@ export declare interface UserRecentTrackType {
       url: string;
     };
     url: string;
-    image?: ImageType[] | null;
+    image: ImageType[];
   }>;
 }
 
@@ -111,7 +111,7 @@ export declare interface UserTopAlbumsType {
       url: string;
     };
     url: string;
-    image?: ImageType[] | null;
+    image: ImageType[];
   }>;
 }
 
@@ -146,6 +146,6 @@ export declare interface UserTopTracksType {
       url: string;
     };
     url: string;
-    image?: ImageType[] | null;
+    image: ImageType[];
   }>;
 }
