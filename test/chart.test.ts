@@ -6,20 +6,26 @@ import { ChartTopArtistsSchema, ChartTopTagsSchema, ChartTopTracksSchema } from 
 const client = new LastFM(config.token);
 
 describe('Chart', () => {
-  it('Should return top artists', async () => {
-    const data = await client.chart.fetchTopArtists();
+  describe('getTopArtists', () => {
+    it('Should return top artists', async () => {
+      const data = await client.chart.fetchTopArtists();
 
-    expect(() => ChartTopArtistsSchema.parse(data.artists)).not.toThrow();
+      expect(() => ChartTopArtistsSchema.parse(data.artists)).not.toThrow();
+    });
   });
 
-  it('Should return top tags', async () => {
-    const data = await client.chart.fetchTopTags();
-    expect(() => ChartTopTagsSchema.parse(data.tags)).not.toThrow();
+  describe('getTopTags', () => {
+    it('Should return top tags', async () => {
+      const data = await client.chart.fetchTopTags();
+      expect(() => ChartTopTagsSchema.parse(data.tags)).not.toThrow();
+    });
   });
 
-  it('Should return top tracks', async () => {
-    const data = await client.chart.fetchTopTracks();
+  describe('getTopTracks', () => {
+    it('Should return top tracks', async () => {
+      const data = await client.chart.fetchTopTracks();
 
-    expect(() => ChartTopTracksSchema.parse(data.tracks)).not.toThrow();
+      expect(() => ChartTopTracksSchema.parse(data.tracks)).not.toThrow();
+    });
   });
 });

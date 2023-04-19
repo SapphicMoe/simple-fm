@@ -12,33 +12,43 @@ import {
 const client = new LastFM(config.token);
 
 describe('Tag', () => {
-  it('Should return info for a tag', async () => {
-    const data = await client.tag.fetch('metal');
+  describe('getInfo', () => {
+    it('Should return info for a tag', async () => {
+      const data = await client.tag.fetch('metal');
 
-    expect(() => TagGetInfoSchema.parse(data)).not.toThrow();
+      expect(() => TagGetInfoSchema.parse(data)).not.toThrow();
+    });
   });
 
-  it('Should return top albums for a tag', async () => {
-    const data = await client.tag.fetchTopAlbums('pop punk');
+  describe('getTopAlbums', () => {
+    it('Should return top albums for a tag', async () => {
+      const data = await client.tag.fetchTopAlbums('pop punk');
 
-    expect(() => TagTopAlbumsSchema.parse(data.albums)).not.toThrow();
+      expect(() => TagTopAlbumsSchema.parse(data.albums)).not.toThrow();
+    });
   });
 
-  it('Should return top artists for a tag', async () => {
-    const data = await client.tag.fetchTopArtists('progressive house');
+  describe('getTopArtists', () => {
+    it('Should return top artists for a tag', async () => {
+      const data = await client.tag.fetchTopArtists('progressive house');
 
-    expect(() => TagTopArtistsSchema.parse(data.artists)).not.toThrow();
+      expect(() => TagTopArtistsSchema.parse(data.artists)).not.toThrow();
+    });
   });
 
-  it('Should return top tracks for a tag', async () => {
-    const data = await client.tag.fetchTopTracks('emo');
+  describe('getTopTracks', () => {
+    it('Should return top tracks for a tag', async () => {
+      const data = await client.tag.fetchTopTracks('emo');
 
-    expect(() => TagTopTracksSchema.parse(data.tracks)).not.toThrow();
+      expect(() => TagTopTracksSchema.parse(data.tracks)).not.toThrow();
+    });
   });
 
-  it("Should return a tag's weekly chart list", async () => {
-    const data = await client.tag.fetchWeeklyChartList('rock');
+  describe('getWeeklyChartList', () => {
+    it("Should return a tag's weekly chart list", async () => {
+      const data = await client.tag.fetchWeeklyChartList('rock');
 
-    expect(() => TagWeeklyChartListSchema.parse(data.positions)).not.toThrow();
+      expect(() => TagWeeklyChartListSchema.parse(data.positions)).not.toThrow();
+    });
   });
 });

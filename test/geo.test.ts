@@ -6,15 +6,19 @@ import { GeoArtistSchema, GeoTrackSchema } from './schemas/geo.schema.js';
 const client = new LastFM(config.token);
 
 describe('Geo', () => {
-  it('Should return top artists from a country', async () => {
-    const data = await client.geo.fetchTopArtists('Canada');
+  describe('getTopArtists', () => {
+    it('Should return top artists from a country', async () => {
+      const data = await client.geo.fetchTopArtists('Canada');
 
-    expect(() => GeoArtistSchema.parse(data.artists)).not.toThrow();
+      expect(() => GeoArtistSchema.parse(data.artists)).not.toThrow();
+    });
   });
 
-  it('Should return top tracks from a country', async () => {
-    const data = await client.geo.fetchTopTracks('New Zealand');
+  describe('getTopTracks', () => {
+    it('Should return top tracks from a country', async () => {
+      const data = await client.geo.fetchTopTracks('New Zealand');
 
-    expect(() => GeoTrackSchema.parse(data.tracks)).not.toThrow();
+      expect(() => GeoTrackSchema.parse(data.tracks)).not.toThrow();
+    });
   });
 });

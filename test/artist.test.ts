@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-return */
+/* eslint-disable @typescript-eslint/no-throw-literal */
 import config from '../config';
 import LastFM from '../src';
 
@@ -12,33 +14,43 @@ import {
 const client = new LastFM(config.token);
 
 describe('Artist', () => {
-  it('Should return info about an artist', async () => {
-    const data = await client.artist.fetch('Nirvana');
+  describe('getInfo', () => {
+    it('Should return info about an artist', async () => {
+      const data = await client.artist.fetch('Nirvana');
 
-    expect(() => ArtistGetInfoSchema.parse(data)).not.toThrow();
+      expect(() => ArtistGetInfoSchema.parse(data)).not.toThrow();
+    });
   });
 
-  it('Should return similar artists from a query', async () => {
-    const data = await client.artist.fetchSimilar('Paramore');
+  describe('getSimilar', () => {
+    it('Should return similar artists from a query', async () => {
+      const data = await client.artist.fetchSimilar('Paramore');
 
-    expect(() => ArtistSimilarSchema.parse(data.artists)).not.toThrow();
+      expect(() => ArtistSimilarSchema.parse(data.artists)).not.toThrow();
+    });
   });
 
-  it("Should return an artist's top albums", async () => {
-    const data = await client.artist.fetchTopAlbums('blink-182');
+  describe('getTopAlbums', () => {
+    it("Should return an artist's top albums", async () => {
+      const data = await client.artist.fetchTopAlbums('blink-182');
 
-    expect(() => ArtistTopAlbumsSchema.parse(data.albums)).not.toThrow();
+      expect(() => ArtistTopAlbumsSchema.parse(data.albums)).not.toThrow();
+    });
   });
 
-  it("Should return an artist's top tags", async () => {
-    const data = await client.artist.fetchTopTags('Porter Robinson');
+  describe('getTopTags', () => {
+    it("Should return an artist's top tags", async () => {
+      const data = await client.artist.fetchTopTags('Porter Robinson');
 
-    expect(() => ArtistTopTagsSchema.parse(data.tags)).not.toThrow();
+      expect(() => ArtistTopTagsSchema.parse(data.tags)).not.toThrow();
+    });
   });
 
-  it("Should return an artist's top tracks", async () => {
-    const data = await client.artist.fetchTopTracks('Muse');
+  describe('getTopTracks', () => {
+    it("Should return an artist's top tracks", async () => {
+      const data = await client.artist.fetchTopTracks('Muse');
 
-    expect(() => ArtistTopTracksSchema.parse(data.tracks)).not.toThrow();
+      expect(() => ArtistTopTracksSchema.parse(data.tracks)).not.toThrow();
+    });
   });
 });
