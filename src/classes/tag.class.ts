@@ -1,4 +1,5 @@
 import { request } from '../request.js';
+import { sanitizeURL } from '../utils/links.js';
 
 import type {
   TagGetInfoResponse,
@@ -33,7 +34,7 @@ export default class Tag {
         count: tag.total,
         reach: tag.reach,
       },
-      url: `https://www.last.fm/tag/${encodeURIComponent(tag.name)}`,
+      url: `https://www.last.fm/tag/${sanitizeURL(tag.name)}`,
     };
   }
 
@@ -68,7 +69,7 @@ export default class Tag {
           name: album.artist.name,
           url: album.artist.url,
         },
-        url: `https://www.last.fm/music/${encodeURIComponent(album.artist.name)}/${encodeURIComponent(album.name)}`,
+        url: `https://www.last.fm/music/${sanitizeURL(album.artist.name)}/${sanitizeURL(album.name)}`,
         image,
       };
     });

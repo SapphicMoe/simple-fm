@@ -1,4 +1,5 @@
 import { request } from '../request.js';
+import { sanitizeURL } from '../utils/links.js';
 
 import type {
   TrackGetInfoResponse,
@@ -120,9 +121,9 @@ export default class Track {
       name: trackName,
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+        url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
       },
-      url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}/_/${encodeURIComponent(trackName)}`,
+      url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}/_/${sanitizeURL(trackName)}`,
       tracks,
     } as TrackSimilarType;
   }
@@ -153,9 +154,9 @@ export default class Track {
       name: attr.track,
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+        url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
       },
-      url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}/_/${encodeURIComponent(attr.track)}`,
+      url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}/_/${sanitizeURL(attr.track)}`,
       tags,
     } as TrackTopTagsType;
   }
@@ -180,22 +181,15 @@ export default class Track {
     });
 
     const tracks = track.map((track) => {
-      const image = track.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
       return {
         name: track.name,
         listeners: Number(track.listeners),
         artist: {
           name: track.artist,
-          url: `https://www.last.fm/music/${encodeURIComponent(track.artist)}`,
+          url: `https://www.last.fm/music/${sanitizeURL(track.artist)}`,
         },
 
         url: track.url,
-        image,
       };
     });
 

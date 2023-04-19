@@ -1,4 +1,5 @@
 import { request } from '../request.js';
+import { sanitizeURL } from '../utils/links.js';
 
 import type {
   AlbumGetInfoResponse,
@@ -67,7 +68,7 @@ export default class Album {
       name: album.name,
       artist: {
         name: album.artist,
-        url: `https://www.last.fm/music/${encodeURIComponent(album.artist)}`,
+        url: `https://www.last.fm/music/${sanitizeURL(album.artist)}`,
       },
       stats: {
         scrobbles: Number(album.playcount),
@@ -110,7 +111,7 @@ export default class Album {
       name: attr.album,
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+        url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
       },
       tags,
     } as AlbumGetTopTagsType;
@@ -147,7 +148,7 @@ export default class Album {
         name: album.name,
         artist: {
           name: album.artist,
-          url: `https://www.last.fm/music/${encodeURIComponent(album.artist)}`,
+          url: `https://www.last.fm/music/${sanitizeURL(album.artist)}`,
         },
         url: album.url,
         image,

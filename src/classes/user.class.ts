@@ -1,4 +1,5 @@
 import { request } from '../request.js';
+import { sanitizeURL } from '../utils/links.js';
 
 import type {
   PersonalTagTypes,
@@ -268,7 +269,7 @@ export default class User {
         name: track.name,
         artist: {
           name: track.artist['#text'],
-          url: `https://www.last.fm/music/${encodeURIComponent(track.artist['#text'])}`,
+          url: `https://www.last.fm/music/${sanitizeURL(track.artist['#text'])}`,
         },
         album: track.album['#text'] || null,
         url: track.url,

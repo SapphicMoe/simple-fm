@@ -1,4 +1,5 @@
 import { request } from '../request.js';
+import { sanitizeURL } from '../utils/links.js';
 
 import type {
   ArtistGetInfoResponse,
@@ -30,9 +31,6 @@ export default class Artist {
       username: userName,
       api_key: this.token,
     });
-
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (!artist) throw new Error('This artist could not be found.');
 
     const response = {
       name: artist.name,
@@ -76,7 +74,7 @@ export default class Artist {
       search: {
         artist: {
           name: attr.artist,
-          url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+          url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
         },
       },
       artists,
@@ -123,7 +121,7 @@ export default class Artist {
       search: {
         artist: {
           name: attr.artist,
-          url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+          url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
         },
         page: Number(attr.page),
         itemsPerPage: Number(attr.perPage),
@@ -157,7 +155,7 @@ export default class Artist {
     return {
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+        url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
       },
       tags,
     } as ArtistTopTagsType;
@@ -199,7 +197,7 @@ export default class Artist {
       search: {
         artist: {
           name: attr.artist,
-          url: `https://www.last.fm/music/${encodeURIComponent(attr.artist)}`,
+          url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
         },
         page: Number(attr.page),
         itemsPerPage: Number(attr.perPage),
