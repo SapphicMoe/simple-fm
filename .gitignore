@@ -23,6 +23,6 @@ pnpm-debug.log*
 desktop.ini
 
 /config.ts
-/index.mjs
+/index.ts
 /package/
 /package.tgz
