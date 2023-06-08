@@ -1,7 +1,9 @@
-import { request } from '../request.js';
-import { sanitizeURL } from '../utils/links.js';
+import { sanitizeURL } from '@utils/links.js';
+import { request } from '~/request.js';
+import { ImageSizes } from '~/types/index.js';
 
 import type {
+  ImageType,
   TrackGetInfoResponse,
   TrackGetSimilarResponse,
   TrackGetTopTagsResponse,
@@ -43,12 +45,14 @@ export default class Track {
       };
     });
 
-    const image = track.album?.image.map((i) => {
-      return {
-        size: i.size,
-        url: i['#text'],
-      };
-    });
+    const image = track.album?.image
+      .filter((i) => ImageSizes.includes(i.size))
+      .map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        } as ImageType;
+      });
 
     const response = {
       name: track.name,
@@ -96,12 +100,14 @@ export default class Track {
     });
 
     const tracks = track.map((track) => {
-      const image = track.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
+      const image = track.image
+        .filter((i) => ImageSizes.includes(i.size))
+        .map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          } as ImageType;
+        });
 
       return {
         match: Number(track.match),

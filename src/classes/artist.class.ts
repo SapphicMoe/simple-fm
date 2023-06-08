@@ -1,5 +1,6 @@
-import { request } from '../request.js';
-import { sanitizeURL } from '../utils/links.js';
+import { sanitizeURL } from '@utils/links.js';
+import { request } from '~/request.js';
+import { ImageSizes } from '~/types/index.js';
 
 import type {
   ArtistGetInfoResponse,
@@ -14,6 +15,7 @@ import type {
   ArtistTopAlbumsType,
   ArtistTopTagsType,
   ArtistTopTracksType,
+  ImageType,
 } from '../types/index.js';
 
 export default class Artist {
@@ -98,12 +100,14 @@ export default class Artist {
     });
 
     const albums = album.map((album) => {
-      const image = album.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
+      const image = album.image
+        .filter((i) => ImageSizes.includes(i.size))
+        .map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          } as ImageType;
+        });
 
       return {
         name: album.name,

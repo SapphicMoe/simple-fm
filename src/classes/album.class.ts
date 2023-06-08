@@ -1,6 +1,6 @@
-import { request } from '../request.js';
-import { sanitizeURL } from '../utils/links.js';
-
+import { sanitizeURL } from '@utils/links.js';
+import { request } from '~/request.js';
+import { ImageSizes } from '~/types/index.js';
 import type {
   AlbumGetInfoResponse,
   AlbumGetTopTagsResponse,
@@ -8,7 +8,8 @@ import type {
   AlbumGetInfoType,
   AlbumGetTopTagsType,
   AlbumSearchType,
-} from '../types/index.js';
+  ImageType,
+} from '~/types/index.js';
 
 export default class Album {
   constructor(private readonly token: string) {}
@@ -57,12 +58,14 @@ export default class Album {
       };
     });
 
-    const image = album.image.map((i) => {
-      return {
-        size: i.size,
-        url: i['#text'],
-      };
-    });
+    const image = album.image
+      .filter((i) => ImageSizes.includes(i.size))
+      .map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        } as ImageType;
+      });
 
     const response = {
       name: album.name,
@@ -137,12 +140,14 @@ export default class Album {
     });
 
     const albums = album.map((album) => {
-      const image = album.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
+      const image = album.image
+        .filter((i) => ImageSizes.includes(i.size))
+        .map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          } as ImageType;
+        });
 
       return {
         name: album.name,

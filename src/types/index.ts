@@ -1,5 +1,6 @@
+export const ImageSizes = ['extralarge', 'large', 'medium', 'small'];
+
 export type PersonalTagTypes = 'album' | 'artist' | 'track';
-export type ImageSizes = 'extralarge' | 'large' | 'medium' | 'mega' | 'small';
 export type RequestMethods =
   | 'album.getInfo'
   | 'album.getTopTags'

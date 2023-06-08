@@ -1,7 +1,9 @@
-import { request } from '../request.js';
-import { sanitizeURL } from '../utils/links.js';
+import { sanitizeURL } from '@utils/links.js';
+import { request } from '~/request.js';
+import { ImageSizes } from '~/types/index.js';
 
 import type {
+  ImageType,
   TagGetInfoResponse,
   TagGetTopAlbumsResponse,
   TagGetTopArtistsResponse,
@@ -55,12 +57,14 @@ export default class Tag {
     });
 
     const albums = album.map((album) => {
-      const image = album.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
+      const image = album.image
+        .filter((i) => ImageSizes.includes(i.size))
+        .map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          } as ImageType;
+        });
 
       return {
         rank: Number(album['@attr'].rank),

@@ -1,7 +1,9 @@
-import { request } from '../request.js';
-import { sanitizeURL } from '../utils/links.js';
+import { sanitizeURL } from '@utils/links.js';
+import { request } from '~/request.js';
+import { ImageSizes } from '~/types/index.js';
 
 import type {
+  ImageType,
   PersonalTagTypes,
   UserGetArtistsResponse,
   UserGetFriendsResponse,
@@ -36,12 +38,14 @@ export default class User {
       api_key: this.token,
     });
 
-    const image = user.image.map((i) => {
-      return {
-        size: i.size,
-        url: i['#text'],
-      };
-    });
+    const image = user.image
+      .filter((i) => ImageSizes.includes(i.size))
+      .map((i) => {
+        return {
+          size: i.size,
+          url: i['#text'],
+        } as ImageType;
+      });
 
     return {
       name: user.name,
@@ -106,12 +110,14 @@ export default class User {
     });
 
     const friends = user.map((user) => {
-      const image = user.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
+      const image = user.image
+        .filter((i) => ImageSizes.includes(i.size))
+        .map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          } as ImageType;
+        });
 
       return {
         name: user.name,
@@ -183,8 +189,7 @@ export default class User {
    * */
   async fetchPersonalTags(userName: string, tagName: string, tagType: PersonalTagTypes): Promise<UserPersonalTagsType> {
     const {
-      taggings,
-      taggings: { '@attr': attr },
+      taggings: { albums, artists, tracks, '@attr': attr },
     } = await request<UserGetPersonalTagsResponse>('user.getPersonalTags', {
       user: userName,
       tag: tagName,
@@ -196,7 +201,7 @@ export default class User {
     if (!tagType) throw new Error('No method was selected.');
 
     const responseTypes = {
-      album: taggings.albums?.album.map((album) => {
+      album: albums?.album.map((album) => {
         return {
           name: album.name,
           artist: {
@@ -207,14 +212,14 @@ export default class User {
         };
       }),
 
-      artist: taggings.artists?.artist.map((artist) => {
+      artist: artists?.artist.map((artist) => {
         return {
           name: artist.name,
           url: artist.url,
         };
       }),
 
-      track: taggings.tracks?.track.map((track) => {
+      track: tracks?.track.map((track) => {
         return {
           name: track.name,
           artist: {
@@ -258,12 +263,14 @@ export default class User {
     });
 
     const tracks = track.map((track) => {
-      const image = track.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
+      const image = track.image
+        .filter((i) => ImageSizes.includes(i.size))
+        .map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          } as ImageType;
+        });
 
       return {
         name: track.name,
@@ -310,12 +317,14 @@ export default class User {
     });
 
     const albums = album.map((album) => {
-      const image = album.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
+      const image = album.image
+        .filter((i) => ImageSizes.includes(i.size))
+        .map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          } as ImageType;
+        });
 
       return {
         rank: Number(album['@attr'].rank),
@@ -389,12 +398,14 @@ export default class User {
     });
 
     const tracks = track.map((track) => {
-      const image = track.image.map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        };
-      });
+      const image = track.image
+        .filter((i) => ImageSizes.includes(i.size))
+        .map((i) => {
+          return {
+            size: i.size,
+            url: i['#text'],
+          } as ImageType;
+        });
 
       return {
         rank: Number(track['@attr'].rank),
