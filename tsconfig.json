@@ -6,7 +6,15 @@
     "esModuleInterop": true,
     "module": "ES2022",
     "target": "ES2022",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"],
+      "@classes/*": ["src/classes/*"],
+      "@responses/*": ["src/responses/*"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"]
+    }
   },
   "include": ["./src"]
 }
