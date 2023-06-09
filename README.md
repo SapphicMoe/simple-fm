@@ -1,15 +1,21 @@
-# simple-fm
+<div align="center">
 
-[![CI][actions-image]][actions-link] [![npm-image]][npm-link] [![downloads-image]][npm-link] [![license-image]][license]
+![The Twitter headphone emoji with musical notes in it.][logo]
 
-_simple-fm is a simple, asynchronous Last.fm wrapper in TypeScript._
+## simple-fm
+
+_A simple, asynchronous Last.fm wrapper in TypeScript._
 
 Search for what someone has been listening to lately, what tracks are trending in a country, an artist's top tracks, and
 a lot more.
 
+[![CI][actions-image]][actions-link] [![npm-image]][npm-link] [![downloads-image]][npm-link] [![license-image]][license]
+
+</div>
+
 # Install
 
-**Node.js 16+** is recommended for this package.
+**Node.js 16+** and **TypeScript v5+** is recommended for this package.
 
 - npm: `npm i @solely/simple-fm`
 - pnpm: `pnpm i @solely/simple-fm`
@@ -21,23 +27,24 @@ a lot more.
 
 To obtain a Last.fm API token, click [here to register an API account][last-fm-api].
 
-# Usage
+# Example usage
 
 ```ts
 // Import the simple-fm package.
-import client from '@solely/simple-fm';
+import simpleFM from '@solely/simple-fm'; // ESM
+const simpleFM = require('@solely/simple-fm'); // CommonJS
 
 // Replace the token with your Last.fm token.
-const lastFM = new client('last.fm token');
+const client = new simpleFM('last.fm token');
 
 // Fetch the recent track from a user.
-const json = await lastFM.user.fetchRecentTracks('solelychloe');
+const json = await client.user.fetchRecentTracks('solelychloe');
 
 console.log(json);
 // => { currentlyPlaying: true, name: 'Dark World', artist: 'Mikel', album: 'Zelda & Chill', ...}
 ```
 
-If you're using [Deno][deno-repo], import `simple-fm` from a URL. For example, via a CDN:
+If you're using [Deno][deno-repo], you can import `simple-fm` via a CDN:
 
 ```ts
 import client from 'https://esm.sh/@solely/simple-fm';
@@ -265,7 +272,7 @@ _Fetches and returns a list of the user's personal tags._
 
 - #### `userName`: The name of the user.
 - #### `tagName`: The name of the tag.
-- ### `tagType`: The type of items which have been tagged. Accepted options: `album`, `artist`, `track`
+- #### `tagType`: The type of items which have been tagged. Accepted options: `album`, `artist`, `track`
 
 ### user.fetchRecentTracks(userName, limit?, page?)
 
@@ -306,6 +313,7 @@ This package is licensed under the [zlib][license] license.
   https://img.shields.io/github/actions/workflow/status/solelychloe/simple-fm/push.yaml?colorA=18181B&colorB=de3931
 [actions-link]: https://github.com/solelychloe/simple-fm/actions/workflows/push.yaml
 [deno-repo]: https://github.com/denoland/deno
+[logo]: /public/logo.png 'The Twitter headphone emoji with musical notes in it.'
 [license]: /LICENSE
 [downloads-image]: https://img.shields.io/npm/dm/@solely/simple-fm.svg?style=flat&colorA=18181B&colorB=de3931
 [last-fm-api]: https://www.last.fm/api/account/create
