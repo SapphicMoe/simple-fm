@@ -1,7 +1,9 @@
+import { describe, expect, it } from 'vitest';
+
 import config from '../config';
 import LastFM from '../src';
 
-import { GeoArtistSchema, GeoTrackSchema } from './schemas/geo.schema.js';
+import { GeoArtistSchema, GeoTrackSchema } from './schemas/geo.schema';
 
 const client = new LastFM(config.token);
 

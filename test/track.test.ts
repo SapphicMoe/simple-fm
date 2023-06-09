@@ -1,12 +1,9 @@
+import { describe, expect, it } from 'vitest';
+
 import config from '../config';
 import LastFM from '../src';
 
-import {
-  TrackGetInfoSchema,
-  TrackSearchSchema,
-  TrackSimilarSchema,
-  TrackTopTagsSchema,
-} from './schemas/track.schema.js';
+import { TrackGetInfoSchema, TrackSearchSchema, TrackSimilarSchema, TrackTopTagsSchema } from './schemas/track.schema';
 
 const client = new LastFM(config.token);
 

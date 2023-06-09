@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import config from '../config';
 import LastFM from '../src';
 
@@ -11,7 +13,7 @@ import {
   UserTopAlbumsSchema,
   UserTopTagsSchema,
   UserTopTracksSchema,
-} from './schemas/user.schema.js';
+} from './schemas/user.schema';
 
 const client = new LastFM(config.token);
 

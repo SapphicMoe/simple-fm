@@ -1,7 +1,9 @@
+import { describe, expect, it } from 'vitest';
+
 import config from '../config';
 import LastFM from '../src';
 
-import { AlbumGetInfoSchema, AlbumGetTopTagsSchema, AlbumSearchSchema } from './schemas/album.schema.js';
+import { AlbumGetInfoSchema, AlbumGetTopTagsSchema, AlbumSearchSchema } from './schemas/album.schema';
 
 const client = new LastFM(config.token);
 
@@ -16,8 +18,6 @@ describe('Album', () => {
     it("Should error when the album doesn't exist", async () => {
       try {
         await client.album.fetch('rj-9wugh', '102edgreth');
-
-        return;
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('Album not found');
       }

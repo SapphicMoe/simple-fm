@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import config from '../config';
 import LastFM from '../src';
 
@@ -7,7 +9,7 @@ import {
   TagTopArtistsSchema,
   TagTopTracksSchema,
   TagWeeklyChartListSchema,
-} from './schemas/tag.schema.js';
+} from './schemas/tag.schema';
 
 const client = new LastFM(config.token);
 

@@ -1,5 +1,5 @@
-/* eslint-disable no-useless-return */
-/* eslint-disable @typescript-eslint/no-throw-literal */
+import { describe, expect, it } from 'vitest';
+
 import config from '../config';
 import LastFM from '../src';
 
@@ -9,7 +9,7 @@ import {
   ArtistTopAlbumsSchema,
   ArtistTopTagsSchema,
   ArtistTopTracksSchema,
-} from './schemas/artist.schema.js';
+} from './schemas/artist.schema';
 
 const client = new LastFM(config.token);
 
