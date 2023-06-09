@@ -1,4 +1,4 @@
-import type { Artist, Track, Tag } from '../index.js';
+import type { Artist, Track, Tag } from '../';
 
 export declare interface ChartGetTopArtistsResponse {
   artists: {

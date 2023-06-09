@@ -1,5 +1,4 @@
-import { request } from '~/request.js';
-
+import { request } from '~/request';
 import type {
   ChartGetTopArtistsResponse,
   ChartGetTopTagsResponse,
@@ -7,7 +6,7 @@ import type {
   ChartTopArtistsType,
   ChartTopTagsType,
   ChartTopTracksType,
-} from '../types/index.js';
+} from '~/types/';
 
 export default class Chart {
   constructor(private readonly token: string) {}

@@ -9,7 +9,7 @@ import {
   UserTopAlbumsType,
   UserTopTagsType,
   UserTopTracksType,
-} from '../../src/index.js';
+} from '../../src/types';
 
 export const UserArtistsSchema = z.array(
   z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserArtistsType>

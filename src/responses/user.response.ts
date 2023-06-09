@@ -1,4 +1,4 @@
-import type { Album, Artist, Image, Tag, Track, User } from '../index.js';
+import type { Album, Artist, Image, Tag, Track, User } from '../';
 
 export declare interface UserGetArtistsResponse {
   artists: {

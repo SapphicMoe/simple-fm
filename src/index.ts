@@ -1,12 +1,12 @@
-import Album from './classes/album.class.js';
-import Artist from './classes/artist.class.js';
-import Chart from './classes/chart.class.js';
-import Geo from './classes/geo.class.js';
-import Tag from './classes/tag.class.js';
-import Track from './classes/track.class.js';
-import User from './classes/user.class.js';
+import Album from '@classes/album.class';
+import Artist from '@classes/artist.class';
+import Chart from '@classes/chart.class';
+import Geo from '@classes/geo.class';
+import Tag from '@classes/tag.class';
+import Track from '@classes/track.class';
+import User from '@classes/user.class';
 
-export * from './types/index.js';
+export * from '~/types';
 
 export default class SimpleFMClient {
   readonly album: Album;

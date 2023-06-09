@@ -1,4 +1,4 @@
-import type { ImageType } from './index.js';
+import type { ImageType } from './';
 
 export declare interface TrackGetInfoType {
   name: string;

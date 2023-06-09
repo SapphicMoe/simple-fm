@@ -1,4 +1,4 @@
-import type { ImageType, PersonalTagType } from './index.js';
+import type { ImageType, PersonalTagType } from './';
 
 export declare interface UserArtistsType {
   search: {

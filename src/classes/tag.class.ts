@@ -1,7 +1,6 @@
-import { sanitizeURL } from '@utils/links.js';
-import { request } from '~/request.js';
-import { ImageSizes } from '~/types/index.js';
-
+import { sanitizeURL } from '@utils/links';
+import { request } from '~/request';
+import { ImageSizes } from '~/types/';
 import type {
   ImageType,
   TagGetInfoResponse,
@@ -14,7 +13,7 @@ import type {
   TagTopArtistsType,
   TagTopTracksType,
   TagWeeklyChartListType,
-} from '../types/index.js';
+} from '~/types/';
 
 export default class Tag {
   constructor(private readonly token: string) {}

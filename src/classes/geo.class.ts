@@ -1,5 +1,5 @@
-import { request } from '~/request.js';
-import type { GeoGetTopArtistsResponse, GeoGetTopTracksResponse, GeoArtistType, GeoTrackType } from '~/types/index.js';
+import { request } from '~/request';
+import type { GeoGetTopArtistsResponse, GeoGetTopTracksResponse, GeoArtistType, GeoTrackType } from '~/types/';
 
 export default class Geo {
   constructor(private readonly token: string) {}

@@ -6,7 +6,7 @@ import {
   TagTopArtistsType,
   TagTopTracksType,
   TagWeeklyChartListType,
-} from '../../src/index.js';
+} from '../../src/types';
 
 export const TagGetInfoSchema = z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagGetInfoType>;
 
