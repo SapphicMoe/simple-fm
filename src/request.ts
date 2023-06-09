@@ -1,7 +1,7 @@
 import { $fetch, FetchError, SearchParameters } from 'ofetch';
 
-import LastFMError from '@utils/error';
-import { RequestMethods } from '~/types';
+import LastFMError from '@utils/error.js';
+import { RequestMethods } from '~/types/index.js';
 
 export async function request<T = unknown, M = RequestMethods>(method: M, params: SearchParameters): Promise<T> {
   const baseURL = 'https://ws.audioscrobbler.com/2.0';

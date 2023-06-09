@@ -1,4 +1,4 @@
-import { Artist, Track } from '../';
+import { Artist, Track } from '../index.js';
 
 export declare interface GeoGetTopArtistsResponse {
   topartists: {

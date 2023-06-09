@@ -1,6 +1,6 @@
-import { sanitizeURL } from '@utils/links';
-import { request } from '~/request';
-import { ImageSizes } from '~/types/';
+import { sanitizeURL } from '@utils/links.js';
+import { request } from '~/request.js';
+import { ImageSizes } from '~/types/index.js';
 import type {
   AlbumGetInfoResponse,
   AlbumGetTopTagsResponse,
@@ -9,7 +9,7 @@ import type {
   AlbumGetTopTagsType,
   AlbumSearchType,
   ImageType,
-} from '~/types/';
+} from '~/types/index.js';
 
 export default class Album {
   constructor(private readonly token: string) {}

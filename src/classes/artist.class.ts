@@ -1,6 +1,6 @@
-import { sanitizeURL } from '@utils/links';
-import { request } from '~/request';
-import { ImageSizes } from '~/types/';
+import { sanitizeURL } from '@utils/links.js';
+import { request } from '~/request.js';
+import { ImageSizes } from '~/types/index.js';
 import type {
   ArtistGetInfoResponse,
   ArtistGetSimilarResponse,
@@ -15,7 +15,7 @@ import type {
   ArtistTopTagsType,
   ArtistTopTracksType,
   ImageType,
-} from '~/types/';
+} from '~/types/index.js';
 
 export default class Artist {
   constructor(private readonly token: string) {}
