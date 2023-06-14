@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import config from '../config';
-import LastFM from '../src';
+import simpleFM from '../src';
 
 import {
   TagGetInfoSchema,
@@ -11,7 +10,7 @@ import {
   TagWeeklyChartListSchema,
 } from './schemas/tag.schema';
 
-const client = new LastFM(config.token);
+const client = new simpleFM(process.env.LASTFM_TOKEN!);
 
 describe('Tag', () => {
   describe('getInfo', () => {

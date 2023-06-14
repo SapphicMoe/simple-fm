@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import config from '../config';
-import LastFM from '../src';
+import simpleFM from '../src';
 
 import {
   UserArtistsSchema,
@@ -15,7 +14,7 @@ import {
   UserTopTracksSchema,
 } from './schemas/user.schema';
 
-const client = new LastFM(config.token);
+const client = new simpleFM(process.env.LASTFM_TOKEN!);
 
 describe('User', () => {
   describe('getInfo', () => {
@@ -23,6 +22,16 @@ describe('User', () => {
       const data = await client.user.fetch('solelychloe');
 
       expect(() => UserGetInfoSchema.parse(data)).not.toThrow();
+    });
+
+    it("Should error when the user doesn't exist", async () => {
+      try {
+        const data = await client.user.fetch('102edgreth');
+
+        expect(() => UserGetInfoSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('User not found');
+      }
     });
   });
 

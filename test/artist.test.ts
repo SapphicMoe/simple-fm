@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import config from '../config';
-import LastFM from '../src';
+import simpleFM from '../src';
 
 import {
   ArtistGetInfoSchema,
@@ -11,7 +10,7 @@ import {
   ArtistTopTracksSchema,
 } from './schemas/artist.schema';
 
-const client = new LastFM(config.token);
+const client = new simpleFM(process.env.LASTFM_TOKEN!);
 
 describe('Artist', () => {
   describe('getInfo', () => {
@@ -19,6 +18,16 @@ describe('Artist', () => {
       const data = await client.artist.fetch('Nirvana');
 
       expect(() => ArtistGetInfoSchema.parse(data)).not.toThrow();
+    });
+
+    it("Should error when the artist doesn't exist", async () => {
+      try {
+        const data = await client.artist.fetch('rj-9wugh');
+
+        expect(() => ArtistGetInfoSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+      }
     });
   });
 

@@ -1,11 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import config from '../config';
-import LastFM from '../src';
+import simpleFM from '../src';
 
 import { GeoArtistSchema, GeoTrackSchema } from './schemas/geo.schema';
 
-const client = new LastFM(config.token);
+const client = new simpleFM(process.env.LASTFM_TOKEN!);
 
 describe('Geo', () => {
   describe('getTopArtists', () => {
