@@ -37,6 +37,16 @@ describe('Artist', () => {
 
       expect(() => ArtistSimilarSchema.parse(data.artists)).not.toThrow();
     });
+
+    it("Should error when the artist doesn't exist", async () => {
+      try {
+        const data = await client.artist.fetchSimilar('rj-9wugh');
+
+        expect(() => ArtistSimilarSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+      }
+    });
   });
 
   describe('getTopAlbums', () => {
@@ -44,6 +54,16 @@ describe('Artist', () => {
       const data = await client.artist.fetchTopAlbums('blink-182');
 
       expect(() => ArtistTopAlbumsSchema.parse(data.albums)).not.toThrow();
+    });
+
+    it("Should error when the artist doesn't exist", async () => {
+      try {
+        const data = await client.artist.fetchTopAlbums('rj-9wugh');
+
+        expect(() => ArtistTopAlbumsSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+      }
     });
   });
 
@@ -53,6 +73,16 @@ describe('Artist', () => {
 
       expect(() => ArtistTopTagsSchema.parse(data.tags)).not.toThrow();
     });
+
+    it("Should error when the artist doesn't exist", async () => {
+      try {
+        const data = await client.artist.fetchTopTags('rj-9wugh');
+
+        expect(() => ArtistTopTagsSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+      }
+    });
   });
 
   describe('getTopTracks', () => {
@@ -60,6 +90,15 @@ describe('Artist', () => {
       const data = await client.artist.fetchTopTracks('Muse');
 
       expect(() => ArtistTopTracksSchema.parse(data.tracks)).not.toThrow();
+    });
+    it("Should error when the artist doesn't exist", async () => {
+      try {
+        const data = await client.artist.fetchTopTracks('rj-9wugh');
+
+        expect(() => ArtistTopTracksSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+      }
     });
   });
 });

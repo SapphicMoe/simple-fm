@@ -13,6 +13,16 @@ describe('Geo', () => {
 
       expect(() => GeoArtistSchema.parse(data.artists)).not.toThrow();
     });
+
+    it('Should error when the country is invalid', async () => {
+      try {
+        const data = await client.geo.fetchTopArtists('Texas');
+
+        expect(() => GeoArtistSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('country param invalid');
+      }
+    });
   });
 
   describe('getTopTracks', () => {
@@ -20,6 +30,16 @@ describe('Geo', () => {
       const data = await client.geo.fetchTopTracks('New Zealand');
 
       expect(() => GeoTrackSchema.parse(data.tracks)).not.toThrow();
+    });
+
+    it('Should error when the country is invalid', async () => {
+      try {
+        const data = await client.geo.fetchTopTracks('Texas');
+
+        expect(() => GeoTrackSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('country param required');
+      }
     });
   });
 });

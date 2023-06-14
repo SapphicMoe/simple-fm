@@ -13,13 +13,33 @@ describe('Track', () => {
 
       expect(() => TrackGetInfoSchema.parse(data)).not.toThrow();
     });
+
+    it("Should error when the track doesn't exist", async () => {
+      try {
+        const data = await client.track.fetch('mrrowk[rpgk', '=-ks0-[hkt0phj');
+
+        expect(() => TrackGetInfoSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('Track not found');
+      }
+    });
   });
 
   describe('getSimilar', () => {
     it('Should return similar tracks from a query', async () => {
       const data = await client.track.fetchSimilar('Metallica', 'Sad But True');
 
-      expect(() => TrackTopTagsSchema.parse(data.tracks)).not.toThrow();
+      expect(() => TrackSearchSchema.parse(data.tracks)).not.toThrow();
+    });
+
+    it("Should error when the track doesn't exist", async () => {
+      try {
+        const data = await client.track.fetchSimilar('mrrowk[rpgk', '=-ks0-[hkt0phj');
+
+        expect(() => TrackSimilarSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('Track not found');
+      }
     });
   });
 
@@ -27,7 +47,17 @@ describe('Track', () => {
     it("Should return a track's top tags", async () => {
       const data = await client.track.fetchTopTags('Taylor Swift', 'New Romantics');
 
-      expect(() => TrackSimilarSchema.parse(data.tags)).not.toThrow();
+      expect(() => TrackTopTagsSchema.parse(data.tags)).not.toThrow();
+    });
+
+    it("Should error when the track doesn't exist", async () => {
+      try {
+        const data = await client.track.fetchTopTags('mrrowk[rpgk', '=-ks0-[hkt0phj');
+
+        expect(() => TrackTopTagsSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('Track not found');
+      }
     });
   });
 

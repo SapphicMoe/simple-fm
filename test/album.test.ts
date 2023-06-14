@@ -31,6 +31,16 @@ describe('Album', () => {
 
       expect(() => AlbumGetTopTagsSchema.parse(data.tags)).not.toThrow();
     });
+
+    it("Should error when the album doesn't exist", async () => {
+      try {
+        const data = await client.album.fetchTopTags('rj-9wugh', '102edgreth');
+
+        expect(() => AlbumGetTopTagsSchema.parse(data)).toThrow();
+      } catch (err) {
+        if (err instanceof Error) expect(err.message).toEqual('Album not found');
+      }
+    });
   });
 
   describe('search', () => {
