@@ -1,21 +1,5 @@
-import type { Album, Artist, Image, Tag, Track, User } from '../index.js';
+import type { Album, Artist, Image, Tag, Track, User } from '~/index.js';
 
-export declare interface UserGetArtistsResponse {
-  artists: {
-    artist: Array<
-      Artist & {
-        playcount: string;
-      }
-    >;
-    '@attr': {
-      user: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
-  };
-}
 export declare interface UserGetInfoResponse {
   user: User;
 }
@@ -37,10 +21,7 @@ export declare interface UserGetLovedTracksResponse {
   lovedtracks: {
     track: Array<
       Track & {
-        artist: {
-          name: string;
-          url: string;
-        };
+        artist: Artist;
         date: {
           uts: string;
           '#text': string;
@@ -62,31 +43,16 @@ export declare interface UserGetPersonalTagsResponse {
     albums?: {
       album: Array<{
         name: string;
-        artist: {
-          name: string;
-          url: string;
-        };
+        artist: Artist;
         url: string;
         image: Image[];
       }>;
     };
     artists?: {
-      artist: Array<{
-        name: string;
-        url: string;
-        image: Image[];
-      }>;
+      artist: Artist[];
     };
     tracks?: {
-      track: Array<{
-        name: string;
-        artist: {
-          name: string;
-          url: string;
-        };
-        url: string;
-        image: Image[];
-      }>;
+      track: Track[];
     };
     '@attr': {
       user: string;
@@ -121,13 +87,30 @@ export declare interface UserGetTopAlbumsResponse {
   topalbums: {
     album: Array<
       Album & {
-        artist: {
-          name: string;
-          url: string;
-        };
+        artist: Artist;
         playcount: string;
         '@attr': {
           rank: string;
+        };
+      }
+    >;
+    '@attr': {
+      user: string;
+      page: string;
+      perPage: string;
+      totalPages: string;
+      total: string;
+    };
+  };
+}
+
+export declare interface UserGetTopArtistsResponse {
+  topartists: {
+    artist: Array<
+      Artist & {
+        playcount: string;
+        '@attr': {
+          rank: number;
         };
       }
     >;
@@ -155,10 +138,7 @@ export declare interface UserGetTopTracksResponse {
     track: Array<
       Track & {
         duration: string;
-        artist: {
-          name: string;
-          url: string;
-        };
+        artist: Artist;
         '@attr': {
           rank: string;
         };

@@ -1,19 +1,4 @@
-import type { ImageType, PersonalTagType } from './index.js';
-
-export declare interface UserArtistsType {
-  search: {
-    user: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
-  };
-  artists: Array<{
-    name: string;
-    scrobbles: number;
-    url: string;
-  }>;
-}
+import type { ImageType, PersonalTagType } from '~/index.js';
 
 export declare interface UserFriendsType {
   search: {
@@ -112,6 +97,22 @@ export declare interface UserTopAlbumsType {
     };
     url: string;
     image: ImageType[];
+  }>;
+}
+
+export declare interface UserTopArtistsType {
+  search: {
+    user: string;
+    page: number;
+    itemsPerPage: number;
+    totalPages: number;
+    totalResults: number;
+  };
+  artists: Array<{
+    rank: number;
+    name: string;
+    scrobbles: number;
+    url: string;
   }>;
 }
 

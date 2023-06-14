@@ -2,23 +2,24 @@ import { sanitizeURL } from '@utils/links.js';
 import { request } from '~/request.js';
 import { ImageSizes } from '~/types/index.js';
 import type {
+  Artist,
   ImageType,
   PersonalTagTypes,
-  UserGetArtistsResponse,
   UserGetFriendsResponse,
   UserGetInfoResponse,
   UserGetLovedTracksResponse,
   UserGetPersonalTagsResponse,
   UserGetRecentTracksResponse,
   UserGetTopAlbumsResponse,
+  UserGetTopArtistsResponse,
   UserGetTopTagsResponse,
   UserGetTopTracksResponse,
-  UserArtistsType,
   UserGetInfoType,
   UserLovedTracksType,
   UserPersonalTagsType,
   UserRecentTrackType,
   UserTopAlbumsType,
+  UserTopArtistsType,
   UserTopTagsType,
   UserTopTracksType,
   UserFriendsType,
@@ -54,42 +55,6 @@ export default class User {
       url: user.url,
       image,
     };
-  }
-
-  /**
-   * Fetches and returns a list of popular artists in a user's library.
-   * @param userName - The name of the user.
-   * @param limit - The number of results to fetch per page. Defaults to 50.
-   * @param page - The page number to fetch. Defaults to the first page.
-   * */
-  async fetchAllArtists(userName: string, limit = 50, page = 1): Promise<UserArtistsType> {
-    const {
-      artists: { artist, '@attr': attr },
-    } = await request<UserGetArtistsResponse>('library.getArtists', {
-      user: userName,
-      api_key: this.token,
-      limit,
-      page,
-    });
-
-    const artists = artist.map((artist) => {
-      return {
-        name: artist.name,
-        scrobbles: Number(artist.playcount),
-        url: artist.url,
-      };
-    });
-
-    return {
-      search: {
-        user: attr.user,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
-      },
-      artists,
-    } as UserArtistsType;
   }
 
   /**
@@ -222,8 +187,8 @@ export default class User {
         return {
           name: track.name,
           artist: {
-            name: track.artist.name,
-            url: track.artist.url,
+            name: (track.artist as Artist).name,
+            url: (track.artist as Artist).url,
           },
           url: track.url,
         };
@@ -348,6 +313,43 @@ export default class User {
       },
       albums,
     } as UserTopAlbumsType;
+  }
+
+  /**
+   * Fetches and returns a list of popular artists in a user's library.
+   * @param userName - The name of the user.
+   * @param limit - The number of results to fetch per page. Defaults to 50.
+   * @param page - The page number to fetch. Defaults to the first page.
+   * */
+  async fetchTopArtists(userName: string, limit = 50, page = 1): Promise<UserTopArtistsType> {
+    const {
+      topartists: { artist, '@attr': attr },
+    } = await request<UserGetTopArtistsResponse>('user.getTopArtists', {
+      user: userName,
+      api_key: this.token,
+      limit,
+      page,
+    });
+
+    const artists = artist.map((artist) => {
+      return {
+        rank: Number(artist['@attr'].rank),
+        name: artist.name,
+        scrobbles: Number(artist.playcount),
+        url: artist.url,
+      };
+    });
+
+    return {
+      search: {
+        user: attr.user,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      artists,
+    } as UserTopArtistsType;
   }
 
   /**

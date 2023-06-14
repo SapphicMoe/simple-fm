@@ -1,18 +1,18 @@
 import { z, ZodObject, ZodRawShape, UnknownKeysParam, ZodTypeAny } from 'zod';
 
 import {
-  UserArtistsType,
   UserGetInfoType,
   UserLovedTracksType,
   UserPersonalTagsType,
   UserRecentTrackType,
   UserTopAlbumsType,
+  UserTopArtistsType,
   UserTopTagsType,
   UserTopTracksType,
 } from '../../src/types';
 
 export const UserArtistsSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserArtistsType>
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserTopArtistsType>
 );
 
 export const UserFriendsSchema = z.array(
