@@ -22,6 +22,11 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
+      - name: Create .env file
+        run: |
+          touch .env
+          echo LASTFM_TOKEN=${{ secrets.LASTFM_TOKEN }} >> .env
+
       - name: Get Yarn's caching
         uses: actions/cache@v3
         id: yarn-cache
