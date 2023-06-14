@@ -16,7 +16,6 @@ export type RequestMethods =
   | 'chart.getTopTracks'
   | 'geo.getTopArtists'
   | 'geo.getTopTracks'
-  | 'library.getArtists'
   | 'tag.getInfo'
   | 'tag.getTopAlbums'
   | 'tag.getTopArtists'
@@ -33,6 +32,7 @@ export type RequestMethods =
   | 'user.getPersonalTags'
   | 'user.getRecentTracks'
   | 'user.getTopAlbums'
+  | 'user.getTopArtists'
   | 'user.getTopTags'
   | 'user.getTopTracks';
 
@@ -53,17 +53,14 @@ export interface Registered {
 
 export interface PersonalTagType {
   name: string;
-  artist?: {
-    name: string;
-    url: string;
-  };
+  artist?: Artist;
   url: string;
   image?: Image[];
 }
 
 export interface Album {
   name: string;
-  artist: object | string;
+  artist: Artist | string;
   url: string;
   image: Image[];
 }
@@ -71,7 +68,7 @@ export interface Album {
 export interface Artist {
   name: string;
   url: string;
-  image: Image[];
+  image?: Image[];
 }
 
 export interface Tag {
@@ -84,7 +81,7 @@ export interface Tag {
 
 export interface Track {
   name: string;
-  artist: object | string;
+  artist: Artist | string;
   url: string;
   image: Image[];
 }
@@ -106,4 +103,4 @@ export * from './tag.type.js';
 export * from './track.type.js';
 export * from './user.type.js';
 
-export * from '~/responses/index.js';
+export * from '@responses/index.js';

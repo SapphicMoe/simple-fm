@@ -1,14 +1,12 @@
-import type { Album, Tag, Track } from '../index.js';
+import Artist from '@classes/artist.class.js';
+import type { Album, Tag, Track } from '~/index.js';
 
 export declare interface TrackGetInfoResponse {
   track: Track & {
     duration: string;
     listeners: string;
     playcount: string;
-    artist: {
-      name: string;
-      url: string;
-    };
+    artist: Artist;
     toptags: {
       tag: Tag[];
     };
@@ -25,10 +23,7 @@ export declare interface TrackGetSimilarResponse {
         playcount: number;
         match: number;
         duration: number;
-        artist: {
-          name: string;
-          url: string;
-        };
+        artist: Artist;
       }
     >;
     '@attr': {

@@ -2,6 +2,7 @@ import { sanitizeURL } from '@utils/links.js';
 import { request } from '~/request.js';
 import { ImageSizes } from '~/types/index.js';
 import type {
+  Artist,
   ImageType,
   TrackGetInfoResponse,
   TrackGetSimilarResponse,
@@ -61,8 +62,8 @@ export default class Track {
         listeners: Number(track.listeners),
       },
       artist: {
-        name: track.artist.name,
-        url: track.artist.url,
+        name: (track.artist as Artist).name,
+        url: (track.artist as Artist).url,
       },
       album: {
         position: Number(album?.['@attr']?.position) || null,
@@ -114,8 +115,8 @@ export default class Track {
         duration: Number(track.duration) || null,
         scrobbles: Number(track.playcount),
         artist: {
-          name: track.artist.name,
-          url: track.artist.url,
+          name: (track.artist as Artist).name,
+          url: (track.artist as Artist).url,
         },
         url: track.url,
         image,

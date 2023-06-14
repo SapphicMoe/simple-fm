@@ -1,4 +1,4 @@
-import type { Album, Artist, Track, Tag } from '../index.js';
+import type { Album, Artist, Track, Tag } from '~/index.js';
 
 export declare interface TagGetInfoResponse {
   tag: Tag & {
@@ -14,10 +14,7 @@ export declare interface TagGetTopAlbumsResponse {
   albums: {
     album: Array<
       Album & {
-        artist: {
-          name: string;
-          url: string;
-        };
+        artist: Artist;
         '@attr': {
           rank: number;
         };
@@ -57,10 +54,7 @@ export declare interface TagGetTopTracksResponse {
     track: Array<
       Track & {
         duration: string;
-        artist: {
-          name: string;
-          url: string;
-        };
+        artist: Artist;
         '@attr': {
           rank: string;
         };

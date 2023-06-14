@@ -1,4 +1,4 @@
-import type { Artist, Track, Tag } from '../index.js';
+import type { Artist, Track, Tag } from '~/index.js';
 
 export declare interface ChartGetTopArtistsResponse {
   artists: {
@@ -39,10 +39,7 @@ export declare interface ChartGetTopTracksResponse {
       Track & {
         playcount: string;
         listeners: string;
-        artist: {
-          name: string;
-          url: string;
-        };
+        artist: Artist;
       }
     >;
     '@attr': {

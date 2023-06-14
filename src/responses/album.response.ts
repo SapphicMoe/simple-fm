@@ -1,4 +1,4 @@
-import type { Album, Image, Tag, Track } from '../index.js';
+import type { Album, Artist, Image, Tag, Track } from '~/index.js';
 
 type ObjArray<T> = T | T[];
 
@@ -18,10 +18,7 @@ export declare interface AlbumGetInfoResponse {
           '@attr': {
             rank: number;
           };
-          artist: {
-            url: string;
-            name: string;
-          };
+          artist: Artist;
         }
       >;
     };

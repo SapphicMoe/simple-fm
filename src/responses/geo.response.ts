@@ -1,4 +1,4 @@
-import { Artist, Track } from '../index.js';
+import { Artist, Track } from '~/index.js';
 
 export declare interface GeoGetTopArtistsResponse {
   topartists: {
@@ -23,10 +23,7 @@ export declare interface GeoGetTopTracksResponse {
       Track & {
         duration: string;
         listeners: string;
-        artist: {
-          name: string;
-          url: string;
-        };
+        artist: Artist;
         '@attr': {
           rank: string;
         };
