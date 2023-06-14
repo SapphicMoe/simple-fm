@@ -30,7 +30,7 @@
     "last.fm-api",
     "last-fm-api"
   ],
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@3.6.0",
   "dependencies": {
     "ofetch": "^1.1.0"
   },
