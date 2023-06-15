@@ -306,8 +306,8 @@ This package is licensed under the [zlib][license] license.
 © 2023 Chloe Arciniega.
 
 [actions-image]:
-  https://img.shields.io/github/actions/workflow/status/solelychloe/simple-fm/push.yaml?colorA=18181B&colorB=de3931
-[actions-link]: https://github.com/solelychloe/simple-fm/actions/workflows/push.yaml
+  https://img.shields.io/github/actions/workflow/status/solelychloe/simple-fm/push.yml?colorA=18181B&colorB=de3931
+[actions-link]: https://github.com/solelychloe/simple-fm/actions/workflows/push.yml
 [deno-repo]: https://github.com/denoland/deno
 [logo]: /public/logo.png 'The Twitter headphone emoji with musical notes in it.'
 [license]: /LICENSE
