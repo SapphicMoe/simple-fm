@@ -141,9 +141,6 @@ export default class User {
       api_key: this.token,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (!tagType) throw new Error('No method was selected.');
-
     const responseTypes = {
       album: albums?.album.map((album) => {
         return {
