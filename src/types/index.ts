@@ -95,12 +95,12 @@ export interface User {
   image: Image[];
 }
 
-export * from './album.type.js';
-export * from './artist.type.js';
-export * from './chart.type.js';
-export * from './geo.type.js';
-export * from './tag.type.js';
-export * from './track.type.js';
-export * from './user.type.js';
+export type * from './album.type.js';
+export type * from './artist.type.js';
+export type * from './chart.type.js';
+export type * from './geo.type.js';
+export type * from './tag.type.js';
+export type * from './track.type.js';
+export type * from './user.type.js';
 
 export * from '@responses/index.js';
