@@ -6,8 +6,6 @@ export default class Geo {
 
   /**
    * Fetches and returns the most popular artists by country.
-   *
-   * Ordered by relevance.
    * @param country - The name of the country.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
@@ -44,8 +42,6 @@ export default class Geo {
 
   /**
    * Fetches and returns the most popular tracks by country.
-   *
-   * Ordered by relevance.
    * @param country - The name of the country.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.

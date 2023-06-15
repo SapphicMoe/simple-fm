@@ -1,6 +1,5 @@
-import { sanitizeURL } from '@utils/links.js';
+import { convertImageSizes, convertURL } from '@utils/convert.js';
 import { request } from '~/request.js';
-import { ImageSizes } from '~/types/index.js';
 import type {
   AlbumGetInfoResponse,
   AlbumGetTopTagsResponse,
@@ -8,7 +7,6 @@ import type {
   AlbumGetInfoType,
   AlbumGetTopTagsType,
   AlbumSearchType,
-  ImageType,
 } from '~/types/index.js';
 
 export default class Album {
@@ -18,8 +16,7 @@ export default class Album {
    * Fetches and returns metadata information for an artist.
    * @param artistName - The name of the artist.
    * @param albumName - The name of the album.
-   * @param userName - The username for the context of the request.
-   * If supplied, the user's playcount for this artist's album is included in the response.
+   * @param userName - The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
    */
   async fetch(artistName: string, albumName: string, userName?: string): Promise<AlbumGetInfoType> {
     const {
@@ -58,20 +55,11 @@ export default class Album {
       };
     });
 
-    const image = album.image
-      .filter((i) => ImageSizes.includes(i.size))
-      .map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        } as ImageType;
-      });
-
     const response = {
       name: album.name,
       artist: {
         name: album.artist,
-        url: `https://www.last.fm/music/${sanitizeURL(album.artist)}`,
+        url: `https://www.last.fm/music/${convertURL(album.artist)}`,
       },
       stats: {
         scrobbles: Number(album.playcount),
@@ -80,7 +68,7 @@ export default class Album {
       tags,
       tracks,
       url: album.url,
-      image,
+      image: convertImageSizes(album.image),
     } as AlbumGetInfoType;
 
     if (userName) response.stats.userPlayCount = Number(album.userplaycount);
@@ -114,7 +102,7 @@ export default class Album {
       name: attr.album,
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
+        url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
       tags,
     } as AlbumGetTopTagsType;
@@ -140,23 +128,14 @@ export default class Album {
     });
 
     const albums = album.map((album) => {
-      const image = album.image
-        .filter((i) => ImageSizes.includes(i.size))
-        .map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          } as ImageType;
-        });
-
       return {
         name: album.name,
         artist: {
           name: album.artist,
-          url: `https://www.last.fm/music/${sanitizeURL(album.artist)}`,
+          url: `https://www.last.fm/music/${convertURL(album.artist)}`,
         },
         url: album.url,
-        image,
+        image: convertImageSizes(album.image),
       };
     });
 

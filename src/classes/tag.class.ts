@@ -1,8 +1,6 @@
-import { sanitizeURL } from '@utils/links.js';
+import { convertImageSizes, convertURL } from '@utils/convert.js';
 import { request } from '~/request.js';
-import { ImageSizes } from '~/types/index.js';
 import type {
-  ImageType,
   TagGetInfoResponse,
   TagGetTopAlbumsResponse,
   TagGetTopArtistsResponse,
@@ -35,7 +33,7 @@ export default class Tag {
         count: tag.total,
         reach: tag.reach,
       },
-      url: `https://www.last.fm/tag/${sanitizeURL(tag.name)}`,
+      url: `https://www.last.fm/tag/${convertURL(tag.name)}`,
     };
   }
 
@@ -56,15 +54,6 @@ export default class Tag {
     });
 
     const albums = album.map((album) => {
-      const image = album.image
-        .filter((i) => ImageSizes.includes(i.size))
-        .map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          } as ImageType;
-        });
-
       return {
         rank: Number(album['@attr'].rank),
         name: album.name,
@@ -72,8 +61,8 @@ export default class Tag {
           name: album.artist.name,
           url: album.artist.url,
         },
-        url: `https://www.last.fm/music/${sanitizeURL(album.artist.name)}/${sanitizeURL(album.name)}`,
-        image,
+        url: `https://www.last.fm/music/${convertURL(album.artist.name)}/${convertURL(album.name)}`,
+        image: convertImageSizes(album.image),
       };
     });
 

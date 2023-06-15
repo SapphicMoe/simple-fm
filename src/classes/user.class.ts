@@ -1,9 +1,7 @@
-import { sanitizeURL } from '@utils/links.js';
+import { convertImageSizes, convertURL } from '@utils/convert.js';
 import { request } from '~/request.js';
-import { ImageSizes } from '~/types/index.js';
 import type {
   Artist,
-  ImageType,
   PersonalTagTypes,
   UserGetFriendsResponse,
   UserGetInfoResponse,
@@ -38,22 +36,13 @@ export default class User {
       api_key: this.token,
     });
 
-    const image = user.image
-      .filter((i) => ImageSizes.includes(i.size))
-      .map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        } as ImageType;
-      });
-
     return {
       name: user.name,
       realName: user.realname || null,
       country: user.country,
       registered: new Date(user.registered['#text'] * 1000),
       url: user.url,
-      image,
+      image: convertImageSizes(user.image),
     };
   }
 
@@ -74,22 +63,13 @@ export default class User {
     });
 
     const friends = user.map((user) => {
-      const image = user.image
-        .filter((i) => ImageSizes.includes(i.size))
-        .map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          } as ImageType;
-        });
-
       return {
         name: user.name,
         realName: user.realname || null,
         country: user.country,
         registered: new Date(Number(user.registered.unixtime) * 1000),
         url: user.url,
-        image,
+        image: convertImageSizes(user.image),
       };
     });
 
@@ -227,24 +207,15 @@ export default class User {
     });
 
     const tracks = track.map((track) => {
-      const image = track.image
-        .filter((i) => ImageSizes.includes(i.size))
-        .map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          } as ImageType;
-        });
-
       return {
         name: track.name,
         artist: {
           name: track.artist['#text'],
-          url: `https://www.last.fm/music/${sanitizeURL(track.artist['#text'])}`,
+          url: `https://www.last.fm/music/${convertURL(track.artist['#text'])}`,
         },
         album: track.album['#text'] || null,
         url: track.url,
-        image,
+        image: convertImageSizes(track.image),
       };
     });
 
@@ -281,15 +252,6 @@ export default class User {
     });
 
     const albums = album.map((album) => {
-      const image = album.image
-        .filter((i) => ImageSizes.includes(i.size))
-        .map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          } as ImageType;
-        });
-
       return {
         rank: Number(album['@attr'].rank),
         name: album.name,
@@ -299,7 +261,7 @@ export default class User {
           url: album.artist.url,
         },
         url: album.url,
-        image,
+        image: convertImageSizes(album.image),
       };
     });
 
@@ -399,15 +361,6 @@ export default class User {
     });
 
     const tracks = track.map((track) => {
-      const image = track.image
-        .filter((i) => ImageSizes.includes(i.size))
-        .map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          } as ImageType;
-        });
-
       return {
         rank: Number(track['@attr'].rank),
         name: track.name,
@@ -420,7 +373,7 @@ export default class User {
           url: track.artist.url,
         },
         url: track.url,
-        image,
+        image: convertImageSizes(track.image),
       };
     });
 

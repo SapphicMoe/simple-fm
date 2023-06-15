@@ -1,9 +1,8 @@
-import { sanitizeURL } from '@utils/links.js';
+import { convertImageSizes, convertURL } from '@utils/convert.js';
 import { request } from '~/request.js';
-import { ImageSizes } from '~/types/index.js';
 import type {
+  Album,
   Artist,
-  ImageType,
   TrackGetInfoResponse,
   TrackGetSimilarResponse,
   TrackGetTopTagsResponse,
@@ -21,8 +20,7 @@ export default class Track {
    * Fetches and returns metadata information for a track.
    * @param artistName - The name of the artist.
    * @param trackName - The name of the track.
-   * @param userName - The username for the context of the request.
-   * If supplied, the user's playcount for this track and whether they have loved the track is included in the response.
+   * @param userName - The username for the context of the request. If supplied, the user's playcount for this track and whether they have loved the track is included in the response.
    */
   async fetch(artistName: string, trackName: string, userName?: string): Promise<TrackGetInfoType> {
     const {
@@ -45,15 +43,6 @@ export default class Track {
       };
     });
 
-    const image = track.album?.image
-      .filter((i) => ImageSizes.includes(i.size))
-      .map((i) => {
-        return {
-          size: i.size,
-          url: i['#text'],
-        } as ImageType;
-      });
-
     const response = {
       name: track.name,
       duration: Number(track.duration) || null,
@@ -68,7 +57,7 @@ export default class Track {
       album: {
         position: Number(album?.['@attr']?.position) || null,
         name: album?.title || null,
-        image,
+        image: convertImageSizes((album as Album).image),
         url: album?.url || null,
       },
       tags,
@@ -100,15 +89,6 @@ export default class Track {
     });
 
     const tracks = track.map((track) => {
-      const image = track.image
-        .filter((i) => ImageSizes.includes(i.size))
-        .map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          } as ImageType;
-        });
-
       return {
         match: Number(track.match),
         name: track.name,
@@ -119,7 +99,7 @@ export default class Track {
           url: (track.artist as Artist).url,
         },
         url: track.url,
-        image,
+        image: convertImageSizes(track.image),
       };
     });
 
@@ -127,9 +107,9 @@ export default class Track {
       name: trackName,
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
+        url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
-      url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}/_/${sanitizeURL(trackName)}`,
+      url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(trackName)}`,
       tracks,
     } as TrackSimilarType;
   }
@@ -160,9 +140,9 @@ export default class Track {
       name: attr.track,
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
+        url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
-      url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}/_/${sanitizeURL(attr.track)}`,
+      url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(attr.track)}`,
       tags,
     } as TrackTopTagsType;
   }
@@ -192,7 +172,7 @@ export default class Track {
         listeners: Number(track.listeners),
         artist: {
           name: track.artist,
-          url: `https://www.last.fm/music/${sanitizeURL(track.artist)}`,
+          url: `https://www.last.fm/music/${convertURL(track.artist)}`,
         },
 
         url: track.url,

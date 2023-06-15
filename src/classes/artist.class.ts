@@ -1,6 +1,5 @@
-import { sanitizeURL } from '@utils/links.js';
+import { convertImageSizes, convertURL } from '@utils/convert.js';
 import { request } from '~/request.js';
-import { ImageSizes } from '~/types/index.js';
 import type {
   ArtistGetInfoResponse,
   ArtistGetSimilarResponse,
@@ -14,7 +13,6 @@ import type {
   ArtistTopAlbumsType,
   ArtistTopTagsType,
   ArtistTopTracksType,
-  ImageType,
 } from '~/types/index.js';
 
 export default class Artist {
@@ -23,8 +21,7 @@ export default class Artist {
   /**
    * Fetches and returns metadata information for an artist.
    * @param artistName - The name of the artist.
-   * @param userName - The username for the context of the request.
-   * If supplied, the user's playcount for this artist is included in the response.
+   * @param userName - The username for the context of the request. If supplied, the user's playcount for this artist is included in the response.
    * */
   async fetch(artistName: string, userName?: string): Promise<ArtistGetInfoType> {
     const { artist } = await request<ArtistGetInfoResponse>('artist.getInfo', {
@@ -75,7 +72,7 @@ export default class Artist {
       search: {
         artist: {
           name: attr.artist,
-          url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
+          url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
         },
       },
       artists,
@@ -99,15 +96,6 @@ export default class Artist {
     });
 
     const albums = album.map((album) => {
-      const image = album.image
-        .filter((i) => ImageSizes.includes(i.size))
-        .map((i) => {
-          return {
-            size: i.size,
-            url: i['#text'],
-          } as ImageType;
-        });
-
       return {
         name: album.name,
         scrobbles: Number(album.playcount),
@@ -116,7 +104,7 @@ export default class Artist {
           url: album.artist.url,
         },
         url: album.url,
-        image,
+        image: convertImageSizes(album.image),
       };
     });
 
@@ -124,7 +112,7 @@ export default class Artist {
       search: {
         artist: {
           name: attr.artist,
-          url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
+          url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
         },
         page: Number(attr.page),
         itemsPerPage: Number(attr.perPage),
@@ -158,7 +146,7 @@ export default class Artist {
     return {
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
+        url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
       tags,
     } as ArtistTopTagsType;
@@ -200,7 +188,7 @@ export default class Artist {
       search: {
         artist: {
           name: attr.artist,
-          url: `https://www.last.fm/music/${sanitizeURL(attr.artist)}`,
+          url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
         },
         page: Number(attr.page),
         itemsPerPage: Number(attr.perPage),
