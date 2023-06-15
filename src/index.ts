@@ -5,6 +5,7 @@ import Geo from '@classes/geo.class.js';
 import Tag from '@classes/tag.class.js';
 import Track from '@classes/track.class.js';
 import User from '@classes/user.class.js';
+import LastFMError from '@utils/error.js';
 
 export * from '~/types/index.js';
 
@@ -18,7 +19,11 @@ export default class SimpleFMClient {
   readonly user: User;
 
   constructor(private readonly token: string) {
-    if (!token) throw new Error('You have not specified a Last.fm API key.');
+    if (!token)
+      throw new LastFMError({
+        message: 'You have not specified a Last.fm API key. Get one here: https://www.last.fm/api/account/create',
+        error: 6,
+      });
 
     this.album = new Album(token);
     this.artist = new Artist(token);
