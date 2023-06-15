@@ -1,9 +1,8 @@
-name: CI
-on: [push]
+name: simple-fm CI
+on: [push, pull_request]
 
 jobs:
   build:
-    name: Cache, lint and build
     runs-on: ubuntu-latest
 
     steps:
