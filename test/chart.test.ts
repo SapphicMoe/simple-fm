@@ -1,32 +1,32 @@
 import { describe, expect, it } from 'vitest';
 
-import simpleFM from '../src';
+import { ChartGetTopArtistsSchema, ChartGetTopTagsSchema, ChartGetTopTracksSchema } from './schemas/chart.schema.js';
 
-import { ChartTopArtistsSchema, ChartTopTagsSchema, ChartTopTracksSchema } from './schemas/chart.schema';
+import simpleFM from '~/index.js';
 
 const client = new simpleFM(process.env.LASTFM_TOKEN!);
 
 describe('Chart', () => {
   describe('getTopArtists', () => {
     it('Should return top artists', async () => {
-      const data = await client.chart.fetchTopArtists();
+      const data = await client.chart.getTopArtists();
 
-      expect(() => ChartTopArtistsSchema.parse(data.artists)).not.toThrow();
+      expect(() => ChartGetTopArtistsSchema.parse(data.artists)).not.toThrow();
     });
   });
 
   describe('getTopTags', () => {
     it('Should return top tags', async () => {
-      const data = await client.chart.fetchTopTags();
-      expect(() => ChartTopTagsSchema.parse(data.tags)).not.toThrow();
+      const data = await client.chart.getTopTags();
+      expect(() => ChartGetTopTagsSchema.parse(data.tags)).not.toThrow();
     });
   });
 
   describe('getTopTracks', () => {
     it('Should return top tracks', async () => {
-      const data = await client.chart.fetchTopTracks();
+      const data = await client.chart.getTopTracks();
 
-      expect(() => ChartTopTracksSchema.parse(data.tracks)).not.toThrow();
+      expect(() => ChartGetTopTracksSchema.parse(data.tracks)).not.toThrow();
     });
   });
 });

@@ -1,32 +1,32 @@
 import { describe, expect, it } from 'vitest';
 
-import simpleFM from '../src';
-
 import {
-  UserArtistsSchema,
-  UserFriendsSchema,
+  UserGetFriendsSchema,
   UserGetInfoSchema,
-  UserLovedTracksSchema,
-  UserPersonalTagsSchema,
-  UserRecentTrackSchema,
-  UserTopAlbumsSchema,
-  UserTopTagsSchema,
-  UserTopTracksSchema,
-} from './schemas/user.schema';
+  UserGetLovedTracksSchema,
+  UserGetPersonalTagsSchema,
+  UserGetRecentTracksSchema,
+  UserGetTopAlbumsSchema,
+  UserGetTopArtistsSchema,
+  UserGetTopTagsSchema,
+  UserGetTopTracksSchema,
+} from './schemas/user.schema.js';
+
+import simpleFM from '~/index.js';
 
 const client = new simpleFM(process.env.LASTFM_TOKEN!);
 
 describe('User', () => {
   describe('getInfo', () => {
     it('Should return info about a user', async () => {
-      const data = await client.user.fetch('solelychloe');
+      const data = await client.user.getInfo({ username: 'solelychloe' });
 
       expect(() => UserGetInfoSchema.parse(data)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.fetch('102edgreth');
+        const data = await client.user.getInfo({ username: '102edgreth' });
 
         expect(() => UserGetInfoSchema.parse(data)).toThrow();
       } catch (err) {
@@ -37,16 +37,16 @@ describe('User', () => {
 
   describe('getFriends', () => {
     it('Should return a list of friends for a user', async () => {
-      const data = await client.user.fetchFriends('megumin');
+      const data = await client.user.getFriends({ username: 'megumin' });
 
-      expect(() => UserFriendsSchema.parse(data.friends)).not.toThrow();
+      expect(() => UserGetFriendsSchema.parse(data.friends)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.fetchFriends('102edgreth');
+        const data = await client.user.getFriends({ username: '102edgreth' });
 
-        expect(() => UserFriendsSchema.parse(data)).toThrow();
+        expect(() => UserGetFriendsSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('User not found');
       }
@@ -55,16 +55,16 @@ describe('User', () => {
 
   describe('getLovedTracks', () => {
     it("Should return a user's loved tracks", async () => {
-      const data = await client.user.fetchLovedTracks('Ovyerus');
+      const data = await client.user.getLovedTracks({ username: 'Ovyerus' });
 
-      expect(() => UserLovedTracksSchema.parse(data.tracks)).not.toThrow();
+      expect(() => UserGetLovedTracksSchema.parse(data.tracks)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.fetchLovedTracks('102edgreth');
+        const data = await client.user.getLovedTracks({ username: '102edgreth' });
 
-        expect(() => UserLovedTracksSchema.parse(data)).toThrow();
+        expect(() => UserGetLovedTracksSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('User not found');
       }
@@ -73,16 +73,16 @@ describe('User', () => {
 
   describe('getPersonalTags', () => {
     it("Should return a user's personal tags", async () => {
-      const data = await client.user.fetchPersonalTags('rj', 'rock', 'artist');
+      const data = await client.user.getPersonalTags({ username: 'rj', tag: 'rock', tagType: 'artist' });
 
-      expect(() => UserPersonalTagsSchema.parse(data.response)).not.toThrow();
+      expect(() => UserGetPersonalTagsSchema.parse(data.response)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.fetchPersonalTags('102edgreth', 'mrrow', 'album');
+        const data = await client.user.getPersonalTags({ username: '102edgreth', tag: 'mrrow', tagType: 'album' });
 
-        expect(() => UserPersonalTagsSchema.parse(data)).toThrow();
+        expect(() => UserGetPersonalTagsSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('User not found');
       }
@@ -91,16 +91,16 @@ describe('User', () => {
 
   describe('getRecentTracks', () => {
     it('Should return a list of recent tracks listened by this user', async () => {
-      const data = await client.user.fetchRecentTracks('kanb');
+      const data = await client.user.getRecentTracks({ username: 'kanb' });
 
-      expect(() => UserRecentTrackSchema.parse(data.tracks)).not.toThrow();
+      expect(() => UserGetRecentTracksSchema.parse(data.tracks)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.fetchRecentTracks('102edgreth');
+        const data = await client.user.getRecentTracks({ username: '102edgreth' });
 
-        expect(() => UserRecentTrackSchema.parse(data)).toThrow();
+        expect(() => UserGetRecentTracksSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('User not found');
       }
@@ -109,16 +109,16 @@ describe('User', () => {
 
   describe('getTopAlbums', () => {
     it('Should return a list of the top listened albums for this user', async () => {
-      const data = await client.user.fetchTopAlbums('kotdev');
+      const data = await client.user.getTopAlbums({ username: 'kotdev' });
 
-      expect(() => UserTopAlbumsSchema.parse(data.albums)).not.toThrow();
+      expect(() => UserGetTopAlbumsSchema.parse(data.albums)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.fetchTopAlbums('102edgreth');
+        const data = await client.user.getTopAlbums({ username: '102edgreth' });
 
-        expect(() => UserTopAlbumsSchema.parse(data)).toThrow();
+        expect(() => UserGetTopAlbumsSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('User not found');
       }
@@ -127,16 +127,16 @@ describe('User', () => {
 
   describe('getArtists', () => {
     it('Should return a list of the top listened artists by this user', async () => {
-      const data = await client.user.fetchTopArtists('lewisakura');
+      const data = await client.user.getTopArtists({ username: 'lewisakura' });
 
-      expect(() => UserArtistsSchema.parse(data.artists)).not.toThrow();
+      expect(() => UserGetTopArtistsSchema.parse(data.artists)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.fetchTopArtists('102edgreth');
+        const data = await client.user.getTopArtists({ username: '102edgreth' });
 
-        expect(() => UserArtistsSchema.parse(data)).toThrow();
+        expect(() => UserGetTopArtistsSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('User not found');
       }
@@ -145,16 +145,16 @@ describe('User', () => {
 
   describe('getTopTags', () => {
     it('Should return a list of the top listened tracks/albums by tags for this user', async () => {
-      const data = await client.user.fetchTopTags('rj');
+      const data = await client.user.getTopTags({ username: 'rj' });
 
-      expect(() => UserTopTagsSchema.parse(data.tags)).not.toThrow();
+      expect(() => UserGetTopTagsSchema.parse(data.tags)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.fetchTopTags('102edgreth');
+        const data = await client.user.getTopTags({ username: '102edgreth' });
 
-        expect(() => UserTopTagsSchema.parse(data)).toThrow();
+        expect(() => UserGetTopTagsSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('User not found');
       }
@@ -163,16 +163,16 @@ describe('User', () => {
 
   describe('getTopTracks', () => {
     it('Should return a list of the top listened tracks for this user', async () => {
-      const data = await client.user.fetchTopTracks('Vininator');
+      const data = await client.user.getTopTracks({ username: 'Vininator' });
 
-      expect(() => UserTopTracksSchema.parse(data.tracks)).not.toThrow();
+      expect(() => UserGetTopTracksSchema.parse(data.tracks)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.fetchTopTracks('102edgreth');
+        const data = await client.user.getTopTracks({ username: '102edgreth' });
 
-        expect(() => UserTopTracksSchema.parse(data)).toThrow();
+        expect(() => UserGetTopTracksSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('User not found');
       }

@@ -1,15 +1,15 @@
 import { z, ZodObject, ZodRawShape, UnknownKeysParam, ZodTypeAny } from 'zod';
 
-import { ChartTopArtistsType, ChartTopTagsType, ChartTopTracksType } from '../../src/types';
+import { ChartGetTopArtistsType, ChartGetTopTagsType, ChartGetTopTracksType } from '~/types/chart.type.js';
 
-export const ChartTopArtistsSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, ChartTopArtistsType>
+export const ChartGetTopArtistsSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, ChartGetTopArtistsType>
 );
 
-export const ChartTopTagsSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, ChartTopTagsType>
+export const ChartGetTopTagsSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, ChartGetTopTagsType>
 );
 
-export const ChartTopTracksSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, ChartTopTracksType>
+export const ChartGetTopTracksSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, ChartGetTopTracksType>
 );

@@ -2,45 +2,45 @@ import { z, ZodObject, ZodRawShape, UnknownKeysParam, ZodTypeAny } from 'zod';
 
 import {
   UserGetInfoType,
-  UserLovedTracksType,
-  UserPersonalTagsType,
-  UserRecentTrackType,
-  UserTopAlbumsType,
-  UserTopArtistsType,
-  UserTopTagsType,
-  UserTopTracksType,
-} from '../../src/types';
+  UserGetLovedTracksType,
+  UserGetPersonalTagsType,
+  UserGetRecentTracksType,
+  UserGetTopAlbumsType,
+  UserGetTopArtistsType,
+  UserGetTopTagsType,
+  UserGetTopTracksType,
+} from '~/types/user.type.js';
 
-export const UserArtistsSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserTopArtistsType>
-);
-
-export const UserFriendsSchema = z.array(
+export const UserGetFriendsSchema = z.array(
   z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetInfoType>
 );
 
 export const UserGetInfoSchema = z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetInfoType>;
 
-export const UserLovedTracksSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserLovedTracksType>
+export const UserGetLovedTracksSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetLovedTracksType>
 );
 
-export const UserPersonalTagsSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserPersonalTagsType>
+export const UserGetPersonalTagsSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetPersonalTagsType>
 );
 
-export const UserRecentTrackSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserRecentTrackType>
+export const UserGetRecentTracksSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetRecentTracksType>
 );
 
-export const UserTopAlbumsSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserTopAlbumsType>
+export const UserGetTopAlbumsSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetTopAlbumsType>
 );
 
-export const UserTopTagsSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserTopTagsType>
+export const UserGetTopArtistsSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetTopArtistsType>
 );
 
-export const UserTopTracksSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserTopTracksType>
+export const UserGetTopTagsSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetTopTagsType>
+);
+
+export const UserGetTopTracksSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetTopTracksType>
 );

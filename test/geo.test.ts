@@ -1,24 +1,24 @@
 import { describe, expect, it } from 'vitest';
 
-import simpleFM from '../src';
+import { GeoGetTopArtistsSchema, GeoGetTopTracksSchema } from './schemas/geo.schema.js';
 
-import { GeoArtistSchema, GeoTrackSchema } from './schemas/geo.schema';
+import simpleFM from '~/index.js';
 
 const client = new simpleFM(process.env.LASTFM_TOKEN!);
 
 describe('Geo', () => {
   describe('getTopArtists', () => {
     it('Should return top artists from a country', async () => {
-      const data = await client.geo.fetchTopArtists('Canada');
+      const data = await client.geo.getTopArtists({ country: 'Canada' });
 
-      expect(() => GeoArtistSchema.parse(data.artists)).not.toThrow();
+      expect(() => GeoGetTopArtistsSchema.parse(data.artists)).not.toThrow();
     });
 
     it('Should error when the country is invalid', async () => {
       try {
-        const data = await client.geo.fetchTopArtists('Texas');
+        const data = await client.geo.getTopArtists({ country: 'Texas' });
 
-        expect(() => GeoArtistSchema.parse(data)).toThrow();
+        expect(() => GeoGetTopArtistsSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('country param invalid');
       }
@@ -27,16 +27,16 @@ describe('Geo', () => {
 
   describe('getTopTracks', () => {
     it('Should return top tracks from a country', async () => {
-      const data = await client.geo.fetchTopTracks('New Zealand');
+      const data = await client.geo.getTopTracks({ country: 'New Zealand' });
 
-      expect(() => GeoTrackSchema.parse(data.tracks)).not.toThrow();
+      expect(() => GeoGetTopTracksSchema.parse(data.tracks)).not.toThrow();
     });
 
     it('Should error when the country is invalid', async () => {
       try {
-        const data = await client.geo.fetchTopTracks('Texas');
+        const data = await client.geo.getTopTracks({ country: 'Texas' });
 
-        expect(() => GeoTrackSchema.parse(data)).toThrow();
+        expect(() => GeoGetTopTracksSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('country param required');
       }

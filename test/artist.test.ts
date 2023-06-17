@@ -1,28 +1,28 @@
 import { describe, expect, it } from 'vitest';
 
-import simpleFM from '../src';
-
 import {
   ArtistGetInfoSchema,
-  ArtistSimilarSchema,
-  ArtistTopAlbumsSchema,
-  ArtistTopTagsSchema,
-  ArtistTopTracksSchema,
-} from './schemas/artist.schema';
+  ArtistGetSimilarSchema,
+  ArtistGetTopAlbumsSchema,
+  ArtistGetTopTagsSchema,
+  ArtistGetTopTracksSchema,
+} from './schemas/artist.schema.js';
+
+import simpleFM from '~/index.js';
 
 const client = new simpleFM(process.env.LASTFM_TOKEN!);
 
 describe('Artist', () => {
   describe('getInfo', () => {
     it('Should return info about an artist', async () => {
-      const data = await client.artist.fetch('Nirvana');
+      const data = await client.artist.getInfo({ artist: 'Nirvana' });
 
       expect(() => ArtistGetInfoSchema.parse(data)).not.toThrow();
     });
 
     it("Should error when the artist doesn't exist", async () => {
       try {
-        const data = await client.artist.fetch('rj-9wugh');
+        const data = await client.artist.getInfo({ artist: 'rj-9wugh' });
 
         expect(() => ArtistGetInfoSchema.parse(data)).toThrow();
       } catch (err) {
@@ -33,16 +33,16 @@ describe('Artist', () => {
 
   describe('getSimilar', () => {
     it('Should return similar artists from a query', async () => {
-      const data = await client.artist.fetchSimilar('Paramore');
+      const data = await client.artist.getSimilar({ artist: 'Paramore' });
 
-      expect(() => ArtistSimilarSchema.parse(data.artists)).not.toThrow();
+      expect(() => ArtistGetSimilarSchema.parse(data.artists)).not.toThrow();
     });
 
     it("Should error when the artist doesn't exist", async () => {
       try {
-        const data = await client.artist.fetchSimilar('rj-9wugh');
+        const data = await client.artist.getSimilar({ artist: 'rj-9wugh' });
 
-        expect(() => ArtistSimilarSchema.parse(data)).toThrow();
+        expect(() => ArtistGetSimilarSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
       }
@@ -51,16 +51,16 @@ describe('Artist', () => {
 
   describe('getTopAlbums', () => {
     it("Should return an artist's top albums", async () => {
-      const data = await client.artist.fetchTopAlbums('blink-182');
+      const data = await client.artist.getTopAlbums({ artist: 'blink-182' });
 
-      expect(() => ArtistTopAlbumsSchema.parse(data.albums)).not.toThrow();
+      expect(() => ArtistGetTopAlbumsSchema.parse(data.albums)).not.toThrow();
     });
 
     it("Should error when the artist doesn't exist", async () => {
       try {
-        const data = await client.artist.fetchTopAlbums('rj-9wugh');
+        const data = await client.artist.getTopAlbums({ artist: 'rj-9wugh' });
 
-        expect(() => ArtistTopAlbumsSchema.parse(data)).toThrow();
+        expect(() => ArtistGetTopAlbumsSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
       }
@@ -69,16 +69,16 @@ describe('Artist', () => {
 
   describe('getTopTags', () => {
     it("Should return an artist's top tags", async () => {
-      const data = await client.artist.fetchTopTags('Porter Robinson');
+      const data = await client.artist.getTopTags({ artist: 'Porter Robinson' });
 
-      expect(() => ArtistTopTagsSchema.parse(data.tags)).not.toThrow();
+      expect(() => ArtistGetTopTagsSchema.parse(data.tags)).not.toThrow();
     });
 
     it("Should error when the artist doesn't exist", async () => {
       try {
-        const data = await client.artist.fetchTopTags('rj-9wugh');
+        const data = await client.artist.getTopTags({ artist: 'rj-9wugh' });
 
-        expect(() => ArtistTopTagsSchema.parse(data)).toThrow();
+        expect(() => ArtistGetTopTagsSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
       }
@@ -87,15 +87,15 @@ describe('Artist', () => {
 
   describe('getTopTracks', () => {
     it("Should return an artist's top tracks", async () => {
-      const data = await client.artist.fetchTopTracks('Muse');
+      const data = await client.artist.getTopTracks({ artist: 'Muse' });
 
-      expect(() => ArtistTopTracksSchema.parse(data.tracks)).not.toThrow();
+      expect(() => ArtistGetTopTracksSchema.parse(data.tracks)).not.toThrow();
     });
     it("Should error when the artist doesn't exist", async () => {
       try {
-        const data = await client.artist.fetchTopTracks('rj-9wugh');
+        const data = await client.artist.getTopTracks({ artist: 'rj-9wugh' });
 
-        expect(() => ArtistTopTracksSchema.parse(data)).toThrow();
+        expect(() => ArtistGetTopTracksSchema.parse(data)).toThrow();
       } catch (err) {
         if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
       }

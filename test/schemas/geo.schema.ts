@@ -1,11 +1,11 @@
 import { z, ZodObject, ZodRawShape, UnknownKeysParam, ZodTypeAny } from 'zod';
 
-import { GeoArtistType, GeoTrackType } from '../../src/types';
+import { GeoGetTopArtistsType, GeoGetTopTracksType } from '~/types/geo.type.js';
 
-export const GeoArtistSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, GeoArtistType>
+export const GeoGetTopArtistsSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, GeoGetTopArtistsType>
 );
 
-export const GeoTrackSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, GeoTrackType>
+export const GeoGetTopTracksSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, GeoGetTopTracksType>
 );

@@ -2,26 +2,26 @@ import { z, ZodObject, ZodRawShape, UnknownKeysParam, ZodTypeAny } from 'zod';
 
 import {
   TagGetInfoType,
-  TagTopAlbumsType,
-  TagTopArtistsType,
-  TagTopTracksType,
-  TagWeeklyChartListType,
-} from '../../src/types';
+  TagGetTopAlbumsType,
+  TagGetTopArtistsType,
+  TagGetTopTracksType,
+  TagGetWeeklyChartListType,
+} from '~/types/tag.type.js';
 
 export const TagGetInfoSchema = z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagGetInfoType>;
 
-export const TagTopAlbumsSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagTopAlbumsType>
+export const TagGetTopAlbumsSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagGetTopAlbumsType>
 );
 
-export const TagTopArtistsSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagTopArtistsType>
+export const TagGetTopArtistsSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagGetTopArtistsType>
 );
 
-export const TagTopTracksSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagTopTracksType>
+export const TagGetTopTracksSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagGetTopTracksType>
 );
 
-export const TagWeeklyChartListSchema = z.array(
-  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagWeeklyChartListType>
+export const TagGetWeeklyChartListSchema = z.array(
+  z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagGetWeeklyChartListType>
 );
