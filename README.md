@@ -23,22 +23,22 @@ a lot more.
 
 # Notice
 
-`simple-fm` requires you to have a Last.fm API token.
+`simple-fm` requires you to have a Last.fm API key.
 
-To obtain a Last.fm API token, click [here to register an API account][last-fm-api].
+To obtain a Last.fm API key, click [here to register an API account][last-fm-api].
 
 # Example usage
 
 ```ts
 // Import the simple-fm package.
-import simpleFM from '@solely/simple-fm'; // ESM
-const simpleFM = require('@solely/simple-fm'); // CommonJS
+import SimpleFM from '@solely/simple-fm'; // ESM
+const SimpleFM = require('@solely/simple-fm'); // CommonJS
 
-// Replace the token with your Last.fm token.
-const client = new simpleFM('last.fm token');
+// Replace the token with your Last.fm API key.
+const client = new SimpleFM('Last.fm API key');
 
 // Fetch the recent track from a user.
-const json = await client.user.fetchRecentTracks('solelychloe');
+const json = await client.user.getRecentTracks({ user: 'solelychloe' });
 
 console.log(json);
 // => { search: { user: 'solelychloe', nowPlaying: true, ... }, tracks: [...] }
@@ -54,111 +54,111 @@ import simpleFM from 'https://esm.sh/@solely/simple-fm';
 
 ## album
 
-### album.fetch(artistName, albumName, userName?)
+### album.getInfo({ artist, album, username? })
 
-_Fetches and returns metadata information for an album._
+_Returns metadata information for an album._
 
-- #### `artistName` (string): The name of the artist.
-- #### `albumName` (string): The name of the album.
-- #### `userName?` (string): The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
+- #### `artist` (string): The name of the artist.
+- #### `album` (string): The name of the album.
+- #### `username?` (string): The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
 
-### album.fetchTopTags(artistName, albumName)
+### album.getTopTags({ artist, album })
 
-_Fetches and returns popular tags for an album._
+_Returns popular tags for an album._
 
-- #### `artistName` (string): The name of the artist.
-- #### `albumName` (string): The name of the album.
+- #### `artist` (string): The name of the artist.
+- #### `album` (string): The name of the album.
 
-### album.search(albumName, limit?, page?)
+### album.search({ album, limit?, page? })
 
 _Search for an album by name._
 
-- #### `albumName` (string): The name of the album.
+- #### `album` (string): The name of the album.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 30.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
 ## artist
 
-### artist.fetch(artistName, userName?)
+### artist.getInfo({ artist, username? })
 
-_Fetches and returns metadata information for an artist._
+_Returns metadata information for an artist._
 
-- #### `artistName` (string): The artist's name.
-- #### `userName?` (string): The username for the context of the request. If supplied, the user's playcount for this artist is included in the response.
+- #### `artist` (string): The artist's name.
+- #### `username?` (string): The username for the context of the request. If supplied, the user's playcount for this artist is included in the response.
 
-### artist.fetchSimilar(artistName, limit?)
+### artist.getSimilar({ artist, limit? })
 
-_Fetches and returns similar artists to this artist._
+_Returns similar artists to this artist._
 
-- #### `artistName` (string): The artist's name.
+- #### `artist` (string): The artist's name.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 30.
 
-### artist.fetchTopAlbums(artistName, limit?, page?)
+### artist.getTopAlbums({ artist, limit?, page? })
 
-_Fetches and returns popular albums for an artist._
+_Returns popular albums for an artist._
 
-- #### `artistName` (string): The artist's name.
+- #### `artist` (string): The artist's name.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### artist.fetchTopTags(artistName)
+### artist.getTopTags({ artist })
 
-_Fetches and returns popular tags for an artist._
+_Returns popular tags for an artist._
 
-- #### `artistName` (string): The artist's name.
+- #### `artist` (string): The artist's name.
 
-### artist.fetchTopTracks(artistName, limit?, page?)
+### artist.getTopTracks({ artist, limit?, page? })
 
-_Fetches and returns popular tracks for an artist._
+_Returns popular tracks for an artist._
 
-- #### `artistName` (string): The artist's name.
+- #### `artist` (string): The artist's name.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### artist.search(artistName, limit?, page?)
+### artist.search({ artist, limit?, page? })
 
 _Search for an artist by name._
 
-- #### `artistName` (string): The artist's name.
+- #### `artist` (string): The artist's name.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 30.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
 ## chart
 
-### chart.fetchTopArtists(limit?, page?)
+### chart.getTopArtists({ limit?, page? })
 
-_Fetches and returns the most popular artists._
-
-- #### `limit?` (number): The number of results to fetch per page. Defaults to 30.
-- #### `page?` (number): The page number to fetch. Defaults to the first page.
-
-### chart.fetchTopTags(limit?, page?)
-
-_Fetches and returns the most popular tags for tracks._
+_Returns the most popular artists._
 
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 30.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### chart.fetchTopTracks(limit?, page?)
+### chart.getTopTags({ limit?, page? })
 
-_Fetches and returns the most popular tracks._
+_Returns the most popular tags for tracks._
+
+- #### `limit?` (number): The number of results to fetch per page. Defaults to 30.
+- #### `page?` (number): The page number to fetch. Defaults to the first page.
+
+### chart.getTopTracks({ limit?, page? })
+
+_Returns the most popular tracks._
 
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 30.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
 ## geo
 
-### geo.fetchTopArtists(country, limit?, page?)
+### geo.getTopArtists({ country, limit?, page? })
 
-_Fetches and returns the most popular artists by country._
+_Returns the most popular artists by country._
 
 - #### `country` (string): The name of the country.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### geo.fetchTopTracks(country, limit?, page?)
+### geo.getTopTracks({ country, limit?, page? })
 
-_Fetches and returns the most popular tracks by country._
+_Returns the most popular tracks by country._
 
 - #### `country` (string): The name of the country.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
@@ -166,136 +166,136 @@ _Fetches and returns the most popular tracks by country._
 
 ## tag
 
-### tag.fetch(tagName)
+### tag.getInfo({ tag })
 
-_Fetches and returns metadata information on a tag._
+_Returns metadata information on a tag._
 
-- #### `tagName` (string): The name of the tag.
+- #### `tag` (string): The name of the tag.
 
-### tag.fetchTopAlbums(tagName, limit?, page?)
+### tag.getTopAlbums({ tag, limit?, page? })
 
-- #### `tagName` (string): The name of the tag.
+- #### `tag` (string): The name of the tag.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### tag.fetchTopArtists(tagName, limit?, page?)
+### tag.getTopArtists({ tag, limit?, page? })
 
-- #### `tagName` (string): The name of the tag.
+- #### `tag` (string): The name of the tag.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### tag.fetchTopTracks(tagName, limit?, page?)
+### tag.getTopTracks({ tag, limit?, page? })
 
-_Fetches and returns popular tracks for a tag._
+_Returns popular tracks for a tag._
 
-- #### `tagName` (string): The name of the tag.
+- #### `tag` (string): The name of the tag.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### tag.fetchWeeklyChartList(tagName)
+### tag.getWeeklyChartList({ tag })
 
-_Fetches and returns a list of available charts for a tag._
+_Returns a list of available charts for a tag._
 
-- #### `tagName` (string): The name of the tag.
+- #### `tag` (string): The name of the tag.
 
 ## track
 
-### track.fetch(artistName, trackName, userName?)
+### track.getInfo({ artist, track, username? })
 
-_Fetches and returns metadata information for a track._
+_Returns metadata information for a track._
 
-- #### `artistName` (string): The name of the artist.
-- #### `trackName` (string): The name of the track.
+- #### `artist` (string): The name of the artist.
+- #### `track` (string): The name of the track.
 
-### track.fetchSimilar(artistName, trackName, limit?)
+### track.getSimilar({ artist, track, limit? })
 
-_Fetches and returns similar tracks for this track._
+_Returns similar tracks for this track._
 
-- #### `artistName` (string): The name of the artist.
-- #### `trackName` (string): The name of the track.
+- #### `artist` (string): The name of the artist.
+- #### `track` (string): The name of the track.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 30.
 
-### track.fetchTopTags(artistName, trackName)
+### track.getTopTags({ artist, track })
 
-_Fetches and returns popular tags for a track._
+_Returns popular tags for a track._
 
-- #### `artistName` (string): The name of the artist.
-- #### `trackName` (string): The name of the track.
+- #### `artist` (string): The name of the artist.
+- #### `track` (string): The name of the track.
 
-### track.search(trackName, limit?, page?)
+### track.search({ track, limit?, page? })
 
 _Search for a track by name._
 
-- #### `trackName` (string): The name of the track.
+- #### `track` (string): The name of the track.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 30.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
 ## user
 
-### user.fetch(userName)
+### user.getInfo({ username })
 
-_Fetches and returns information about a user's profile._
+_Returns information about a user's profile._
 
-- #### `userName` (string): The name of the user.
+- #### `username` (string): The name of the user.
 
-### user.fetchAllArtists(userName, limit?, page?)
+### user.getTopArtists({ username, limit?, page? })
 
-_Fetches and returns a list of all the artists in a user's library._
+_Returns a list of popular artists in a user's library._
 
-- #### `userName` (string): The name of the user.
+- #### `username` (string): The name of the user.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### user.fetchFriends(userName, limit?, page?)
+### user.getFriends({ username, limit?, page? })
 
-_Fetches and returns a list of the user's friends._
+_Returns a list of the user's friends._
 
-- #### `userName` (string): The name of the user.
+- #### `username` (string): The name of the user.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### user.fetchLovedTracks(userName, limit?, page?)
+### user.getLovedTracks({ username, limit?, page? })
 
-_Fetches and returns the loved tracks as set by the user._
+_Returns the loved tracks as set by the user._
 
-- #### `userName` (string): The name of the user.
+- #### `username` (string): The name of the user.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### user.fetchPersonalTags(userName, tagName, tagType)
+### user.getPersonalTags({ username, tag, tagType })
 
-_Fetches and returns a list of the user's personal tags._
+_Returns a list of the user's personal tags._
 
-- #### `userName` (string): The name of the user.
-- #### `tagName` (string): The name of the tag.
+- #### `username` (string): The name of the user.
+- #### `tag` (string): The name of the tag.
 - #### `tagType` (album, artist, track): The type of items which have been tagged.
 
-### user.fetchRecentTracks(userName, limit?, page?)
+### user.getRecentTracks({ username, limit?, page? })
 
-_Fetches and returns the most recent track listened by the user._
+_Returns the most recent track listened by the user._
 
-- #### `userName` (string): The name of the user.
+- #### `username` (string): The name of the user.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50. Maximum is 200.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### user.fetchTopAlbums
+### user.getTopAlbums({ username, limit?, page? })
 
-_Fetches and returns a list of popular albums in a user's library._
+_Returns a list of popular albums in a user's library._
 
-- #### `userName` (string): The name of the user.
+- #### `username` (string): The name of the user.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
-### user.fetchTopTags(userName, limit?)
+### user.getTopTags({ username, limit? })
 
-- #### `userName` (string): The name of the user.
+- #### `username` (string): The name of the user.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 
-### user.fetchTopTracks(userName, limit?, page?)
+### user.getTopTracks({ username, limit?, page? })
 
-_Fetches and returns a list of popular tracks in a user's library._
+_Returns a list of popular tracks in a user's library._
 
-- #### `userName` (string): The name of the user.
+- #### `username` (string): The name of the user.
 - #### `limit?` (number): The number of results to fetch per page. Defaults to 50.
 - #### `page?` (number): The page number to fetch. Defaults to the first page.
 
