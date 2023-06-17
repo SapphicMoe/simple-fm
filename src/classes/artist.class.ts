@@ -1,5 +1,5 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
-import { request } from '~/request.js';
+import Base from '~/base.js';
 import type {
   ArtistGetInfoResponse,
   ArtistGetSimilarResponse,
@@ -9,25 +9,32 @@ import type {
   ArtistSearchResponse,
   ArtistGetInfoType,
   ArtistSearchType,
-  ArtistSimilarType,
-  ArtistTopAlbumsType,
-  ArtistTopTagsType,
-  ArtistTopTracksType,
+  ArtistGetSimilarType,
+  ArtistGetTopAlbumsType,
+  ArtistGetTopTagsType,
+  ArtistGetTopTracksType,
 } from '~/types/index.js';
 
-export default class Artist {
-  constructor(private readonly token: string) {}
+import type {
+  ArtistGetInfoParams,
+  ArtistGetSimilarParams,
+  ArtistGetTopAlbumsParams,
+  ArtistGetTopTagsParams,
+  ArtistGetTopTracksParams,
+  ArtistSearchParams,
+} from '@params/artist.params.js';
 
+export default class Artist extends Base {
   /**
-   * Fetches and returns metadata information for an artist.
-   * @param artistName - The name of the artist.
-   * @param userName - The username for the context of the request. If supplied, the user's playcount for this artist is included in the response.
+   * Returns metadata information for an artist.
+   * @param artist - The name of the artist.
+   * @param username - The username for the context of the request. If supplied, the user's playcount for this artist is included in the response.
    * */
-  async fetch(artistName: string, userName?: string): Promise<ArtistGetInfoType> {
-    const { artist } = await request<ArtistGetInfoResponse>('artist.getInfo', {
-      artist: artistName,
-      username: userName,
-      api_key: this.token,
+  async getInfo(params: ArtistGetInfoParams): Promise<ArtistGetInfoType> {
+    const { artist } = await this.sendRequest<ArtistGetInfoResponse>({
+      method: 'artist.getInfo',
+      artist: params.artist,
+      username: params.username,
     });
 
     const response = {
@@ -41,23 +48,23 @@ export default class Artist {
       url: artist.url,
     } as ArtistGetInfoType;
 
-    if (userName) response.stats.userPlayCount = Number(artist.stats.userplaycount);
+    if (params.username) response.stats.userPlayCount = Number(artist.stats.userplaycount);
 
     return response;
   }
 
   /**
-   * Fetches and returns similar artists to this artist.
-   * @param artistName - The name of the artist.
+   * Returns similar artists to this artist.
+   * @param artist - The name of the artist.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * */
-  async fetchSimilar(artistName: string, limit = 30): Promise<ArtistSimilarType> {
+  async getSimilar(params: ArtistGetSimilarParams): Promise<ArtistGetSimilarType> {
     const {
       similarartists: { artist, '@attr': attr },
-    } = await request<ArtistGetSimilarResponse>('artist.getSimilar', {
-      artist: artistName,
-      api_key: this.token,
-      limit,
+    } = await this.sendRequest<ArtistGetSimilarResponse>({
+      method: 'artist.getSimilar',
+      artist: params.artist,
+      limit: params.limit ?? 30,
     });
 
     const artists = artist.map((artist) => {
@@ -76,23 +83,23 @@ export default class Artist {
         },
       },
       artists,
-    } as ArtistSimilarType;
+    } as ArtistGetSimilarType;
   }
 
   /**
-   * Fetches and returns popular albums for an artist.
-   * @param artistName - The name of the artist.
+   * Returns popular albums for an artist.
+   * @param artist - The name of the artist.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopAlbums(artistName: string, limit = 50, page = 1): Promise<ArtistTopAlbumsType> {
+  async getTopAlbums(params: ArtistGetTopAlbumsParams): Promise<ArtistGetTopAlbumsType> {
     const {
       topalbums: { album, '@attr': attr },
-    } = await request<ArtistGetTopAlbumsResponse>('artist.getTopAlbums', {
-      artist: artistName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<ArtistGetTopAlbumsResponse>({
+      method: 'artist.getTopAlbums',
+      artist: params.artist,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const albums = album.map((album) => {
@@ -120,19 +127,19 @@ export default class Artist {
         totalResults: Number(attr.total),
       },
       albums,
-    } as ArtistTopAlbumsType;
+    } as ArtistGetTopAlbumsType;
   }
 
   /**
-   * Fetches and returns popular tags for an artist.
-   * @param artistName - The name of the artist.
+   * Returns popular tags for an artist.
+   * @param artist - The name of the artist.
    * */
-  async fetchTopTags(artistName: string): Promise<ArtistTopTagsType> {
+  async getTopTags(params: ArtistGetTopTagsParams): Promise<ArtistGetTopTagsType> {
     const {
       toptags: { tag, '@attr': attr },
-    } = await request<ArtistGetTopTagsResponse>('artist.getTopTags', {
-      artist: artistName,
-      api_key: this.token,
+    } = await this.sendRequest<ArtistGetTopTagsResponse>({
+      method: 'artist.getTopTags',
+      artist: params.artist,
     });
 
     const tags = tag.map((tag) => {
@@ -149,23 +156,23 @@ export default class Artist {
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
       tags,
-    } as ArtistTopTagsType;
+    } as ArtistGetTopTagsType;
   }
 
   /**
-   * Fetches and returns popular tracks for an artist.
-   * @param artistName - The name of the artist.
+   * Returns popular tracks for an artist.
+   * @param artist - The name of the artist.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(artistName: string, limit = 50, page = 1): Promise<ArtistTopTracksType> {
+  async getTopTracks(params: ArtistGetTopTracksParams): Promise<ArtistGetTopTracksType> {
     const {
       toptracks: { track, '@attr': attr },
-    } = await request<ArtistGetTopTracksResponse>('artist.getTopTracks', {
-      artist: artistName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<ArtistGetTopTracksResponse>({
+      method: 'artist.getTopTracks',
+      artist: params.artist,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const tracks = track.map((track) => {
@@ -196,26 +203,26 @@ export default class Artist {
         totalResults: Number(attr.total),
       },
       tracks,
-    } as ArtistTopTracksType;
+    } as ArtistGetTopTracksType;
   }
 
   /**
    * Search for an artist by name.
-   * @param artistName - The name of the artist.
+   * @param artist - The name of the artist.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async search(artistName: string, limit = 30, page = 1): Promise<ArtistSearchType> {
+  async search(params: ArtistSearchParams): Promise<ArtistSearchType> {
     const {
       results,
       results: {
         artistmatches: { artist },
       },
-    } = await request<ArtistSearchResponse>('artist.search', {
-      artist: artistName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<ArtistSearchResponse>({
+      method: 'artist.search',
+      artist: params.artist,
+      limit: params.limit ?? 30,
+      page: params.page ?? 1,
     });
 
     const artists = artist.map((artist) => {

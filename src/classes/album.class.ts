@@ -1,5 +1,5 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
-import { request } from '~/request.js';
+import Base from '~/base.js';
 import type {
   AlbumGetInfoResponse,
   AlbumGetTopTagsResponse,
@@ -9,27 +9,27 @@ import type {
   AlbumSearchType,
 } from '~/types/index.js';
 
-export default class Album {
-  constructor(private readonly token: string) {}
+import type { AlbumGetInfoParams, AlbumGetTopTagsParams, AlbumSearchParams } from '@params/album.params.js';
 
+export default class Album extends Base {
   /**
-   * Fetches and returns metadata information for an artist.
-   * @param artistName - The name of the artist.
-   * @param albumName - The name of the album.
-   * @param userName - The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
+   * Returns metadata information for an artist.
+   * @param artist - The name of the artist.
+   * @param album - The name of the album.
+   * @param username - The username for the context of the request. If supplied, the user's playcount for this artist's album is included in the response.
    */
-  async fetch(artistName: string, albumName: string, userName?: string): Promise<AlbumGetInfoType> {
+  async getInfo(params: AlbumGetInfoParams): Promise<AlbumGetInfoType> {
     const {
       album,
       album: {
         tracks: { track },
         tags: { tag },
       },
-    } = await request<AlbumGetInfoResponse>('album.getInfo', {
-      artist: artistName,
-      album: albumName,
-      username: userName,
-      api_key: this.token,
+    } = await this.sendRequest<AlbumGetInfoResponse>({
+      method: 'album.getInfo',
+      artist: params.artist,
+      album: params.album,
+      username: params.username,
     });
 
     const tracks = Array.isArray(track)
@@ -71,23 +71,23 @@ export default class Album {
       image: convertImageSizes(album.image),
     } as AlbumGetInfoType;
 
-    if (userName) response.stats.userPlayCount = Number(album.userplaycount);
+    if (params.username) response.stats.userPlayCount = Number(album.userplaycount);
 
     return response;
   }
 
   /**
-   * Fetches and returns popular tags for an album.
-   * @param artistName - The name of the artist.
-   * @param albumName - The name of the album.
+   * Returns popular tags for an album.
+   * @param artist - The name of the artist.
+   * @param album - The name of the album.
    */
-  async fetchTopTags(artistName: string, albumName: string): Promise<AlbumGetTopTagsType> {
+  async getTopTags(params: AlbumGetTopTagsParams): Promise<AlbumGetTopTagsType> {
     const {
       toptags: { tag, '@attr': attr },
-    } = await request<AlbumGetTopTagsResponse>('album.getTopTags', {
-      artist: artistName,
-      album: albumName,
-      api_key: this.token,
+    } = await this.sendRequest<AlbumGetTopTagsResponse>({
+      method: 'album.getTopTags',
+      artist: params.artist,
+      album: params.album,
     });
 
     const tags = tag.map((tag) => {
@@ -110,21 +110,21 @@ export default class Album {
 
   /**
    * Search for an album by name.
-   * @param albumName - The name of the album.
+   * @param album - The name of the album.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async search(albumName: string, limit = 30, page = 1): Promise<AlbumSearchType> {
+  async search(params: AlbumSearchParams): Promise<AlbumSearchType> {
     const {
       results,
       results: {
         albummatches: { album },
       },
-    } = await request<AlbumSearchResponse>('album.search', {
-      album: albumName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<AlbumSearchResponse>({
+      method: 'album.search',
+      album: params.album,
+      limit: params.limit ?? 30,
+      page: params.page ?? 1,
     });
 
     const albums = album.map((album) => {

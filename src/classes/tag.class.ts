@@ -1,5 +1,5 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
-import { request } from '~/request.js';
+import Base from '~/base.js';
 import type {
   TagGetInfoResponse,
   TagGetTopAlbumsResponse,
@@ -7,23 +7,29 @@ import type {
   TagGetTopTracksResponse,
   TagGetWeeklyChartListResponse,
   TagGetInfoType,
-  TagTopAlbumsType,
-  TagTopArtistsType,
-  TagTopTracksType,
-  TagWeeklyChartListType,
+  TagGetTopAlbumsType,
+  TagGetTopArtistsType,
+  TagGetTopTracksType,
+  TagGetWeeklyChartListType,
 } from '~/types/index.js';
 
-export default class Tag {
-  constructor(private readonly token: string) {}
+import type {
+  TagGetInfoParams,
+  TagGetTopAlbumsParams,
+  TagGetTopArtistsParams,
+  TagGetTopTracksParams,
+  TagGetWeeklyChartListParams,
+} from '@params/tag.params.js';
 
+export default class Tag extends Base {
   /**
-   * Fetches and returns metadata information on a tag.
-   * @param tagName - The name of the tag.
+   * Returns metadata information on a tag.
+   * @param tag - The name of the tag.
    * */
-  async fetch(tagName: string): Promise<TagGetInfoType> {
-    const { tag } = await request<TagGetInfoResponse>('tag.getInfo', {
-      tag: tagName,
-      api_key: this.token,
+  async getInfo(params: TagGetInfoParams): Promise<TagGetInfoType> {
+    const { tag } = await this.sendRequest<TagGetInfoResponse>({
+      method: 'tag.getInfo',
+      tag: params.tag,
     });
 
     return {
@@ -38,19 +44,19 @@ export default class Tag {
   }
 
   /**
-   * Fetches and returns popular albums that are tagged by a tag name.
-   * @param tagName - The name of the tag.
+   * Returns popular albums that are tagged by a tag name.
+   * @param tag - The name of the tag.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopAlbums(tagName: string, limit = 50, page = 1): Promise<TagTopAlbumsType> {
+  async getTopAlbums(params: TagGetTopAlbumsParams): Promise<TagGetTopAlbumsType> {
     const {
       albums: { album, '@attr': attr },
-    } = await request<TagGetTopAlbumsResponse>('tag.getTopAlbums', {
-      tag: tagName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<TagGetTopAlbumsResponse>({
+      method: 'tag.getTopAlbums',
+      tag: params.tag,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const albums = album.map((album) => {
@@ -75,23 +81,23 @@ export default class Tag {
         totalResults: Number(attr.total),
       },
       albums,
-    } as TagTopAlbumsType;
+    } as TagGetTopAlbumsType;
   }
 
   /**
-   * Fetches and returns popular artists that are tagged by a tag name.
-   * @param tagName - The name of the tag.
+   * Returns popular artists that are tagged by a tag name.
+   * @param tag - The name of the tag.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopArtists(tagName: string, limit = 50, page = 1): Promise<TagTopArtistsType> {
+  async getTopArtists(params: TagGetTopArtistsParams): Promise<TagGetTopArtistsType> {
     const {
       topartists: { artist, '@attr': attr },
-    } = await request<TagGetTopArtistsResponse>('tag.getTopArtists', {
-      tag: tagName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<TagGetTopArtistsResponse>({
+      method: 'tag.getTopArtists',
+      tag: params.tag,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const artists = artist.map((artist) => {
@@ -111,23 +117,23 @@ export default class Tag {
         totalResults: Number(attr.total),
       },
       artists,
-    } as TagTopArtistsType;
+    } as TagGetTopArtistsType;
   }
 
   /**
-   * Fetches and returns popular tracks that are tagged by a tag name.
-   * @param tagName - The name of the tag.
+   * Returns popular tracks that are tagged by a tag name.
+   * @param tag - The name of the tag.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(tagName: string, limit = 50, page = 1): Promise<TagTopTracksType> {
+  async getTopTracks(params: TagGetTopTracksParams): Promise<TagGetTopTracksType> {
     const {
       tracks: { track, '@attr': attr },
-    } = await request<TagGetTopTracksResponse>('tag.getTopTracks', {
-      tag: tagName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<TagGetTopTracksResponse>({
+      method: 'tag.getTopTracks',
+      tag: params.tag,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const tracks = track.map((track) => {
@@ -152,19 +158,19 @@ export default class Tag {
         totalResults: Number(attr.total),
       },
       tracks,
-    } as TagTopTracksType;
+    } as TagGetTopTracksType;
   }
 
   /**
-   * Fetches and returns a list of available charts for a tag.
-   * @param tagName - The name of the tag.
+   * Returns a list of available charts for a tag.
+   * @param tag - The name of the tag.
    * */
-  async fetchWeeklyChartList(tagName: string): Promise<TagWeeklyChartListType> {
+  async getWeeklyChartList(params: TagGetWeeklyChartListParams): Promise<TagGetWeeklyChartListType> {
     const {
       weeklychartlist: { chart, '@attr': attr },
-    } = await request<TagGetWeeklyChartListResponse>('tag.getWeeklyChartList', {
-      tag: tagName,
-      api_key: this.token,
+    } = await this.sendRequest<TagGetWeeklyChartListResponse>({
+      method: 'tag.getWeeklyChartList',
+      tag: params.tag,
     });
 
     const positions = chart.map((chart) => {
@@ -181,6 +187,6 @@ export default class Tag {
       positions,
     };
 
-    return response as TagWeeklyChartListType;
+    return response as TagGetWeeklyChartListType;
   }
 }

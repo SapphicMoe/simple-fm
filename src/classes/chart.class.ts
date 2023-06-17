@@ -1,28 +1,28 @@
-import { request } from '~/request.js';
+import Base from '~/base.js';
 import type {
   ChartGetTopArtistsResponse,
   ChartGetTopTagsResponse,
   ChartGetTopTracksResponse,
-  ChartTopArtistsType,
-  ChartTopTagsType,
-  ChartTopTracksType,
+  ChartGetTopArtistsType,
+  ChartGetTopTagsType,
+  ChartGetTopTracksType,
 } from '~/types/index.js';
 
-export default class Chart {
-  constructor(private readonly token: string) {}
+import type { ChartGetTopArtistParams, ChartGetTopTagsParams, ChartGetTopTracksParams } from '@params/chart.params.js';
 
+export default class Chart extends Base {
   /**
-   * Fetches and returns the most popular artists.
+   * Returns the most popular artists.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopArtists(limit = 30, page = 1): Promise<ChartTopArtistsType> {
+  async getTopArtists(params?: ChartGetTopArtistParams): Promise<ChartGetTopArtistsType> {
     const {
       artists: { artist, '@attr': attr },
-    } = await request<ChartGetTopArtistsResponse>('chart.getTopArtists', {
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<ChartGetTopArtistsResponse>({
+      method: 'chart.getTopArtists',
+      limit: params?.limit ?? 30,
+      page: params?.page ?? 1,
     });
 
     const artists = artist.map((artist) => {
@@ -44,21 +44,21 @@ export default class Chart {
         totalResults: Number(attr.total),
       },
       artists,
-    } as ChartTopArtistsType;
+    } as ChartGetTopArtistsType;
   }
 
   /**
-   * Fetches and returns the most popular tags for tracks.
+   * Returns the most popular tags for tracks.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTags(limit = 30, page = 1): Promise<ChartTopTagsType> {
+  async getTopTags(params?: ChartGetTopTagsParams): Promise<ChartGetTopTagsType> {
     const {
       tags: { tag, '@attr': attr },
-    } = await request<ChartGetTopTagsResponse>('chart.getTopTags', {
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<ChartGetTopTagsResponse>({
+      method: 'chart.getTopTags',
+      limit: params?.limit ?? 30,
+      page: params?.page ?? 1,
     });
 
     const tags = tag.map((tag) => {
@@ -80,21 +80,21 @@ export default class Chart {
         totalResults: Number(attr.total),
       },
       tags,
-    } as ChartTopTagsType;
+    } as ChartGetTopTagsType;
   }
 
   /**
-   * Fetches and returns the most popular tracks.
+   * Returns the most popular tracks.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(limit = 30, page = 1): Promise<ChartTopTracksType> {
+  async getTopTracks(params?: ChartGetTopTracksParams): Promise<ChartGetTopTracksType> {
     const {
       tracks: { track, '@attr': attr },
-    } = await request<ChartGetTopTracksResponse>('chart.getTopTracks', {
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<ChartGetTopTracksResponse>({
+      method: 'chart.getTopTracks',
+      limit: params?.limit ?? 30,
+      page: params?.page ?? 1,
     });
 
     const tracks = track.map((track) => {
@@ -120,6 +120,6 @@ export default class Chart {
         totalResults: Number(attr.total),
       },
       tracks,
-    } as ChartTopTracksType;
+    } as ChartGetTopTracksType;
   }
 }

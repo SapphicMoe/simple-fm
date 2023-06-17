@@ -1,8 +1,7 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
-import { request } from '~/request.js';
+import Base from '~/base.js';
 import type {
   Artist,
-  PersonalTagTypes,
   UserGetFriendsResponse,
   UserGetInfoResponse,
   UserGetLovedTracksResponse,
@@ -13,27 +12,37 @@ import type {
   UserGetTopTagsResponse,
   UserGetTopTracksResponse,
   UserGetInfoType,
-  UserLovedTracksType,
-  UserPersonalTagsType,
-  UserRecentTrackType,
-  UserTopAlbumsType,
-  UserTopArtistsType,
-  UserTopTagsType,
-  UserTopTracksType,
-  UserFriendsType,
+  UserGetLovedTracksType,
+  UserGetPersonalTagsType,
+  UserGetRecentTracksType,
+  UserGetTopAlbumsType,
+  UserGetTopArtistsType,
+  UserGetTopTagsType,
+  UserGetTopTracksType,
+  UserGetFriendsType,
 } from '~/types/index.js';
 
-export default class User {
-  constructor(private readonly token: string) {}
+import type {
+  UserGetFriendsParams,
+  UserGetInfoParams,
+  UserGetLovedTracksParams,
+  UserGetPersonalTagsParams,
+  UserGetRecentTracksParams,
+  UserGetTopAlbumsParams,
+  UserGetTopArtistsParams,
+  UserGetTopTagsParams,
+  UserGetTopTracksParams,
+} from '@params/user.params.js';
 
+export default class User extends Base {
   /**
-   * Fetches and returns information about a user's profile.
-   * @param userName - The name of the user.
+   * Returns information about a user's profile.
+   * @param username - The name of the user.
    * */
-  async fetch(userName: string): Promise<UserGetInfoType> {
-    const { user } = await request<UserGetInfoResponse>('user.getInfo', {
-      user: userName,
-      api_key: this.token,
+  async getInfo(params: UserGetInfoParams): Promise<UserGetInfoType> {
+    const { user } = await this.sendRequest<UserGetInfoResponse>({
+      method: 'user.getInfo',
+      user: params.username,
     });
 
     return {
@@ -47,19 +56,19 @@ export default class User {
   }
 
   /**
-   * Fetches and returns a list of the user's friends.
-   * @param userName - The name of the user.
+   * Returns a list of the user's friends.
+   * @param username - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchFriends(userName: string, limit = 50, page = 1): Promise<UserFriendsType> {
+  async getFriends(params: UserGetFriendsParams): Promise<UserGetFriendsType> {
     const {
       friends: { user, '@attr': attr },
-    } = await request<UserGetFriendsResponse>('user.getFriends', {
-      user: userName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<UserGetFriendsResponse>({
+      method: 'user.getFriends',
+      user: params.username,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const friends = user.map((user) => {
@@ -82,23 +91,23 @@ export default class User {
         totalResults: Number(attr.total),
       },
       friends,
-    } as UserFriendsType;
+    } as UserGetFriendsType;
   }
 
   /**
-   * Fetches and returns the loved tracks as set by the user.
-   * @param userName - The name of the user.
+   * Returns the loved tracks as set by the user.
+   * @param username - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchLovedTracks(userName: string, limit = 50, page = 1): Promise<UserLovedTracksType> {
+  async getLovedTracks(params: UserGetLovedTracksParams): Promise<UserGetLovedTracksType> {
     const {
       lovedtracks: { track, '@attr': attr },
-    } = await request<UserGetLovedTracksResponse>('user.getLovedTracks', {
-      user: userName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<UserGetLovedTracksResponse>({
+      method: 'user.getLovedTracks',
+      user: params.username,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const tracks = track.map((track) => {
@@ -122,23 +131,23 @@ export default class User {
         totalResults: Number(attr.total),
       },
       tracks,
-    } as UserLovedTracksType;
+    } as UserGetLovedTracksType;
   }
 
   /**
-   * Fetches and returns a list of the user's personal tags.
-   * @param userName - The name of the user.
-   * @param tagName - The name of the tag.
+   * Returns a list of the user's personal tags.
+   * @param username - The name of the user.
+   * @param tag - The name of the tag.
    * @param tagType - The type of items which have been tagged.
    * */
-  async fetchPersonalTags(userName: string, tagName: string, tagType: PersonalTagTypes): Promise<UserPersonalTagsType> {
+  async getPersonalTags(params: UserGetPersonalTagsParams): Promise<UserGetPersonalTagsType> {
     const {
       taggings: { albums, artists, tracks, '@attr': attr },
-    } = await request<UserGetPersonalTagsResponse>('user.getPersonalTags', {
-      user: userName,
-      tag: tagName,
-      taggingtype: tagType,
-      api_key: this.token,
+    } = await this.sendRequest<UserGetPersonalTagsResponse>({
+      method: 'user.getPersonalTags',
+      user: params.username,
+      tag: params.tag,
+      taggingtype: params.tagType,
     });
 
     const responseTypes = {
@@ -172,7 +181,7 @@ export default class User {
       }),
     };
 
-    const response = responseTypes[tagType];
+    const response = responseTypes[params.tagType];
 
     return {
       search: {
@@ -184,23 +193,23 @@ export default class User {
         totalResults: Number(attr.total),
       },
       response,
-    } as UserPersonalTagsType;
+    } as UserGetPersonalTagsType;
   }
 
   /**
-   * Fetches and returns the most recent tracks listened by the user.
-   * @param userName - The name of the user.
+   * Returns the most recent tracks listened by the user.
+   * @param username - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50. Maximum is 200.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchRecentTracks(userName: string, limit = 50, page = 1): Promise<UserRecentTrackType> {
+  async getRecentTracks(params: UserGetRecentTracksParams): Promise<UserGetRecentTracksType> {
     const {
       recenttracks: { track, '@attr': attr },
-    } = await request<UserGetRecentTracksResponse>('user.getRecentTracks', {
-      user: userName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<UserGetRecentTracksResponse>({
+      method: 'user.getRecentTracks',
+      user: params.username,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const tracks = track.map((track) => {
@@ -229,23 +238,23 @@ export default class User {
       tracks,
     };
 
-    return response as UserRecentTrackType;
+    return response as UserGetRecentTracksType;
   }
 
   /**
-   * Fetches and returns a list of popular albums in a user's library.
-   * @param userName - The name of the user.
+   * Returns a list of popular albums in a user's library.
+   * @param username - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopAlbums(userName: string, limit = 50, page = 1): Promise<UserTopAlbumsType> {
+  async getTopAlbums(params: UserGetTopAlbumsParams): Promise<UserGetTopAlbumsType> {
     const {
       topalbums: { album, '@attr': attr },
-    } = await request<UserGetTopAlbumsResponse>('user.getTopAlbums', {
-      user: userName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<UserGetTopAlbumsResponse>({
+      method: 'user.getTopAlbums',
+      user: params.username,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const albums = album.map((album) => {
@@ -271,23 +280,23 @@ export default class User {
         totalResults: Number(attr.total),
       },
       albums,
-    } as UserTopAlbumsType;
+    } as UserGetTopAlbumsType;
   }
 
   /**
-   * Fetches and returns a list of popular artists in a user's library.
-   * @param userName - The name of the user.
+   * Returns a list of popular artists in a user's library.
+   * @param username - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopArtists(userName: string, limit = 50, page = 1): Promise<UserTopArtistsType> {
+  async getTopArtists(params: UserGetTopArtistsParams): Promise<UserGetTopArtistsType> {
     const {
       topartists: { artist, '@attr': attr },
-    } = await request<UserGetTopArtistsResponse>('user.getTopArtists', {
-      user: userName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<UserGetTopArtistsResponse>({
+      method: 'user.getTopArtists',
+      user: params.username,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const artists = artist.map((artist) => {
@@ -308,21 +317,21 @@ export default class User {
         totalResults: Number(attr.total),
       },
       artists,
-    } as UserTopArtistsType;
+    } as UserGetTopArtistsType;
   }
 
   /**
-   * Fetches and returns a list of all the tags used by the user.
-   * @param userName - The name of the user.
+   * Returns a list of all the tags used by the user.
+   * @param username - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * */
-  async fetchTopTags(userName: string, limit = 50): Promise<UserTopTagsType> {
+  async getTopTags(params: UserGetTopTagsParams): Promise<UserGetTopTagsType> {
     const {
       toptags: { tag, '@attr': attr },
-    } = await request<UserGetTopTagsResponse>('user.getTopTags', {
-      user: userName,
-      api_key: this.token,
-      limit,
+    } = await this.sendRequest<UserGetTopTagsResponse>({
+      method: 'user.getTopTags',
+      user: params.username,
+      limit: params.limit ?? 50,
     });
 
     const tags = tag.map((tag) => {
@@ -338,23 +347,23 @@ export default class User {
         user: attr.user,
       },
       tags,
-    } as UserTopTagsType;
+    } as UserGetTopTagsType;
   }
 
   /**
-   * Fetches and returns a list of popular tracks in a user's library.
-   * @param userName - The name of the user.
+   * Returns a list of popular tracks in a user's library.
+   * @param username - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(userName: string, limit = 50, page = 1): Promise<UserTopTracksType> {
+  async getTopTracks(params: UserGetTopTracksParams): Promise<UserGetTopTracksType> {
     const {
       toptracks: { track, '@attr': attr },
-    } = await request<UserGetTopTracksResponse>('user.getTopTracks', {
-      user: userName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<UserGetTopTracksResponse>({
+      method: 'user.getTopTracks',
+      user: params.username,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const tracks = track.map((track) => {
@@ -383,6 +392,6 @@ export default class User {
         totalResults: Number(attr.total),
       },
       tracks,
-    } as UserTopTracksType;
+    } as UserGetTopTracksType;
   }
 }

@@ -1,23 +1,28 @@
-import { request } from '~/request.js';
-import type { GeoGetTopArtistsResponse, GeoGetTopTracksResponse, GeoArtistType, GeoTrackType } from '~/types/index.js';
+import Base from '~/base.js';
+import type {
+  GeoGetTopArtistsResponse,
+  GeoGetTopTracksResponse,
+  GeoGetTopArtistsType,
+  GeoGetTopTracksType,
+} from '~/types/index.js';
 
-export default class Geo {
-  constructor(private readonly token: string) {}
+import type { GeoGetTopArtistsParams, GeoGetTopTracksParams } from '@params/geo.params.js';
 
+export default class Geo extends Base {
   /**
-   * Fetches and returns the most popular artists by country.
+   * Returns the most popular artists by country.
    * @param country - The name of the country.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopArtists(country: string, limit = 50, page = 1): Promise<GeoArtistType> {
+  async getTopArtists(params: GeoGetTopArtistsParams): Promise<GeoGetTopArtistsType> {
     const {
       topartists: { artist, '@attr': attr },
-    } = await request<GeoGetTopArtistsResponse>('geo.getTopArtists', {
-      country,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<GeoGetTopArtistsResponse>({
+      method: 'geo.getTopArtists',
+      country: params.country,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const artists = artist.map((artist) => {
@@ -37,23 +42,23 @@ export default class Geo {
         totalResults: Number(attr.total),
       },
       artists,
-    } as GeoArtistType;
+    } as GeoGetTopArtistsType;
   }
 
   /**
-   * Fetches and returns the most popular tracks by country.
+   * Returns the most popular tracks by country.
    * @param country - The name of the country.
    * @param limit - The number of results to fetch per page. Defaults to 50.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async fetchTopTracks(country: string, limit = 50, page = 1): Promise<GeoTrackType> {
+  async getTopTracks(params: GeoGetTopTracksParams): Promise<GeoGetTopTracksType> {
     const {
       tracks: { track, '@attr': attr },
-    } = await request<GeoGetTopTracksResponse>('geo.getTopTracks', {
-      country,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<GeoGetTopTracksResponse>({
+      method: 'geo.getTopTracks',
+      country: params.country,
+      limit: params.limit ?? 50,
+      page: params.page ?? 1,
     });
 
     const tracks = track.map((track) => {
@@ -79,6 +84,6 @@ export default class Geo {
         totalResults: Number(attr.total),
       },
       tracks,
-    } as GeoTrackType;
+    } as GeoGetTopTracksType;
   }
 }

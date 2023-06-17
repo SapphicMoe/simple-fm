@@ -1,5 +1,5 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
-import { request } from '~/request.js';
+import Base from '~/base.js';
 import type {
   Album,
   Artist,
@@ -8,32 +8,37 @@ import type {
   TrackGetTopTagsResponse,
   TrackSearchResponse,
   TrackGetInfoType,
+  TrackGetSimilarType,
+  TrackGetTopTagsType,
   TrackSearchType,
-  TrackSimilarType,
-  TrackTopTagsType,
 } from '~/types/index.js';
 
-export default class Track {
-  constructor(private readonly token: string) {}
+import type {
+  TrackGetInfoParams,
+  TrackGetSimilarParams,
+  TrackGetTopTagsParams,
+  TrackSearchParams,
+} from '@params/track.params.js';
 
+export default class Track extends Base {
   /**
-   * Fetches and returns metadata information for a track.
-   * @param artistName - The name of the artist.
-   * @param trackName - The name of the track.
-   * @param userName - The username for the context of the request. If supplied, the user's playcount for this track and whether they have loved the track is included in the response.
+   * Returns metadata information for a track.
+   * @param artist - The name of the artist.
+   * @param track - The name of the track.
+   * @param username - The username for the context of the request. If supplied, the user's playcount for this track and whether they have loved the track is included in the response.
    */
-  async fetch(artistName: string, trackName: string, userName?: string): Promise<TrackGetInfoType> {
+  async getInfo(params: TrackGetInfoParams): Promise<TrackGetInfoType> {
     const {
       track,
       track: {
         album,
         toptags: { tag },
       },
-    } = await request<TrackGetInfoResponse>('track.getInfo', {
-      artist: artistName,
-      track: trackName,
-      username: userName,
-      api_key: this.token,
+    } = await this.sendRequest<TrackGetInfoResponse>({
+      method: 'track.getInfo',
+      artist: params.artist,
+      track: params.track,
+      username: params.username,
     });
 
     const tags = tag.map((tag) => {
@@ -64,7 +69,7 @@ export default class Track {
       url: track.url,
     } as TrackGetInfoType;
 
-    if (userName) {
+    if (params.username) {
       response.stats.userPlayCount = Number(track.userplaycount);
       response.stats.userLoved = Boolean(Number(track.userloved)).valueOf();
     }
@@ -73,19 +78,19 @@ export default class Track {
   }
 
   /**
-   * Fetches and returns similar tracks for this track.
-   * @param artistName - The name of the artist.
-   * @param trackName - The name of the track.
+   * Returns similar tracks for this track.
+   * @param artist - The name of the artist.
+   * @param track - The name of the track.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    */
-  async fetchSimilar(artistName: string, trackName: string, limit = 30): Promise<TrackSimilarType> {
+  async getSimilar(params: TrackGetSimilarParams): Promise<TrackGetSimilarType> {
     const {
       similartracks: { track, '@attr': attr },
-    } = await request<TrackGetSimilarResponse>('track.getSimilar', {
-      artist: artistName,
-      track: trackName,
-      api_key: this.token,
-      limit,
+    } = await this.sendRequest<TrackGetSimilarResponse>({
+      method: 'track.getSimilar',
+      artist: params.artist,
+      track: params.track,
+      limit: params.limit ?? 30,
     });
 
     const tracks = track.map((track) => {
@@ -104,28 +109,28 @@ export default class Track {
     });
 
     return {
-      name: trackName,
+      name: params.track,
       artist: {
         name: attr.artist,
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
-      url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(trackName)}`,
+      url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(params.track)}`,
       tracks,
-    } as TrackSimilarType;
+    } as TrackGetSimilarType;
   }
 
   /**
-   * Fetches and returns popular tags for a track.
-   * @param artistName - The name of the artist.
-   * @param trackName - The name of the track.
+   * Returns popular tags for a track.
+   * @param artist - The name of the artist.
+   * @param track - The name of the track.
    */
-  async fetchTopTags(artistName: string, trackName: string): Promise<TrackTopTagsType> {
+  async getTopTags(parmas: TrackGetTopTagsParams): Promise<TrackGetTopTagsType> {
     const {
       toptags: { tag, '@attr': attr },
-    } = await request<TrackGetTopTagsResponse>('track.getTopTags', {
-      artist: artistName,
-      track: trackName,
-      api_key: this.token,
+    } = await this.sendRequest<TrackGetTopTagsResponse>({
+      method: 'track.getTopTags',
+      artist: parmas.artist,
+      track: parmas.track,
     });
 
     const tags = tag.map((tag) => {
@@ -144,26 +149,26 @@ export default class Track {
       },
       url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(attr.track)}`,
       tags,
-    } as TrackTopTagsType;
+    } as TrackGetTopTagsType;
   }
 
   /**
    * Search for a track by name.
-   * @param trackName - The name of the track.
+   * @param track - The name of the track.
    * @param limit - The number of results to fetch per page. Defaults to 30.
    * @param page - The page number to fetch. Defaults to the first page.
    * */
-  async search(trackName: string, limit = 30, page = 1): Promise<TrackSearchType> {
+  async search(params: TrackSearchParams): Promise<TrackSearchType> {
     const {
       results,
       results: {
         trackmatches: { track },
       },
-    } = await request<TrackSearchResponse>('track.search', {
-      track: trackName,
-      api_key: this.token,
-      limit,
-      page,
+    } = await this.sendRequest<TrackSearchResponse>({
+      method: 'track.search',
+      track: params.track,
+      limit: params.limit ?? 30,
+      page: params.page ?? 1,
     });
 
     const tracks = track.map((track) => {
@@ -181,7 +186,7 @@ export default class Track {
 
     return {
       search: {
-        query: trackName,
+        query: params.track,
         page: Number(results['opensearch:Query'].startPage),
         itemsPerPage: Number(results['opensearch:itemsPerPage']),
         totalResults: Number(results['opensearch:totalResults']),

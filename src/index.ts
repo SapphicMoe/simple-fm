@@ -18,19 +18,21 @@ export default class SimpleFMClient {
   readonly track: Track;
   readonly user: User;
 
-  constructor(private readonly token: string) {
-    if (!token)
+  constructor(private readonly key: string, options: { userAgent?: string } = {}) {
+    if (!key)
       throw new LastFMError({
         message: 'You have not specified a Last.fm API key. Get one here: https://www.last.fm/api/account/create',
         error: 6,
       });
 
-    this.album = new Album(token);
-    this.artist = new Artist(token);
-    this.chart = new Chart(token);
-    this.geo = new Geo(token);
-    this.tag = new Tag(token);
-    this.track = new Track(token);
-    this.user = new User(token);
+    options.userAgent ??= `simple-fm - a simple Last.fm wrapper written in TypeScript (GitHub: https://github.com/solelychloe/simple-fm)`;
+
+    this.album = new Album(key, options.userAgent);
+    this.artist = new Artist(key, options.userAgent);
+    this.chart = new Chart(key, options.userAgent);
+    this.geo = new Geo(key, options.userAgent);
+    this.tag = new Tag(key, options.userAgent);
+    this.track = new Track(key, options.userAgent);
+    this.user = new User(key, options.userAgent);
   }
 }
