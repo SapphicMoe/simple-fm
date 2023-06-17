@@ -10,7 +10,7 @@ export declare interface TagGetInfoType {
   url: string;
 }
 
-export declare interface TagTopAlbumsType {
+export declare interface TagGetTopAlbumsType {
   search: {
     tag: string;
     page: number;
@@ -30,7 +30,7 @@ export declare interface TagTopAlbumsType {
   }>;
 }
 
-export declare interface TagTopArtistsType {
+export declare interface TagGetTopArtistsType {
   search: {
     tag: string;
     page: number;
@@ -45,7 +45,7 @@ export declare interface TagTopArtistsType {
   }>;
 }
 
-export declare interface TagTopTracksType {
+export declare interface TagGetTopTracksType {
   search: {
     tag: string;
     page: number;
@@ -65,7 +65,7 @@ export declare interface TagTopTracksType {
   }>;
 }
 
-export declare interface TagWeeklyChartListType {
+export declare interface TagGetWeeklyChartListType {
   search: {
     tag: string;
   };

@@ -1,4 +1,4 @@
-export declare interface ChartTopArtistsType {
+export declare interface ChartGetTopArtistsType {
   search: {
     page: number;
     itemsPerPage: number;
@@ -15,7 +15,7 @@ export declare interface ChartTopArtistsType {
   }>;
 }
 
-export declare interface ChartTopTagsType {
+export declare interface ChartGetTopTagsType {
   search: {
     page: number;
     itemsPerPage: number;
@@ -32,7 +32,7 @@ export declare interface ChartTopTagsType {
   }>;
 }
 
-export declare interface ChartTopTracksType {
+export declare interface ChartGetTopTracksType {
   search: {
     page: number;
     itemsPerPage: number;

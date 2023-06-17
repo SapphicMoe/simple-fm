@@ -1,6 +1,6 @@
 import type { ImageType, PersonalTagType } from '~/index.js';
 
-export declare interface UserFriendsType {
+export declare interface UserGetFriendsType {
   search: {
     user: string;
     page: number;
@@ -27,7 +27,7 @@ export declare interface UserGetInfoType {
   image: ImageType[];
 }
 
-export declare interface UserLovedTracksType {
+export declare interface UserGetLovedTracksType {
   search: {
     user: string;
     page: number;
@@ -46,7 +46,7 @@ export declare interface UserLovedTracksType {
   }>;
 }
 
-export declare interface UserPersonalTagsType {
+export declare interface UserGetPersonalTagsType {
   search: {
     user: string;
     tag: string;
@@ -58,7 +58,7 @@ export declare interface UserPersonalTagsType {
   response: PersonalTagType[];
 }
 
-export declare interface UserRecentTrackType {
+export declare interface UserGetRecentTracksType {
   search: {
     user: string;
     nowPlaying: boolean;
@@ -79,7 +79,7 @@ export declare interface UserRecentTrackType {
   }>;
 }
 
-export declare interface UserTopAlbumsType {
+export declare interface UserGetTopAlbumsType {
   search: {
     user: string;
     page: number;
@@ -100,7 +100,7 @@ export declare interface UserTopAlbumsType {
   }>;
 }
 
-export declare interface UserTopArtistsType {
+export declare interface UserGetTopArtistsType {
   search: {
     user: string;
     page: number;
@@ -116,7 +116,7 @@ export declare interface UserTopArtistsType {
   }>;
 }
 
-export declare interface UserTopTagsType {
+export declare interface UserGetTopTagsType {
   search: {
     user: string;
   };
@@ -127,7 +127,7 @@ export declare interface UserTopTagsType {
   }>;
 }
 
-export declare interface UserTopTracksType {
+export declare interface UserGetTopTracksType {
   search: {
     user: string;
     page: number;

@@ -12,21 +12,7 @@ export declare interface ArtistGetInfoType {
   url: string;
 }
 
-export declare interface ArtistSearchType {
-  search: {
-    query: string;
-    page: number;
-    itemsPerPage: number;
-    totalResults: number;
-  };
-  artists: Array<{
-    name: string;
-    listeners: number;
-    url: string;
-  }>;
-}
-
-export declare interface ArtistSimilarType {
+export declare interface ArtistGetSimilarType {
   search: {
     artist: {
       name: string;
@@ -40,7 +26,7 @@ export declare interface ArtistSimilarType {
   }>;
 }
 
-export declare interface ArtistTopAlbumsType {
+export declare interface ArtistGetTopAlbumsType {
   search: {
     artist: {
       name: string;
@@ -63,7 +49,19 @@ export declare interface ArtistTopAlbumsType {
   }>;
 }
 
-export declare interface ArtistTopTracksType {
+export declare interface ArtistGetTopTagsType {
+  artist: {
+    name: string;
+    url: string;
+  };
+  tags: Array<{
+    name: string;
+    count: number;
+    url: string;
+  }>;
+}
+
+export declare interface ArtistGetTopTracksType {
   search: {
     artist: {
       name: string;
@@ -89,14 +87,16 @@ export declare interface ArtistTopTracksType {
   }>;
 }
 
-export declare interface ArtistTopTagsType {
-  artist: {
-    name: string;
-    url: string;
+export declare interface ArtistSearchType {
+  search: {
+    query: string;
+    page: number;
+    itemsPerPage: number;
+    totalResults: number;
   };
-  tags: Array<{
+  artists: Array<{
     name: string;
-    count: number;
+    listeners: number;
     url: string;
   }>;
 }

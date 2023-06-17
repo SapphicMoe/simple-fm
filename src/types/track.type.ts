@@ -23,25 +23,7 @@ export declare interface TrackGetInfoType {
   url: string;
 }
 
-export declare interface TrackSearchType {
-  search: {
-    query: string;
-    page: number;
-    itemsPerPage: number;
-    totalResults: number;
-  };
-  tracks: Array<{
-    name: string;
-    listeners: number;
-    artist: {
-      name: string;
-      url: string;
-    };
-    url: string;
-  }>;
-}
-
-export declare interface TrackSimilarType {
+export declare interface TrackGetSimilarType {
   name: string;
   artist: { name: string; url: string };
   url: string;
@@ -59,7 +41,7 @@ export declare interface TrackSimilarType {
   }>;
 }
 
-export declare interface TrackTopTagsType {
+export declare interface TrackGetTopTagsType {
   name: string;
   artist: {
     name: string;
@@ -69,6 +51,24 @@ export declare interface TrackTopTagsType {
   tags: Array<{
     count: number;
     name: string;
+    url: string;
+  }>;
+}
+
+export declare interface TrackSearchType {
+  search: {
+    query: string;
+    page: number;
+    itemsPerPage: number;
+    totalResults: number;
+  };
+  tracks: Array<{
+    name: string;
+    listeners: number;
+    artist: {
+      name: string;
+      url: string;
+    };
     url: string;
   }>;
 }

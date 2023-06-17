@@ -1,4 +1,4 @@
-export declare interface GeoArtistType {
+export declare interface GeoGetTopArtistsType {
   search: {
     country: string;
     page: number;
@@ -13,7 +13,7 @@ export declare interface GeoArtistType {
   }>;
 }
 
-export declare interface GeoTrackType {
+export declare interface GeoGetTopTracksType {
   search: {
     country: string;
     page: number;
