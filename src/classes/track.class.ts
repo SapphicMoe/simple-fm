@@ -41,13 +41,6 @@ export default class Track extends Base {
       username: params.username,
     });
 
-    const tags = tag.map((tag) => {
-      return {
-        name: tag.name,
-        url: tag.url,
-      };
-    });
-
     const response = {
       name: track.name,
       duration: Number(track.duration) || null,
@@ -56,8 +49,8 @@ export default class Track extends Base {
         listeners: Number(track.listeners),
       },
       artist: {
-        name: (track.artist as Artist).name,
-        url: (track.artist as Artist).url,
+        name: typeof track.artist === 'string' ? track.artist : track.artist.name,
+        url: typeof track.artist === 'string' ? track.artist : track.artist.url,
       },
       album: {
         position: Number(album?.['@attr']?.position) || null,
@@ -65,7 +58,10 @@ export default class Track extends Base {
         image: convertImageSizes((album as Album).image),
         url: album?.url || null,
       },
-      tags,
+      tags: tag.map((tag) => ({
+        name: tag.name,
+        url: tag.url,
+      })),
       url: track.url,
     } as TrackGetInfoType;
 
@@ -93,8 +89,14 @@ export default class Track extends Base {
       limit: params.limit ?? 30,
     });
 
-    const tracks = track.map((track) => {
-      return {
+    return {
+      name: params.track,
+      artist: {
+        name: attr.artist,
+        url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
+      },
+      url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(params.track)}`,
+      tracks: track.map((track) => ({
         match: Number(track.match),
         name: track.name,
         duration: Number(track.duration) || null,
@@ -105,17 +107,7 @@ export default class Track extends Base {
         },
         url: track.url,
         image: convertImageSizes(track.image),
-      };
-    });
-
-    return {
-      name: params.track,
-      artist: {
-        name: attr.artist,
-        url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
-      },
-      url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(params.track)}`,
-      tracks,
+      })),
     } as TrackGetSimilarType;
   }
 
@@ -133,14 +125,6 @@ export default class Track extends Base {
       track: parmas.track,
     });
 
-    const tags = tag.map((tag) => {
-      return {
-        count: Number(tag.count),
-        name: tag.name,
-        url: tag.url,
-      };
-    });
-
     return {
       name: attr.track,
       artist: {
@@ -148,7 +132,11 @@ export default class Track extends Base {
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
       url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(attr.track)}`,
-      tags,
+      tags: tag.map((tag) => ({
+        count: Number(tag.count),
+        name: tag.name,
+        url: tag.url,
+      })),
     } as TrackGetTopTagsType;
   }
 
@@ -171,8 +159,14 @@ export default class Track extends Base {
       page: params.page ?? 1,
     });
 
-    const tracks = track.map((track) => {
-      return {
+    return {
+      search: {
+        query: params.track,
+        page: Number(results['opensearch:Query'].startPage),
+        itemsPerPage: Number(results['opensearch:itemsPerPage']),
+        totalResults: Number(results['opensearch:totalResults']),
+      },
+      tracks: track.map((track) => ({
         name: track.name,
         listeners: Number(track.listeners),
         artist: {
@@ -181,17 +175,7 @@ export default class Track extends Base {
         },
 
         url: track.url,
-      };
-    });
-
-    return {
-      search: {
-        query: params.track,
-        page: Number(results['opensearch:Query'].startPage),
-        itemsPerPage: Number(results['opensearch:itemsPerPage']),
-        totalResults: Number(results['opensearch:totalResults']),
-      },
-      tracks,
+      })),
     } as TrackSearchType;
   }
 }

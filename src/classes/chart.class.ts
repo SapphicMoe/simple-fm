@@ -25,17 +25,6 @@ export default class Chart extends Base {
       page: params?.page ?? 1,
     });
 
-    const artists = artist.map((artist) => {
-      return {
-        name: artist.name,
-        stats: {
-          scrobbles: Number(artist.playcount),
-          listeners: Number(artist.listeners),
-        },
-        url: artist.url,
-      };
-    });
-
     return {
       search: {
         page: Number(attr.page),
@@ -43,7 +32,14 @@ export default class Chart extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists,
+      artists: artist.map((artist) => ({
+        name: artist.name,
+        stats: {
+          scrobbles: Number(artist.playcount),
+          listeners: Number(artist.listeners),
+        },
+        url: artist.url,
+      })),
     } as ChartGetTopArtistsType;
   }
 
@@ -61,17 +57,6 @@ export default class Chart extends Base {
       page: params?.page ?? 1,
     });
 
-    const tags = tag.map((tag) => {
-      return {
-        name: tag.name,
-        stats: {
-          count: Number(tag.taggings),
-          reach: Number(tag.reach),
-        },
-        url: tag.url,
-      };
-    });
-
     return {
       search: {
         page: Number(attr.page),
@@ -79,7 +64,14 @@ export default class Chart extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tags,
+      tags: tag.map((tag) => ({
+        name: tag.name,
+        stats: {
+          count: Number(tag.taggings),
+          reach: Number(tag.reach),
+        },
+        url: tag.url,
+      })),
     } as ChartGetTopTagsType;
   }
 
@@ -97,8 +89,14 @@ export default class Chart extends Base {
       page: params?.page ?? 1,
     });
 
-    const tracks = track.map((track) => {
-      return {
+    return {
+      search: {
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tracks: track.map((track) => ({
         name: track.name,
         stats: {
           scrobbles: Number(track.playcount),
@@ -109,17 +107,7 @@ export default class Chart extends Base {
           url: track.artist.url,
         },
         url: track.url,
-      };
-    });
-
-    return {
-      search: {
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
-      },
-      tracks,
+      })),
     } as ChartGetTopTracksType;
   }
 }

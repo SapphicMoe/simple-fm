@@ -40,7 +40,7 @@ export default class Tag extends Base {
         reach: tag.reach,
       },
       url: `https://www.last.fm/tag/${convertURL(tag.name)}`,
-    };
+    } as TagGetInfoType;
   }
 
   /**
@@ -59,19 +59,6 @@ export default class Tag extends Base {
       page: params.page ?? 1,
     });
 
-    const albums = album.map((album) => {
-      return {
-        rank: Number(album['@attr'].rank),
-        name: album.name,
-        artist: {
-          name: album.artist.name,
-          url: album.artist.url,
-        },
-        url: `https://www.last.fm/music/${convertURL(album.artist.name)}/${convertURL(album.name)}`,
-        image: convertImageSizes(album.image),
-      };
-    });
-
     return {
       search: {
         tag: attr.tag,
@@ -80,7 +67,16 @@ export default class Tag extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      albums,
+      albums: album.map((album) => ({
+        rank: Number(album['@attr'].rank),
+        name: album.name,
+        artist: {
+          name: album.artist.name,
+          url: album.artist.url,
+        },
+        url: `https://www.last.fm/music/${convertURL(album.artist.name)}/${convertURL(album.name)}`,
+        image: convertImageSizes(album.image),
+      })),
     } as TagGetTopAlbumsType;
   }
 
@@ -100,14 +96,6 @@ export default class Tag extends Base {
       page: params.page ?? 1,
     });
 
-    const artists = artist.map((artist) => {
-      return {
-        rank: Number(artist['@attr'].rank),
-        name: artist.name,
-        url: artist.url,
-      };
-    });
-
     return {
       search: {
         tag: attr.tag,
@@ -116,7 +104,11 @@ export default class Tag extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists,
+      artists: artist.map((artist) => ({
+        rank: Number(artist['@attr'].rank),
+        name: artist.name,
+        url: artist.url,
+      })),
     } as TagGetTopArtistsType;
   }
 
@@ -136,19 +128,6 @@ export default class Tag extends Base {
       page: params.page ?? 1,
     });
 
-    const tracks = track.map((track) => {
-      return {
-        rank: Number(track['@attr'].rank),
-        name: track.name,
-        duration: Number(track.duration) || null,
-        artist: {
-          name: track.artist.name,
-          url: track.artist.url,
-        },
-        url: track.url,
-      };
-    });
-
     return {
       search: {
         tag: attr.tag,
@@ -157,7 +136,16 @@ export default class Tag extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks,
+      tracks: track.map((track) => ({
+        rank: Number(track['@attr'].rank),
+        name: track.name,
+        duration: Number(track.duration) || null,
+        artist: {
+          name: track.artist.name,
+          url: track.artist.url,
+        },
+        url: track.url,
+      })),
     } as TagGetTopTracksType;
   }
 
@@ -173,20 +161,14 @@ export default class Tag extends Base {
       tag: params.tag,
     });
 
-    const positions = chart.map((chart) => {
-      return {
-        from: new Date(Number(chart.from) * 1000),
-        to: new Date(Number(chart.to) * 1000),
-      };
-    });
-
-    const response = {
+    return {
       search: {
         tag: attr.tag,
       },
-      positions,
-    };
-
-    return response as TagGetWeeklyChartListType;
+      positions: chart.map((chart) => ({
+        from: new Date(Number(chart.from) * 1000),
+        to: new Date(Number(chart.to) * 1000),
+      })),
+    } as TagGetWeeklyChartListType;
   }
 }

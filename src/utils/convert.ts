@@ -4,12 +4,12 @@ import { ImageSizes } from '~/index.js';
 export const convertImageSizes = (image: Image[]) => {
   const data = image
     .filter((i) => ImageSizes.includes(i.size))
-    .map((i) => {
-      return {
+    .map(
+      (i): ImageType => ({
         size: i.size,
         url: i['#text'],
-      } as ImageType;
-    });
+      })
+    );
 
   return data;
 };

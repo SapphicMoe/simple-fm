@@ -67,14 +67,6 @@ export default class Artist extends Base {
       limit: params.limit ?? 30,
     });
 
-    const artists = artist.map((artist) => {
-      return {
-        match: Number(artist.match),
-        name: artist.name,
-        url: artist.url,
-      };
-    });
-
     return {
       search: {
         artist: {
@@ -82,7 +74,11 @@ export default class Artist extends Base {
           url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
         },
       },
-      artists,
+      artists: artist.map((artist) => ({
+        match: Number(artist.match),
+        name: artist.name,
+        url: artist.url,
+      })),
     } as ArtistGetSimilarType;
   }
 
@@ -102,19 +98,6 @@ export default class Artist extends Base {
       page: params.page ?? 1,
     });
 
-    const albums = album.map((album) => {
-      return {
-        name: album.name,
-        scrobbles: Number(album.playcount),
-        artist: {
-          name: album.artist.name,
-          url: album.artist.url,
-        },
-        url: album.url,
-        image: convertImageSizes(album.image),
-      };
-    });
-
     return {
       search: {
         artist: {
@@ -126,7 +109,16 @@ export default class Artist extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      albums,
+      albums: album.map((album) => ({
+        name: album.name,
+        scrobbles: Number(album.playcount),
+        artist: {
+          name: album.artist.name,
+          url: album.artist.url,
+        },
+        url: album.url,
+        image: convertImageSizes(album.image),
+      })),
     } as ArtistGetTopAlbumsType;
   }
 
@@ -142,20 +134,16 @@ export default class Artist extends Base {
       artist: params.artist,
     });
 
-    const tags = tag.map((tag) => {
-      return {
-        count: tag.count,
-        name: tag.name,
-        url: tag.url,
-      };
-    });
-
     return {
       artist: {
         name: attr.artist,
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
-      tags,
+      tags: tag.map((tag) => ({
+        count: tag.count,
+        name: tag.name,
+        url: tag.url,
+      })),
     } as ArtistGetTopTagsType;
   }
 
@@ -175,22 +163,6 @@ export default class Artist extends Base {
       page: params.page ?? 1,
     });
 
-    const tracks = track.map((track) => {
-      return {
-        rank: Number(track['@attr'].rank),
-        name: track.name,
-        artist: {
-          name: track.artist.name,
-          url: track.artist.url,
-        },
-        stats: {
-          scrobbles: Number(track.playcount),
-          listeners: Number(track.listeners),
-        },
-        url: track.url,
-      };
-    });
-
     return {
       search: {
         artist: {
@@ -202,7 +174,19 @@ export default class Artist extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks,
+      tracks: track.map((track) => ({
+        rank: Number(track['@attr'].rank),
+        name: track.name,
+        artist: {
+          name: track.artist.name,
+          url: track.artist.url,
+        },
+        stats: {
+          scrobbles: Number(track.playcount),
+          listeners: Number(track.listeners),
+        },
+        url: track.url,
+      })),
     } as ArtistGetTopTracksType;
   }
 
@@ -225,14 +209,6 @@ export default class Artist extends Base {
       page: params.page ?? 1,
     });
 
-    const artists = artist.map((artist) => {
-      return {
-        name: artist.name,
-        listeners: Number(artist.listeners),
-        url: artist.url,
-      };
-    });
-
     return {
       search: {
         query: results['opensearch:Query'].searchTerms,
@@ -240,7 +216,11 @@ export default class Artist extends Base {
         itemsPerPage: Number(results['opensearch:itemsPerPage']),
         totalResults: Number(results['opensearch:totalResults']),
       },
-      artists,
+      artists: artist.map((artist) => ({
+        name: artist.name,
+        listeners: Number(artist.listeners),
+        url: artist.url,
+      })),
     } as ArtistSearchType;
   }
 }

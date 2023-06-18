@@ -25,14 +25,6 @@ export default class Geo extends Base {
       page: params.page ?? 1,
     });
 
-    const artists = artist.map((artist) => {
-      return {
-        name: artist.name,
-        listeners: Number(artist.listeners),
-        url: artist.url,
-      };
-    });
-
     return {
       search: {
         country: attr.country,
@@ -41,7 +33,11 @@ export default class Geo extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists,
+      artists: artist.map((artist) => ({
+        name: artist.name,
+        listeners: Number(artist.listeners),
+        url: artist.url,
+      })),
     } as GeoGetTopArtistsType;
   }
 
@@ -61,8 +57,15 @@ export default class Geo extends Base {
       page: params.page ?? 1,
     });
 
-    const tracks = track.map((track) => {
-      return {
+    return {
+      search: {
+        country: attr.country,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tracks: track.map((track) => ({
         rank: Number(track['@attr'].rank),
         name: track.name,
         duration: Number(track.duration) || null,
@@ -72,18 +75,7 @@ export default class Geo extends Base {
           url: track.artist.url,
         },
         url: track.url,
-      };
-    });
-
-    return {
-      search: {
-        country: attr.country,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
-      },
-      tracks,
+      })),
     } as GeoGetTopTracksType;
   }
 }

@@ -32,29 +32,6 @@ export default class Album extends Base {
       username: params.username,
     });
 
-    const tracks = Array.isArray(track)
-      ? track.map((track) => {
-          return {
-            rank: Number(track['@attr'].rank),
-            name: track.name,
-            duration: Number(track.duration) || null,
-            url: track.url,
-          };
-        })
-      : {
-          rank: Number(track['@attr'].rank),
-          name: track.name,
-          duration: Number(track.duration) || null,
-          url: track.url,
-        };
-
-    const tags = tag.map((tag) => {
-      return {
-        name: tag.name,
-        url: tag.url,
-      };
-    });
-
     const response = {
       name: album.name,
       artist: {
@@ -65,8 +42,23 @@ export default class Album extends Base {
         scrobbles: Number(album.playcount),
         listeners: Number(album.listeners),
       },
-      tags,
-      tracks,
+      tags: tag.map((tag) => ({
+        name: tag.name,
+        url: tag.url,
+      })),
+      tracks: Array.isArray(track)
+        ? track.map((track) => ({
+            rank: Number(track['@attr'].rank),
+            name: track.name,
+            duration: Number(track.duration) || null,
+            url: track.url,
+          }))
+        : {
+            rank: Number(track['@attr'].rank),
+            name: track.name,
+            duration: Number(track.duration) || null,
+            url: track.url,
+          },
       url: album.url,
       image: convertImageSizes(album.image),
     } as AlbumGetInfoType;
@@ -90,21 +82,17 @@ export default class Album extends Base {
       album: params.album,
     });
 
-    const tags = tag.map((tag) => {
-      return {
-        count: tag.count,
-        name: tag.name,
-        url: tag.url,
-      };
-    });
-
     return {
       name: attr.album,
       artist: {
         name: attr.artist,
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
-      tags,
+      tags: tag.map((tag) => ({
+        count: tag.count,
+        name: tag.name,
+        url: tag.url,
+      })),
     } as AlbumGetTopTagsType;
   }
 
@@ -127,18 +115,6 @@ export default class Album extends Base {
       page: params.page ?? 1,
     });
 
-    const albums = album.map((album) => {
-      return {
-        name: album.name,
-        artist: {
-          name: album.artist,
-          url: `https://www.last.fm/music/${convertURL(album.artist)}`,
-        },
-        url: album.url,
-        image: convertImageSizes(album.image),
-      };
-    });
-
     return {
       search: {
         query: results['opensearch:Query'].searchTerms,
@@ -146,7 +122,15 @@ export default class Album extends Base {
         itemsPerPage: Number(results['opensearch:itemsPerPage']),
         totalResults: Number(results['opensearch:totalResults']),
       },
-      albums,
+      albums: album.map((album) => ({
+        name: album.name,
+        artist: {
+          name: album.artist,
+          url: `https://www.last.fm/music/${convertURL(album.artist)}`,
+        },
+        url: album.url,
+        image: convertImageSizes(album.image),
+      })),
     } as AlbumSearchType;
   }
 }

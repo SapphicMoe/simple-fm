@@ -1,7 +1,6 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
 import type {
-  Artist,
   UserGetFriendsResponse,
   UserGetInfoResponse,
   UserGetLovedTracksResponse,
@@ -52,7 +51,7 @@ export default class User extends Base {
       registered: new Date(user.registered['#text'] * 1000),
       url: user.url,
       image: convertImageSizes(user.image),
-    };
+    } as UserGetInfoType;
   }
 
   /**
@@ -71,17 +70,6 @@ export default class User extends Base {
       page: params.page ?? 1,
     });
 
-    const friends = user.map((user) => {
-      return {
-        name: user.name,
-        realName: user.realname || null,
-        country: user.country,
-        registered: new Date(Number(user.registered.unixtime) * 1000),
-        url: user.url,
-        image: convertImageSizes(user.image),
-      };
-    });
-
     return {
       search: {
         user: attr.user,
@@ -90,7 +78,14 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      friends,
+      friends: user.map((user) => ({
+        name: user.name,
+        realName: user.realname || null,
+        country: user.country,
+        registered: new Date(Number(user.registered.unixtime) * 1000),
+        url: user.url,
+        image: convertImageSizes(user.image),
+      })),
     } as UserGetFriendsType;
   }
 
@@ -110,18 +105,6 @@ export default class User extends Base {
       page: params.page ?? 1,
     });
 
-    const tracks = track.map((track) => {
-      return {
-        name: track.name,
-        date: new Date(Number(track.date.uts) * 1000),
-        artist: {
-          name: track.artist.name,
-          url: track.artist.url,
-        },
-        url: track.url,
-      };
-    });
-
     return {
       search: {
         user: attr.user,
@@ -130,7 +113,15 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks,
+      tracks: track.map((track) => ({
+        name: track.name,
+        date: new Date(Number(track.date.uts) * 1000),
+        artist: {
+          name: track.artist.name,
+          url: track.artist.url,
+        },
+        url: track.url,
+      })),
     } as UserGetLovedTracksType;
   }
 
@@ -151,34 +142,28 @@ export default class User extends Base {
     });
 
     const responseTypes = {
-      album: albums?.album.map((album) => {
-        return {
-          name: album.name,
-          artist: {
-            name: album.artist.name,
-            url: album.artist.url,
-          },
-          url: album.url,
-        };
-      }),
+      album: albums?.album.map((album) => ({
+        name: album.name,
+        artist: {
+          name: album.artist.name,
+          url: album.artist.url,
+        },
+        url: album.url,
+      })),
 
-      artist: artists?.artist.map((artist) => {
-        return {
-          name: artist.name,
-          url: artist.url,
-        };
-      }),
+      artist: artists?.artist.map((artist) => ({
+        name: artist.name,
+        url: artist.url,
+      })),
 
-      track: tracks?.track.map((track) => {
-        return {
-          name: track.name,
-          artist: {
-            name: (track.artist as Artist).name,
-            url: (track.artist as Artist).url,
-          },
-          url: track.url,
-        };
-      }),
+      track: tracks?.track.map((track) => ({
+        name: track.name,
+        artist: {
+          name: typeof track.artist === 'string' ? track.artist : track.artist.name,
+          url: typeof track.artist === 'string' ? track.artist : track.artist.url,
+        },
+        url: track.url,
+      })),
     };
 
     const response = responseTypes[params.tagType];
@@ -212,20 +197,7 @@ export default class User extends Base {
       page: params.page ?? 1,
     });
 
-    const tracks = track.map((track) => {
-      return {
-        name: track.name,
-        artist: {
-          name: track.artist['#text'],
-          url: `https://www.last.fm/music/${convertURL(track.artist['#text'])}`,
-        },
-        album: track.album['#text'] || null,
-        url: track.url,
-        image: convertImageSizes(track.image),
-      };
-    });
-
-    const response = {
+    return {
       search: {
         user: attr.user,
         nowPlaying: track[0]['@attr']?.nowplaying === 'true',
@@ -234,11 +206,17 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-
-      tracks,
-    };
-
-    return response as UserGetRecentTracksType;
+      tracks: track.map((track) => ({
+        name: track.name,
+        artist: {
+          name: track.artist['#text'],
+          url: `https://www.last.fm/music/${convertURL(track.artist['#text'])}`,
+        },
+        album: track.album['#text'] || null,
+        url: track.url,
+        image: convertImageSizes(track.image),
+      })),
+    } as UserGetRecentTracksType;
   }
 
   /**
@@ -257,8 +235,15 @@ export default class User extends Base {
       page: params.page ?? 1,
     });
 
-    const albums = album.map((album) => {
-      return {
+    return {
+      search: {
+        user: attr.user,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      albums: album.map((album) => ({
         rank: Number(album['@attr'].rank),
         name: album.name,
         playCount: Number(album.playcount),
@@ -268,18 +253,7 @@ export default class User extends Base {
         },
         url: album.url,
         image: convertImageSizes(album.image),
-      };
-    });
-
-    return {
-      search: {
-        user: attr.user,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
-      },
-      albums,
+      })),
     } as UserGetTopAlbumsType;
   }
 
@@ -299,15 +273,6 @@ export default class User extends Base {
       page: params.page ?? 1,
     });
 
-    const artists = artist.map((artist) => {
-      return {
-        rank: Number(artist['@attr'].rank),
-        name: artist.name,
-        scrobbles: Number(artist.playcount),
-        url: artist.url,
-      };
-    });
-
     return {
       search: {
         user: attr.user,
@@ -316,7 +281,12 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists,
+      artists: artist.map((artist) => ({
+        rank: Number(artist['@attr'].rank),
+        name: artist.name,
+        scrobbles: Number(artist.playcount),
+        url: artist.url,
+      })),
     } as UserGetTopArtistsType;
   }
 
@@ -334,19 +304,15 @@ export default class User extends Base {
       limit: params.limit ?? 50,
     });
 
-    const tags = tag.map((tag) => {
-      return {
-        count: Number(tag.count),
-        name: tag.name,
-        url: tag.url,
-      };
-    });
-
     return {
       search: {
         user: attr.user,
       },
-      tags,
+      tags: tag.map((tag) => ({
+        count: Number(tag.count),
+        name: tag.name,
+        url: tag.url,
+      })),
     } as UserGetTopTagsType;
   }
 
@@ -366,8 +332,15 @@ export default class User extends Base {
       page: params.page ?? 1,
     });
 
-    const tracks = track.map((track) => {
-      return {
+    return {
+      search: {
+        user: attr.user,
+        page: Number(attr.page),
+        itemsPerPage: Number(attr.perPage),
+        totalPages: Number(attr.totalPages),
+        totalResults: Number(attr.total),
+      },
+      tracks: track.map((track) => ({
         rank: Number(track['@attr'].rank),
         name: track.name,
         stats: {
@@ -380,18 +353,7 @@ export default class User extends Base {
         },
         url: track.url,
         image: convertImageSizes(track.image),
-      };
-    });
-
-    return {
-      search: {
-        user: attr.user,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
-      },
-      tracks,
+      })),
     } as UserGetTopTracksType;
   }
 }
