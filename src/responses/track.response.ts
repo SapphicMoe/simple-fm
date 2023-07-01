@@ -1,5 +1,4 @@
-import Artist from '@classes/artist.class.js';
-import type { Album, Tag, Track } from '~/index.js';
+import type { Artist, Album, Tag, Track } from '~/index.js';
 
 export declare interface TrackGetInfoResponse {
   track: Track & {

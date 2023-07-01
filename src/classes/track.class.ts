@@ -49,8 +49,8 @@ export default class Track extends Base {
         listeners: Number(track.listeners),
       },
       artist: {
-        name: typeof track.artist === 'string' ? track.artist : track.artist.name,
-        url: typeof track.artist === 'string' ? track.artist : track.artist.url,
+        name: track.artist.name,
+        url: track.artist.url,
       },
       album: {
         position: Number(album?.['@attr']?.position) || null,
@@ -102,8 +102,8 @@ export default class Track extends Base {
         duration: Number(track.duration) || null,
         scrobbles: Number(track.playcount),
         artist: {
-          name: (track.artist as Artist).name,
-          url: (track.artist as Artist).url,
+          name: track.artist.name,
+          url: track.artist.url,
         },
         url: track.url,
         image: convertImageSizes(track.image),
