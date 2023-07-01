@@ -37,7 +37,7 @@ export default class Artist extends Base {
       username: params.username,
     });
 
-    const response = {
+    return {
       name: artist.name,
       description: artist.bio.summary,
       onTour: Boolean(Number(artist.ontour)).valueOf(),
@@ -45,12 +45,11 @@ export default class Artist extends Base {
         scrobbles: Number(artist.stats.playcount),
         listeners: Number(artist.stats.listeners),
       },
+      userStats: {
+        userPlayCount: (params.username && Number(artist.stats.userplaycount)) || null,
+      },
       url: artist.url,
     };
-
-    if (params.username) response.stats.userPlayCount = Number(artist.stats.userplaycount);
-
-    return response;
   }
 
   /**

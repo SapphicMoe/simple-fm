@@ -9,7 +9,9 @@ export declare interface AlbumGetInfoType {
   stats: {
     scrobbles: number;
     listeners: number;
-    userPlayCount?: number;
+  };
+  userStats?: {
+    userPlayCount?: number | null;
   };
   tags: Array<{
     name: string;

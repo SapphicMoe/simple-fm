@@ -40,7 +40,7 @@ export default class Album extends Base {
       url: track.url,
     });
 
-    const response = {
+    return {
       name: album.name,
       artist: {
         name: album.artist,
@@ -50,6 +50,9 @@ export default class Album extends Base {
         scrobbles: Number(album.playcount),
         listeners: Number(album.listeners),
       },
+      userStats: {
+        userPlayCount: (params.username && Number(album.userplaycount)) || null,
+      },
       tags: tag.map((tag) => ({
         name: tag.name,
         url: tag.url,
@@ -58,10 +61,6 @@ export default class Album extends Base {
       url: album.url,
       image: convertImageSizes(album.image),
     };
-
-    if (params.username) response.stats.userPlayCount = Number(album.userplaycount);
-
-    return response;
   }
 
   /**

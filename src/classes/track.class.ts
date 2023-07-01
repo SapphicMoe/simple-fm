@@ -2,7 +2,6 @@ import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
 import type {
   Album,
-  Artist,
   TrackGetInfoResponse,
   TrackGetSimilarResponse,
   TrackGetTopTagsResponse,
@@ -41,12 +40,16 @@ export default class Track extends Base {
       username: params.username,
     });
 
-    const response = {
+    return {
       name: track.name,
       duration: Number(track.duration) || null,
       stats: {
         scrobbles: Number(track.playcount),
         listeners: Number(track.listeners),
+      },
+      userStats: {
+        userLoved: (params.username && Boolean(Number(track.userloved)).valueOf()) || null,
+        userPlayCount: (params.username && Number(track.userplaycount)) || null,
       },
       artist: {
         name: track.artist.name,
@@ -64,13 +67,6 @@ export default class Track extends Base {
       })),
       url: track.url,
     };
-
-    if (params.username) {
-      response.stats.userPlayCount = Number(track.userplaycount);
-      response.stats.userLoved = Boolean(Number(track.userloved)).valueOf();
-    }
-
-    return response;
   }
 
   /**

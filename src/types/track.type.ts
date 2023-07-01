@@ -6,8 +6,10 @@ export declare interface TrackGetInfoType {
   stats: {
     scrobbles: number;
     listeners: number;
-    userPlayCount: number | null;
-    userLoved: boolean;
+  };
+  userStats: {
+    userPlayCount?: number | null;
+    userLoved?: boolean | null;
   };
   artist: {
     name: string;

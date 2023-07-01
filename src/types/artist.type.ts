@@ -7,6 +7,8 @@ export declare interface ArtistGetInfoType {
   stats: {
     scrobbles: number;
     listeners: number;
+  };
+  userStats: {
     userPlayCount?: number | null;
   };
   url: string;
