@@ -7,6 +7,7 @@ import type {
   AlbumGetInfoType,
   AlbumGetTopTagsType,
   AlbumSearchType,
+  TrackResponse,
 } from '~/types/index.js';
 
 import type { AlbumGetInfoParams, AlbumGetTopTagsParams, AlbumSearchParams } from '@params/album.params.js';
@@ -32,6 +33,13 @@ export default class Album extends Base {
       username: params.username,
     });
 
+    const returnTrack = (track: TrackResponse) => ({
+      rank: Number(track['@attr'].rank),
+      name: track.name,
+      duration: Number(track.duration) || null,
+      url: track.url,
+    });
+
     const response = {
       name: album.name,
       artist: {
@@ -46,19 +54,7 @@ export default class Album extends Base {
         name: tag.name,
         url: tag.url,
       })),
-      tracks: Array.isArray(track)
-        ? track.map((track) => ({
-            rank: Number(track['@attr'].rank),
-            name: track.name,
-            duration: Number(track.duration) || null,
-            url: track.url,
-          }))
-        : {
-            rank: Number(track['@attr'].rank),
-            name: track.name,
-            duration: Number(track.duration) || null,
-            url: track.url,
-          },
+      tracks: Array.isArray(track) ? track.map((track) => returnTrack(track)) : returnTrack(track),
       url: album.url,
       image: convertImageSizes(album.image),
     };
