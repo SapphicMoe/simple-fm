@@ -58,6 +58,6 @@ export class LastFMRequest {
 
     if (data.error === 6) throw new LastFMError(data);
 
-    return data as Promise<Awaited<T>>;
+    return data;
   }
 }
