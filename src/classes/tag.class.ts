@@ -40,7 +40,7 @@ export default class Tag extends Base {
         reach: tag.reach,
       },
       url: `https://www.last.fm/tag/${convertURL(tag.name)}`,
-    } as TagGetInfoType;
+    };
   }
 
   /**
@@ -77,7 +77,7 @@ export default class Tag extends Base {
         url: `https://www.last.fm/music/${convertURL(album.artist.name)}/${convertURL(album.name)}`,
         image: convertImageSizes(album.image),
       })),
-    } as TagGetTopAlbumsType;
+    };
   }
 
   /**
@@ -109,7 +109,7 @@ export default class Tag extends Base {
         name: artist.name,
         url: artist.url,
       })),
-    } as TagGetTopArtistsType;
+    };
   }
 
   /**
@@ -146,7 +146,7 @@ export default class Tag extends Base {
         },
         url: track.url,
       })),
-    } as TagGetTopTracksType;
+    };
   }
 
   /**
@@ -169,6 +169,6 @@ export default class Tag extends Base {
         from: new Date(Number(chart.from) * 1000),
         to: new Date(Number(chart.to) * 1000),
       })),
-    } as TagGetWeeklyChartListType;
+    };
   }
 }

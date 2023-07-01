@@ -46,7 +46,7 @@ export default class Artist extends Base {
         listeners: Number(artist.stats.listeners),
       },
       url: artist.url,
-    } as ArtistGetInfoType;
+    };
 
     if (params.username) response.stats.userPlayCount = Number(artist.stats.userplaycount);
 
@@ -79,7 +79,7 @@ export default class Artist extends Base {
         name: artist.name,
         url: artist.url,
       })),
-    } as ArtistGetSimilarType;
+    };
   }
 
   /**
@@ -119,7 +119,7 @@ export default class Artist extends Base {
         url: album.url,
         image: convertImageSizes(album.image),
       })),
-    } as ArtistGetTopAlbumsType;
+    };
   }
 
   /**
@@ -144,7 +144,7 @@ export default class Artist extends Base {
         name: tag.name,
         url: tag.url,
       })),
-    } as ArtistGetTopTagsType;
+    };
   }
 
   /**
@@ -187,7 +187,7 @@ export default class Artist extends Base {
         },
         url: track.url,
       })),
-    } as ArtistGetTopTracksType;
+    };
   }
 
   /**
@@ -221,6 +221,6 @@ export default class Artist extends Base {
         listeners: Number(artist.listeners),
         url: artist.url,
       })),
-    } as ArtistSearchType;
+    };
   }
 }

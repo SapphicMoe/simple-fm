@@ -40,7 +40,7 @@ export default class Chart extends Base {
         },
         url: artist.url,
       })),
-    } as ChartGetTopArtistsType;
+    };
   }
 
   /**
@@ -72,7 +72,7 @@ export default class Chart extends Base {
         },
         url: tag.url,
       })),
-    } as ChartGetTopTagsType;
+    };
   }
 
   /**
@@ -108,6 +108,6 @@ export default class Chart extends Base {
         },
         url: track.url,
       })),
-    } as ChartGetTopTracksType;
+    };
   }
 }

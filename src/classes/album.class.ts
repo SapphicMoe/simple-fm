@@ -61,7 +61,7 @@ export default class Album extends Base {
           },
       url: album.url,
       image: convertImageSizes(album.image),
-    } as AlbumGetInfoType;
+    };
 
     if (params.username) response.stats.userPlayCount = Number(album.userplaycount);
 
@@ -93,7 +93,7 @@ export default class Album extends Base {
         name: tag.name,
         url: tag.url,
       })),
-    } as AlbumGetTopTagsType;
+    };
   }
 
   /**
@@ -131,6 +131,6 @@ export default class Album extends Base {
         url: album.url,
         image: convertImageSizes(album.image),
       })),
-    } as AlbumSearchType;
+    };
   }
 }

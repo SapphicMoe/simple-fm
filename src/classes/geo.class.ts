@@ -38,7 +38,7 @@ export default class Geo extends Base {
         listeners: Number(artist.listeners),
         url: artist.url,
       })),
-    } as GeoGetTopArtistsType;
+    };
   }
 
   /**
@@ -76,6 +76,6 @@ export default class Geo extends Base {
         },
         url: track.url,
       })),
-    } as GeoGetTopTracksType;
+    };
   }
 }

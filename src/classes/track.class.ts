@@ -63,7 +63,7 @@ export default class Track extends Base {
         url: tag.url,
       })),
       url: track.url,
-    } as TrackGetInfoType;
+    };
 
     if (params.username) {
       response.stats.userPlayCount = Number(track.userplaycount);
@@ -108,7 +108,7 @@ export default class Track extends Base {
         url: track.url,
         image: convertImageSizes(track.image),
       })),
-    } as TrackGetSimilarType;
+    };
   }
 
   /**
@@ -137,7 +137,7 @@ export default class Track extends Base {
         name: tag.name,
         url: tag.url,
       })),
-    } as TrackGetTopTagsType;
+    };
   }
 
   /**
@@ -173,9 +173,8 @@ export default class Track extends Base {
           name: track.artist,
           url: `https://www.last.fm/music/${convertURL(track.artist)}`,
         },
-
         url: track.url,
       })),
-    } as TrackSearchType;
+    };
   }
 }

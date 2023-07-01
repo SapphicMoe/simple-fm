@@ -354,6 +354,6 @@ export default class User extends Base {
         url: track.url,
         image: convertImageSizes(track.image),
       })),
-    } as UserGetTopTracksType;
+    };
   }
 }
