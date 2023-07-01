@@ -1,4 +1,4 @@
-import type { Artist, Track, Tag } from '~/index.js';
+import type { Artist, AttrMeta, Track, Tag } from '~/index.js';
 
 export declare interface ChartGetTopArtistsResponse {
   artists: {
@@ -8,12 +8,7 @@ export declare interface ChartGetTopArtistsResponse {
         listeners: string;
       }
     >;
-    '@attr': {
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta;
   };
 }
 
@@ -24,12 +19,7 @@ export declare interface ChartGetTopTagsResponse {
         taggings: string;
       }
     >;
-    '@attr': {
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta;
   };
 }
 
@@ -42,11 +32,6 @@ export declare interface ChartGetTopTracksResponse {
         artist: Artist;
       }
     >;
-    '@attr': {
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta;
   };
 }

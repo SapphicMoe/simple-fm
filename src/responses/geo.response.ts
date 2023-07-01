@@ -1,4 +1,4 @@
-import { Artist, Track } from '~/index.js';
+import type { Artist, AttrMeta, Track } from '~/index.js';
 
 export declare interface GeoGetTopArtistsResponse {
   topartists: {
@@ -7,13 +7,7 @@ export declare interface GeoGetTopArtistsResponse {
         listeners: string;
       }
     >;
-    '@attr': {
-      country: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { country: string };
   };
 }
 
@@ -29,12 +23,6 @@ export declare interface GeoGetTopTracksResponse {
         };
       }
     >;
-    '@attr': {
-      country: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { country: string };
   };
 }

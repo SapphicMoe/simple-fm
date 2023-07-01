@@ -1,4 +1,4 @@
-import type { Album, Artist, Track, Tag } from '~/index.js';
+import type { Album, Artist, AttrMeta, Track, Tag } from '~/index.js';
 
 export declare interface TagGetInfoResponse {
   tag: Tag & {
@@ -20,13 +20,7 @@ export declare interface TagGetTopAlbumsResponse {
         };
       }
     >;
-    '@attr': {
-      tag: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { tag: string };
   };
 }
 
@@ -39,13 +33,7 @@ export declare interface TagGetTopArtistsResponse {
         };
       }
     >;
-    '@attr': {
-      tag: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { tag: string };
   };
 }
 
@@ -60,13 +48,7 @@ export declare interface TagGetTopTracksResponse {
         };
       }
     >;
-    '@attr': {
-      tag: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { tag: string };
   };
 }
 

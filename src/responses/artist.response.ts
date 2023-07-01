@@ -1,4 +1,4 @@
-import { Album, Artist, Track, Tag } from '~/index.js';
+import type { Album, Artist, AttrMeta, OpenSearchMeta, Track, Tag } from '~/index.js';
 
 export declare interface ArtistGetInfoResponse {
   artist: Artist & {
@@ -33,13 +33,7 @@ export declare interface ArtistGetTopAlbumsResponse {
         artist: Artist;
       }
     >;
-    '@attr': {
-      artist: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { artist: string };
   };
 }
 
@@ -69,24 +63,15 @@ export declare interface ArtistGetTopTracksResponse {
         };
       }
     >;
-    '@attr': {
-      artist: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { artist: string };
   };
 }
 
 export declare interface ArtistSearchResponse {
-  results: {
+  results: OpenSearchMeta & {
     'opensearch:Query': {
       searchTerms: string;
-      startPage: string;
     };
-    'opensearch:totalResults': string;
-    'opensearch:itemsPerPage': string;
     artistmatches: {
       artist: Array<
         Artist & {

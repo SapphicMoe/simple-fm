@@ -1,4 +1,4 @@
-import type { Artist, Album, Tag, Track } from '~/index.js';
+import type { Artist, Album, OpenSearchMeta, Tag, Track } from '~/index.js';
 
 export declare interface TrackGetInfoResponse {
   track: Track & {
@@ -42,12 +42,7 @@ export declare interface TrackGetTopTagsResponse {
 }
 
 export declare interface TrackSearchResponse {
-  results: {
-    'opensearch:Query': {
-      startPage: string;
-    };
-    'opensearch:totalResults': string;
-    'opensearch:itemsPerPage': string;
+  results: OpenSearchMeta & {
     trackmatches: {
       track: Array<
         Track & {

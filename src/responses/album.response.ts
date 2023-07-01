@@ -1,4 +1,4 @@
-import type { Album, Artist, Image, Tag, Track } from '~/index.js';
+import type { Album, Artist, Image, OpenSearchMeta, Tag, Track } from '~/index.js';
 
 type ObjArray<T> = T | T[];
 
@@ -38,13 +38,10 @@ export declare interface AlbumGetTopTagsResponse {
 }
 
 export declare interface AlbumSearchResponse {
-  results: {
+  results: OpenSearchMeta & {
     'opensearch:Query': {
       searchTerms: string;
-      startPage: string;
     };
-    'opensearch:totalResults': string;
-    'opensearch:itemsPerPage': string;
     albummatches: {
       album: Array<
         Album & {

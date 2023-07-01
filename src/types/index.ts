@@ -36,6 +36,21 @@ export type RequestMethods =
   | 'user.getTopTags'
   | 'user.getTopTracks';
 
+export interface AttrMeta {
+  page: string;
+  perPage: string;
+  totalPages: string;
+  total: string;
+}
+
+export interface OpenSearchMeta {
+  'opensearch:Query': {
+    startPage: string;
+  };
+  'opensearch:totalResults': string;
+  'opensearch:itemsPerPage': string;
+}
+
 export interface Image {
   size: string;
   '#text': string;

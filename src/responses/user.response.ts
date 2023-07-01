@@ -1,4 +1,4 @@
-import type { Album, Artist, Image, Tag, Track, User } from '~/index.js';
+import type { Album, Artist, AttrMeta, Image, Tag, Track, User } from '~/index.js';
 
 export declare interface UserGetInfoResponse {
   user: User;
@@ -7,13 +7,7 @@ export declare interface UserGetInfoResponse {
 export declare interface UserGetFriendsResponse {
   friends: {
     user: User[];
-    '@attr': {
-      user: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { user: string };
   };
 }
 
@@ -28,13 +22,7 @@ export declare interface UserGetLovedTracksResponse {
         };
       }
     >;
-    '@attr': {
-      user: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { user: string };
   };
 }
 
@@ -54,14 +42,7 @@ export declare interface UserGetPersonalTagsResponse {
     tracks?: {
       track: Track[];
     };
-    '@attr': {
-      user: string;
-      tag: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { user: string; tag: string };
   };
 }
 
@@ -74,13 +55,7 @@ export declare interface UserGetRecentTracksResponse {
         '@attr'?: { nowplaying: string };
       }
     >;
-    '@attr': {
-      user: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { user: string };
   };
 }
 export declare interface UserGetTopAlbumsResponse {
@@ -94,13 +69,7 @@ export declare interface UserGetTopAlbumsResponse {
         };
       }
     >;
-    '@attr': {
-      user: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { user: string };
   };
 }
 
@@ -114,13 +83,7 @@ export declare interface UserGetTopArtistsResponse {
         };
       }
     >;
-    '@attr': {
-      user: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { user: string };
   };
 }
 
@@ -145,12 +108,6 @@ export declare interface UserGetTopTracksResponse {
         playcount: string;
       }
     >;
-    '@attr': {
-      user: string;
-      page: string;
-      perPage: string;
-      totalPages: string;
-      total: string;
-    };
+    '@attr': AttrMeta & { user: string };
   };
 }
