@@ -7,7 +7,11 @@ export declare interface TrackGetInfoResponse {
     playcount: string;
     artist: Artist;
     toptags: {
-      tag: Tag[];
+      tag: Array<
+        Tag & {
+          url: string;
+        }
+      >;
     };
     album?: Album & { title: string; '@attr'?: { position: string } };
     userplaycount?: string;
@@ -33,7 +37,12 @@ export declare interface TrackGetSimilarResponse {
 
 export declare interface TrackGetTopTagsResponse {
   toptags: {
-    tag: Tag[];
+    tag: Array<
+      Tag & {
+        count: number;
+        url: string;
+      }
+    >;
     '@attr': {
       artist: string;
       track: string;

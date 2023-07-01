@@ -1,4 +1,4 @@
-import type { ImageType } from '~/index.js';
+import type { ImageType, ObjArray } from '~/index.js';
 
 export declare interface AlbumGetInfoType {
   name: string;
@@ -17,7 +17,7 @@ export declare interface AlbumGetInfoType {
     name: string;
     url: string;
   }>;
-  tracks: Array<{
+  tracks: ObjArray<{
     rank: number;
     name: string;
     duration: number | null;

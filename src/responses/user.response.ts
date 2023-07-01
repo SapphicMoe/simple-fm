@@ -89,7 +89,12 @@ export declare interface UserGetTopArtistsResponse {
 
 export declare interface UserGetTopTagsResponse {
   toptags: {
-    tag: Tag[];
+    tag: Array<
+      Tag & {
+        count: number;
+        url: string;
+      }
+    >;
     '@attr': {
       user: string;
     };

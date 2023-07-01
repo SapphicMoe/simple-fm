@@ -5,7 +5,11 @@ type ObjArray<T> = T | T[];
 export declare interface AlbumGetInfoResponse {
   album: Album & {
     tags: {
-      tag: Tag[];
+      tag: Array<
+        Tag & {
+          url: string;
+        }
+      >;
     };
     artist: string;
     listeners: string;
@@ -29,7 +33,12 @@ export declare interface AlbumGetInfoResponse {
 
 export declare interface AlbumGetTopTagsResponse {
   toptags: {
-    tag: Tag[];
+    tag: Array<
+      Tag & {
+        count: number;
+        url: string;
+      }
+    >;
     '@attr': {
       artist: string;
       album: string;

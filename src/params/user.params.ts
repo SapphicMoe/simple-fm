@@ -1,5 +1,3 @@
-import { PersonalTagTypes } from '~/index.js';
-
 export interface UserGetInfoParams {
   username: string;
 }
@@ -19,7 +17,7 @@ export interface UserGetLovedTracksParams {
 export interface UserGetPersonalTagsParams {
   username: string;
   tag: string;
-  tagType: PersonalTagTypes;
+  tagType: 'album' | 'artist' | 'track';
 }
 
 export interface UserGetRecentTracksParams {

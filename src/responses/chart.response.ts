@@ -17,6 +17,7 @@ export declare interface ChartGetTopTagsResponse {
     tag: Array<
       Tag & {
         taggings: string;
+        url: string;
       }
     >;
     '@attr': AttrMeta;

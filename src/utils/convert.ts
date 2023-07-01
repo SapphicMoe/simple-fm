@@ -1,9 +1,10 @@
 import type { Image, ImageType } from '~/index.js';
-import { ImageSizes } from '~/index.js';
+
+const ImageSize = ['extralarge', 'large', 'medium', 'small'];
 
 export const convertImageSizes = (image: Image[]) => {
   const data = image
-    .filter((i) => ImageSizes.includes(i.size))
+    .filter((i) => ImageSize.includes(i.size))
     .map(
       (i): ImageType => ({
         size: i.size,
