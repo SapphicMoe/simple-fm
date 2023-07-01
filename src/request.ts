@@ -1,10 +1,10 @@
 import { $fetch, FetchError } from 'ofetch';
 
 import LastFMError from '@utils/error.js';
-import { RequestMethods } from '~/types/index.js';
+import { RequestMethod } from '~/types/index.js';
 
 export interface LastFMArgument {
-  method: RequestMethods;
+  method: RequestMethod;
 
   album?: string;
   artist?: string;

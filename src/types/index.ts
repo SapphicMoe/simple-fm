@@ -1,15 +1,23 @@
 export type ObjArray<T> = T | T[];
 
-export type RequestMethods =
+export type RequestMethod =
+  | 'album.addTags'
   | 'album.getInfo'
   | 'album.getTopTags'
+  | 'album.removeTag'
   | 'album.search'
+  | 'artist.addTags'
+  | 'artist.getCorrection'
   | 'artist.getInfo'
   | 'artist.getSimilar'
   | 'artist.getTopAlbums'
   | 'artist.getTopTags'
   | 'artist.getTopTracks'
+  | 'artist.removeTag'
   | 'artist.search'
+  | 'auth.getMobileSession'
+  | 'auth.getSession'
+  | 'auth.getToken'
   | 'chart.getTopArtists'
   | 'chart.getTopTags'
   | 'chart.getTopTracks'
@@ -21,10 +29,17 @@ export type RequestMethods =
   | 'tag.getTopTags'
   | 'tag.getTopTracks'
   | 'tag.getWeeklyChartList'
+  | 'track.addTags'
+  | 'track.getCorrection'
   | 'track.getInfo'
   | 'track.getSimilar'
   | 'track.getTopTags'
+  | 'track.love'
+  | 'track.removeTag'
+  | 'track.scrobble'
   | 'track.search'
+  | 'track.unlove'
+  | 'track.updateNowPlaying'
   | 'user.getFriends'
   | 'user.getInfo'
   | 'user.getLovedTracks'
@@ -33,7 +48,11 @@ export type RequestMethods =
   | 'user.getTopAlbums'
   | 'user.getTopArtists'
   | 'user.getTopTags'
-  | 'user.getTopTracks';
+  | 'user.getTopTracks'
+  | 'user.getWeeklyAlbumChart'
+  | 'user.getWeeklyArtistChart'
+  | 'user.getWeeklyChartList'
+  | 'user.getWeeklyTrackList';
 
 export interface AttrMeta {
   page: string;
