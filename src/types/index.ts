@@ -95,7 +95,7 @@ export interface Album {
   name: string;
   artist: Artist | string;
   url: string;
-  image: Image[];
+  image: Image[] | null;
 }
 
 export interface Artist {

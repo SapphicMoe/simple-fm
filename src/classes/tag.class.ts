@@ -75,7 +75,7 @@ export default class Tag extends Base {
           url: album.artist.url,
         },
         url: `https://www.last.fm/music/${convertURL(album.artist.name)}/${convertURL(album.name)}`,
-        image: convertImageSizes(album.image),
+        image: convertImageSizes(album.image) || null,
       })),
     };
   }

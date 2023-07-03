@@ -116,7 +116,7 @@ export default class Artist extends Base {
           url: album.artist.url,
         },
         url: album.url,
-        image: convertImageSizes(album.image),
+        image: convertImageSizes(album.image) || null,
       })),
     };
   }

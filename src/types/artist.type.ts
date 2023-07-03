@@ -47,7 +47,7 @@ export declare interface ArtistGetTopAlbumsType {
       url: string;
     };
     url: string;
-    image: ImageType[];
+    image: ImageType[] | null;
   }>;
 }
 

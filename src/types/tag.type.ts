@@ -26,7 +26,7 @@ export declare interface TagGetTopAlbumsType {
       url: string;
     };
     url: string;
-    image: ImageType[];
+    image: ImageType[] | null;
   }>;
 }
 

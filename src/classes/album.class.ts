@@ -59,7 +59,7 @@ export default class Album extends Base {
       })),
       tracks: Array.isArray(track) ? track.map((track) => returnTrack(track)) : returnTrack(track),
       url: album.url,
-      image: convertImageSizes(album.image),
+      image: convertImageSizes(album.image) || null,
     };
   }
 
@@ -124,7 +124,7 @@ export default class Album extends Base {
           url: `https://www.last.fm/music/${convertURL(album.artist)}`,
         },
         url: album.url,
-        image: convertImageSizes(album.image),
+        image: convertImageSizes(album.image) || null,
       })),
     };
   }

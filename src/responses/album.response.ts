@@ -27,7 +27,7 @@ export declare interface AlbumGetInfoResponse {
       >;
     };
     url: string;
-    image: Image[];
+    image: Image[] | null;
   };
 }
 

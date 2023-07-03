@@ -1,7 +1,6 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
 import type {
-  Album,
   TrackGetInfoResponse,
   TrackGetSimilarResponse,
   TrackGetTopTagsResponse,
@@ -58,7 +57,7 @@ export default class Track extends Base {
       album: {
         position: Number(album?.['@attr']?.position) || null,
         name: album?.title || null,
-        image: convertImageSizes((album as Album).image),
+        image: convertImageSizes(album?.image || null) || null,
         url: album?.url || null,
       },
       tags: tag.map((tag) => ({
@@ -102,7 +101,7 @@ export default class Track extends Base {
           url: track.artist.url,
         },
         url: track.url,
-        image: convertImageSizes(track.image),
+        image: convertImageSizes(track.image) || null,
       })),
     };
   }

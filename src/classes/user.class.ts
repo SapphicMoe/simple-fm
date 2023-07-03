@@ -352,7 +352,7 @@ export default class User extends Base {
           url: track.artist.url,
         },
         url: track.url,
-        image: convertImageSizes(track.image),
+        image: convertImageSizes(track.image) || null,
       })),
     };
   }
