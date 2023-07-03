@@ -50,7 +50,7 @@ export default class User extends Base {
       country: user.country,
       registered: new Date(user.registered['#text'] * 1000),
       url: user.url,
-      image: convertImageSizes(user.image),
+      image: convertImageSizes(user.image) || null,
     };
   }
 
@@ -84,7 +84,7 @@ export default class User extends Base {
         country: user.country,
         registered: new Date(Number(user.registered.unixtime) * 1000),
         url: user.url,
-        image: convertImageSizes(user.image),
+        image: convertImageSizes(user.image) || null,
       })),
     };
   }
@@ -142,31 +142,34 @@ export default class User extends Base {
     });
 
     const responseTypes = {
-      album: albums?.album.map((album) => ({
-        name: album.name,
-        artist: {
-          name: album.artist.name,
-          url: album.artist.url,
-        },
-        url: album.url,
-      })),
+      album:
+        albums?.album.map((album) => ({
+          name: album.name,
+          artist: {
+            name: album.artist.name,
+            url: album.artist.url,
+          },
+          url: album.url,
+        })) || null,
 
-      artist: artists?.artist.map((artist) => ({
-        name: artist.name,
-        url: artist.url,
-      })),
+      artist:
+        artists?.artist.map((artist) => ({
+          name: artist.name,
+          url: artist.url,
+        })) || null,
 
-      track: tracks?.track.map((track) => ({
-        name: track.name,
-        artist: {
-          name: typeof track.artist === 'string' ? track.artist : track.artist.name,
-          url: typeof track.artist === 'string' ? track.artist : track.artist.url,
-        },
-        url: track.url,
-      })),
+      track:
+        tracks?.track.map((track) => ({
+          name: track.name,
+          artist: {
+            name: typeof track.artist === 'string' ? track.artist : track.artist.name,
+            url: typeof track.artist === 'string' ? track.artist : track.artist.url,
+          },
+          url: track.url,
+        })) || null,
     };
 
-    const response = responseTypes[params.tagType];
+    const response = responseTypes[params.tagType] || null;
 
     return {
       search: {
@@ -214,7 +217,7 @@ export default class User extends Base {
         },
         album: track.album['#text'] || null,
         url: track.url,
-        image: convertImageSizes(track.image),
+        image: convertImageSizes(track.image) || null,
       })),
     };
   }
@@ -252,7 +255,7 @@ export default class User extends Base {
           url: album.artist.url,
         },
         url: album.url,
-        image: convertImageSizes(album.image),
+        image: convertImageSizes(album.image) || null,
       })),
     };
   }

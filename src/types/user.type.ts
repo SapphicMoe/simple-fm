@@ -55,7 +55,7 @@ export declare interface UserGetPersonalTagsType {
     totalPages: number;
     totalResults: number;
   };
-  response: PersonalTagType[];
+  response: PersonalTagType[] | null;
 }
 
 export declare interface UserGetRecentTracksType {
@@ -69,7 +69,7 @@ export declare interface UserGetRecentTracksType {
   };
   tracks: Array<{
     name: string;
-    album: string;
+    album: string | null;
     artist: {
       name: string;
       url: string;
