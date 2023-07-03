@@ -15,6 +15,6 @@ export default class Base {
   async sendRequest<T = unknown>(params: LastFMArgument): Promise<T> {
     const response = await new LastFMRequest(this.key, this.userAgent, params).get();
 
-    return response as Promise<Awaited<T>>;
+    return response as Promise<T>;
   }
 }
