@@ -51,7 +51,7 @@ export default class User extends Base {
       registered: new Date(user.registered['#text'] * 1000),
       url: user.url,
       image: convertImageSizes(user.image),
-    } as UserGetInfoType;
+    };
   }
 
   /**
@@ -86,7 +86,7 @@ export default class User extends Base {
         url: user.url,
         image: convertImageSizes(user.image),
       })),
-    } as UserGetFriendsType;
+    };
   }
 
   /**
@@ -122,7 +122,7 @@ export default class User extends Base {
         },
         url: track.url,
       })),
-    } as UserGetLovedTracksType;
+    };
   }
 
   /**
@@ -178,7 +178,7 @@ export default class User extends Base {
         totalResults: Number(attr.total),
       },
       response,
-    } as UserGetPersonalTagsType;
+    };
   }
 
   /**
@@ -216,7 +216,7 @@ export default class User extends Base {
         url: track.url,
         image: convertImageSizes(track.image),
       })),
-    } as UserGetRecentTracksType;
+    };
   }
 
   /**
@@ -254,7 +254,7 @@ export default class User extends Base {
         url: album.url,
         image: convertImageSizes(album.image),
       })),
-    } as UserGetTopAlbumsType;
+    };
   }
 
   /**
@@ -287,7 +287,7 @@ export default class User extends Base {
         scrobbles: Number(artist.playcount),
         url: artist.url,
       })),
-    } as UserGetTopArtistsType;
+    };
   }
 
   /**
@@ -313,7 +313,7 @@ export default class User extends Base {
         name: tag.name,
         url: tag.url,
       })),
-    } as UserGetTopTagsType;
+    };
   }
 
   /**
