@@ -18,7 +18,10 @@ export default class SimpleFMClient {
   readonly track: Track;
   readonly user: User;
 
-  constructor(private readonly key: string, options: { userAgent?: string } = {}) {
+  constructor(
+    private readonly key: string,
+    options: { userAgent?: string } = {}
+  ) {
     if (!key)
       throw new LastFMError({
         message: 'You have not specified a Last.fm API key. Get one here: https://www.last.fm/api/account/create',
