@@ -5,11 +5,12 @@ import {
   TrackGetSimilarSchema,
   TrackGetTopTagsSchema,
   TrackSearchSchema,
-} from './schemas/track.schema.js';
+} from '../schemas/track.schema.js';
 
+import { ENV } from 'test/env.js';
 import simpleFM from '~/index.js';
 
-const client = new simpleFM(process.env.LASTFM_TOKEN!);
+const client = new simpleFM(ENV.LASTFM_TOKEN);
 
 describe('Track', () => {
   describe('getInfo', () => {

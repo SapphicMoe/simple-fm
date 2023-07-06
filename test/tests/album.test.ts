@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import { AlbumGetInfoSchema, AlbumGetTopTagsSchema, AlbumSearchSchema } from './schemas/album.schema.js';
+import { AlbumGetInfoSchema, AlbumGetTopTagsSchema, AlbumSearchSchema } from '../schemas/album.schema.js';
 
+import { ENV } from 'test/env.js';
 import simpleFM from '~/index.js';
 
-const client = new simpleFM(process.env.LASTFM_TOKEN!);
+const client = new simpleFM(ENV.LASTFM_TOKEN);
 
 describe('Album', () => {
   describe('getInfo', () => {

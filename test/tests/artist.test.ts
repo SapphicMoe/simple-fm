@@ -6,11 +6,12 @@ import {
   ArtistGetTopAlbumsSchema,
   ArtistGetTopTagsSchema,
   ArtistGetTopTracksSchema,
-} from './schemas/artist.schema.js';
+} from '../schemas/artist.schema.js';
 
+import { ENV } from 'test/env.js';
 import simpleFM from '~/index.js';
 
-const client = new simpleFM(process.env.LASTFM_TOKEN!);
+const client = new simpleFM(ENV.LASTFM_TOKEN);
 
 describe('Artist', () => {
   describe('getInfo', () => {

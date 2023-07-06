@@ -6,11 +6,12 @@ import {
   TagGetTopArtistsSchema,
   TagGetTopTracksSchema,
   TagGetWeeklyChartListSchema,
-} from './schemas/tag.schema.js';
+} from '../schemas/tag.schema.js';
 
+import { ENV } from 'test/env.js';
 import simpleFM from '~/index.js';
 
-const client = new simpleFM(process.env.LASTFM_TOKEN!);
+const client = new simpleFM(ENV.LASTFM_TOKEN);
 
 describe('Tag', () => {
   describe('getInfo', () => {

@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import { ChartGetTopArtistsSchema, ChartGetTopTagsSchema, ChartGetTopTracksSchema } from './schemas/chart.schema.js';
+import { ChartGetTopArtistsSchema, ChartGetTopTagsSchema, ChartGetTopTracksSchema } from '../schemas/chart.schema.js';
 
+import { ENV } from 'test/env.js';
 import simpleFM from '~/index.js';
 
-const client = new simpleFM(process.env.LASTFM_TOKEN!);
+const client = new simpleFM(ENV.LASTFM_TOKEN);
 
 describe('Chart', () => {
   describe('getTopArtists', () => {
