@@ -13,9 +13,11 @@
     "build": "tsc && tsconfig-replace-paths -p tsconfig.json -s src/",
     "dev": "tsc --watch",
     "lint": "yarn eslint .",
-    "prepare": "yarn pack && tar -xvf package.tgz && rimraf ./package.tgz",
+    "package": "tar -xvf package.tgz && rimraf ./package.tgz",
+    "prepare": "yarn pack && yarn package && yarn changeset publish",
     "prepack": "rimraf ./dist && yarn build",
-    "test": "vitest"
+    "test": "vitest",
+    "version": "yarn changeset version"
   },
   "exports": {
     ".": "./dist/index.js",
@@ -35,6 +37,7 @@
     "ofetch": "^1.1.1"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@types/node": "^20.4.1",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
