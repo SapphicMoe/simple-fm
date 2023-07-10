@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc && tsconfig-replace-paths -p tsconfig.json -s src/",
     "dev": "tsc --watch",
-    "lint": "eslint .",
+    "lint": "yarn eslint .",
     "prepare": "yarn pack && tar -xvf package.tgz && rimraf ./package.tgz",
     "prepack": "rimraf ./dist && yarn build",
     "test": "vitest"
@@ -43,7 +43,7 @@
     "eslint-config-clarity": "^1.0.3",
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier": "alpha",
     "prettier": "^3.0.0",
     "rimraf": "^5.0.1",
     "tsconfig-replace-paths": "^0.0.14",
