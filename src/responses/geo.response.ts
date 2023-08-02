@@ -1,4 +1,4 @@
-import type { Artist, AttrMeta, Track } from '~/index.js';
+import type { Artist, AttrMeta, Track } from '@typings/index.js';
 
 export declare interface GeoGetTopArtistsResponse {
   topartists: {

@@ -1,17 +1,5 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
-import type {
-  TagGetInfoResponse,
-  TagGetTopAlbumsResponse,
-  TagGetTopArtistsResponse,
-  TagGetTopTracksResponse,
-  TagGetWeeklyChartListResponse,
-  TagGetInfoType,
-  TagGetTopAlbumsType,
-  TagGetTopArtistsType,
-  TagGetTopTracksType,
-  TagGetWeeklyChartListType,
-} from '~/types/index.js';
 
 import type {
   TagGetInfoParams,
@@ -19,7 +7,21 @@ import type {
   TagGetTopArtistsParams,
   TagGetTopTracksParams,
   TagGetWeeklyChartListParams,
-} from '@params/tag.params.js';
+} from '@params/index.js';
+import type {
+  TagGetInfoResponse,
+  TagGetTopAlbumsResponse,
+  TagGetTopArtistsResponse,
+  TagGetTopTracksResponse,
+  TagGetWeeklyChartListResponse,
+} from '@responses/index.js';
+import type {
+  TagGetInfoType,
+  TagGetTopAlbumsType,
+  TagGetTopArtistsType,
+  TagGetTopTracksType,
+  TagGetWeeklyChartListType,
+} from '@typings/index.js';
 
 export default class Tag extends Base {
   /**

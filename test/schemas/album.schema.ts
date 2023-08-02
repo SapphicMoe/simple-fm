@@ -1,6 +1,6 @@
 import { z, ZodObject, ZodRawShape, UnknownKeysParam, ZodTypeAny } from 'zod';
 
-import { AlbumGetInfoType, AlbumGetTopTagsType, AlbumSearchType } from '~/types/album.type.js';
+import { AlbumGetInfoType, AlbumGetTopTagsType, AlbumSearchType } from '@typings/album.type.js';
 
 export const AlbumGetInfoSchema = z.object({}) as ZodObject<
   ZodRawShape,

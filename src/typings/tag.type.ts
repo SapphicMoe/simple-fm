@@ -1,4 +1,4 @@
-import type { ImageType } from '~/index.js';
+import type { ImageType } from '@typings/index.js';
 
 export declare interface TagGetInfoType {
   name: string;

@@ -7,7 +7,7 @@ import Track from '@classes/track.class.js';
 import User from '@classes/user.class.js';
 import LastFMError from '@utils/error.js';
 
-export * from '~/types/index.js';
+export type * from '@typings/index.js';
 
 export default class SimpleFMClient {
   readonly album: Album;

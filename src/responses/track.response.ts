@@ -1,4 +1,4 @@
-import type { Artist, Album, OpenSearchMeta, Tag, Track } from '~/index.js';
+import type { Artist, Album, OpenSearchMeta, Tag, Track } from '@typings/index.js';
 
 export declare interface TrackGetInfoResponse {
   track: Track & {

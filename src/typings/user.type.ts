@@ -1,4 +1,4 @@
-import type { ImageType, PersonalTagType } from '~/index.js';
+import type { ImageType, PersonalTagType } from '@typings/index.js';
 
 export declare interface UserGetFriendsType {
   search: {

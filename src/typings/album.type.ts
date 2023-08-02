@@ -1,4 +1,4 @@
-import type { ImageType, ObjArray } from '~/index.js';
+import type { ImageType, ObjArray } from '@typings/index.js';
 
 export declare interface AlbumGetInfoType {
   name: string;

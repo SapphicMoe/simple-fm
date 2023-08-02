@@ -6,7 +6,7 @@ import {
   ArtistGetTopAlbumsType,
   ArtistGetTopTagsType,
   ArtistGetTopTracksType,
-} from '~/types/artist.type.js';
+} from '@typings/artist.type.js';
 
 export const ArtistGetInfoSchema = z.object({}) as ZodObject<
   ZodRawShape,

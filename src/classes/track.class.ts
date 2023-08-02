@@ -1,22 +1,19 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
-import type {
-  TrackGetInfoResponse,
-  TrackGetSimilarResponse,
-  TrackGetTopTagsResponse,
-  TrackSearchResponse,
-  TrackGetInfoType,
-  TrackGetSimilarType,
-  TrackGetTopTagsType,
-  TrackSearchType,
-} from '~/types/index.js';
 
 import type {
   TrackGetInfoParams,
   TrackGetSimilarParams,
   TrackGetTopTagsParams,
   TrackSearchParams,
-} from '@params/track.params.js';
+} from '@params/index.js';
+import type {
+  TrackGetInfoResponse,
+  TrackGetSimilarResponse,
+  TrackGetTopTagsResponse,
+  TrackSearchResponse,
+} from '@responses/index.js';
+import type { TrackGetInfoType, TrackGetSimilarType, TrackGetTopTagsType, TrackSearchType } from '@typings/index.js';
 
 export default class Track extends Base {
   /**

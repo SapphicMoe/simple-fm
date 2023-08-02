@@ -128,12 +128,10 @@ export interface User {
   image: Image[];
 }
 
-export type * from '~/types/album.type.js';
-export type * from '~/types/artist.type.js';
-export type * from '~/types/chart.type.js';
-export type * from '~/types/geo.type.js';
-export type * from '~/types/tag.type.js';
-export type * from '~/types/track.type.js';
-export type * from '~/types/user.type.js';
-
-export type * from '@responses/index.js';
+export type * from '@typings/album.type.js';
+export type * from '@typings/artist.type.js';
+export type * from '@typings/chart.type.js';
+export type * from '@typings/geo.type.js';
+export type * from '@typings/tag.type.js';
+export type * from '@typings/track.type.js';
+export type * from '@typings/user.type.js';

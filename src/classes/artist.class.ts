@@ -1,19 +1,5 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
-import type {
-  ArtistGetInfoResponse,
-  ArtistGetSimilarResponse,
-  ArtistGetTopAlbumsResponse,
-  ArtistGetTopTagsResponse,
-  ArtistGetTopTracksResponse,
-  ArtistSearchResponse,
-  ArtistGetInfoType,
-  ArtistSearchType,
-  ArtistGetSimilarType,
-  ArtistGetTopAlbumsType,
-  ArtistGetTopTagsType,
-  ArtistGetTopTracksType,
-} from '~/types/index.js';
 
 import type {
   ArtistGetInfoParams,
@@ -22,7 +8,23 @@ import type {
   ArtistGetTopTagsParams,
   ArtistGetTopTracksParams,
   ArtistSearchParams,
-} from '@params/artist.params.js';
+} from '@params/index.js';
+import type {
+  ArtistGetInfoResponse,
+  ArtistGetSimilarResponse,
+  ArtistGetTopAlbumsResponse,
+  ArtistGetTopTagsResponse,
+  ArtistGetTopTracksResponse,
+  ArtistSearchResponse,
+} from '@responses/index.js';
+import type {
+  ArtistGetInfoType,
+  ArtistSearchType,
+  ArtistGetSimilarType,
+  ArtistGetTopAlbumsType,
+  ArtistGetTopTagsType,
+  ArtistGetTopTracksType,
+} from '@typings/index.js';
 
 export default class Artist extends Base {
   /**

@@ -1,12 +1,8 @@
 import Base from '~/base.js';
-import type {
-  GeoGetTopArtistsResponse,
-  GeoGetTopTracksResponse,
-  GeoGetTopArtistsType,
-  GeoGetTopTracksType,
-} from '~/types/index.js';
 
-import type { GeoGetTopArtistsParams, GeoGetTopTracksParams } from '@params/geo.params.js';
+import type { GeoGetTopArtistsParams, GeoGetTopTracksParams } from '@params/index.js';
+import type { GeoGetTopArtistsResponse, GeoGetTopTracksResponse } from '@responses/index.js';
+import type { GeoGetTopArtistsType, GeoGetTopTracksType } from '@typings/index.js';
 
 export default class Geo extends Base {
   /**

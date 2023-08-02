@@ -1,7 +1,7 @@
 import { $fetch, FetchError } from 'ofetch';
 
 import LastFMError from '@utils/error.js';
-import { RequestMethod } from '~/types/index.js';
+import type { RequestMethod } from '@typings/index.js';
 
 export interface LastFMArgument {
   method: RequestMethod;

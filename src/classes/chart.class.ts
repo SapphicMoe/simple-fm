@@ -1,14 +1,12 @@
 import Base from '~/base.js';
+
+import type { ChartGetTopArtistParams, ChartGetTopTagsParams, ChartGetTopTracksParams } from '@params/index.js';
 import type {
   ChartGetTopArtistsResponse,
   ChartGetTopTagsResponse,
   ChartGetTopTracksResponse,
-  ChartGetTopArtistsType,
-  ChartGetTopTagsType,
-  ChartGetTopTracksType,
-} from '~/types/index.js';
-
-import type { ChartGetTopArtistParams, ChartGetTopTagsParams, ChartGetTopTracksParams } from '@params/chart.params.js';
+} from '@responses/index.js';
+import type { ChartGetTopArtistsType, ChartGetTopTagsType, ChartGetTopTracksType } from '@typings/index.js';
 
 export default class Chart extends Base {
   /**

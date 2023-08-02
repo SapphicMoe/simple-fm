@@ -1,16 +1,14 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
+
+import type { AlbumGetInfoParams, AlbumGetTopTagsParams, AlbumSearchParams } from '@params/index.js';
 import type {
   AlbumGetInfoResponse,
   AlbumGetTopTagsResponse,
   AlbumSearchResponse,
-  AlbumGetInfoType,
-  AlbumGetTopTagsType,
-  AlbumSearchType,
   TrackResponse,
-} from '~/types/index.js';
-
-import type { AlbumGetInfoParams, AlbumGetTopTagsParams, AlbumSearchParams } from '@params/album.params.js';
+} from '@responses/index.js';
+import type { AlbumGetInfoType, AlbumGetTopTagsType, AlbumSearchType } from '@typings/index.js';
 
 export default class Album extends Base {
   /**

@@ -1,25 +1,5 @@
 import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
-import type {
-  UserGetFriendsResponse,
-  UserGetInfoResponse,
-  UserGetLovedTracksResponse,
-  UserGetPersonalTagsResponse,
-  UserGetRecentTracksResponse,
-  UserGetTopAlbumsResponse,
-  UserGetTopArtistsResponse,
-  UserGetTopTagsResponse,
-  UserGetTopTracksResponse,
-  UserGetInfoType,
-  UserGetLovedTracksType,
-  UserGetPersonalTagsType,
-  UserGetRecentTracksType,
-  UserGetTopAlbumsType,
-  UserGetTopArtistsType,
-  UserGetTopTagsType,
-  UserGetTopTracksType,
-  UserGetFriendsType,
-} from '~/types/index.js';
 
 import type {
   UserGetFriendsParams,
@@ -31,7 +11,29 @@ import type {
   UserGetTopArtistsParams,
   UserGetTopTagsParams,
   UserGetTopTracksParams,
-} from '@params/user.params.js';
+} from '@params/index.js';
+import type {
+  UserGetFriendsResponse,
+  UserGetInfoResponse,
+  UserGetLovedTracksResponse,
+  UserGetPersonalTagsResponse,
+  UserGetRecentTracksResponse,
+  UserGetTopAlbumsResponse,
+  UserGetTopArtistsResponse,
+  UserGetTopTagsResponse,
+  UserGetTopTracksResponse,
+} from '@responses/index.js';
+import type {
+  UserGetInfoType,
+  UserGetLovedTracksType,
+  UserGetPersonalTagsType,
+  UserGetRecentTracksType,
+  UserGetTopAlbumsType,
+  UserGetTopArtistsType,
+  UserGetTopTagsType,
+  UserGetTopTracksType,
+  UserGetFriendsType,
+} from '@typings/index.js';
 
 export default class User extends Base {
   /**

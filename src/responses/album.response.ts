@@ -1,4 +1,4 @@
-import type { Album, Artist, Image, OpenSearchMeta, Tag, Track } from '~/index.js';
+import type { Album, Artist, Image, OpenSearchMeta, Tag, Track } from '@typings/index.js';
 
 type ObjArray<T> = T | T[];
 
