@@ -8,6 +8,7 @@ export declare interface GeoGetTopArtistsType {
   };
   artists: Array<{
     name: string;
+    mbid: string;
     listeners: number;
     url: string;
   }>;
@@ -24,10 +25,12 @@ export declare interface GeoGetTopTracksType {
   tracks: Array<{
     rank: number;
     name: string;
+    mbid: string;
     duration: number | null;
     listeners: number;
     artist: {
       name: string;
+      mbid: string;
       url: string;
     };
     url: string;

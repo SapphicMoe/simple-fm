@@ -41,6 +41,7 @@ export default class Artist extends Base {
 
     return {
       name: artist.name,
+      mbid: artist.mbid,
       description: artist.bio.summary,
       onTour: Boolean(Number(artist.ontour)).valueOf(),
       stats: {
@@ -78,6 +79,7 @@ export default class Artist extends Base {
       artists: artist.map((artist) => ({
         match: Number(artist.match),
         name: artist.name,
+        mbid: artist.mbid,
         url: artist.url,
       })),
     };
@@ -178,6 +180,7 @@ export default class Artist extends Base {
       tracks: track.map((track) => ({
         rank: Number(track['@attr'].rank),
         name: track.name,
+        mbid: track.mbid,
         artist: {
           name: track.artist.name,
           url: track.artist.url,
@@ -219,6 +222,7 @@ export default class Artist extends Base {
       },
       artists: artist.map((artist) => ({
         name: artist.name,
+        mbid: artist.mbid,
         listeners: Number(artist.listeners),
         url: artist.url,
       })),

@@ -2,6 +2,7 @@ import type { ImageType } from '@typings/index.js';
 
 export declare interface TrackGetInfoType {
   name: string;
+  mbid: string;
   duration: number | null;
   stats: {
     scrobbles: number;
@@ -13,11 +14,13 @@ export declare interface TrackGetInfoType {
   };
   artist: {
     name: string;
+    mbid: string;
     url: string;
   };
   album: {
     position: number | null;
     name: string | null;
+    mbid?: string;
     image: ImageType[] | null;
     url: string | null;
   };
@@ -27,7 +30,10 @@ export declare interface TrackGetInfoType {
 
 export declare interface TrackGetSimilarType {
   name: string;
-  artist: { name: string; url: string };
+  artist: {
+    name: string;
+    url: string;
+  };
   url: string;
   tracks: Array<{
     match: number;
@@ -66,6 +72,7 @@ export declare interface TrackSearchType {
   };
   tracks: Array<{
     name: string;
+    mbid: string;
     listeners: number;
     artist: {
       name: string;

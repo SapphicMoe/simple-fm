@@ -32,6 +32,7 @@ export default class Chart extends Base {
       },
       artists: artist.map((artist) => ({
         name: artist.name,
+        mbid: artist.mbid,
         stats: {
           scrobbles: Number(artist.playcount),
           listeners: Number(artist.listeners),
@@ -96,6 +97,7 @@ export default class Chart extends Base {
       },
       tracks: track.map((track) => ({
         name: track.name,
+        mbid: track.mbid,
         stats: {
           scrobbles: Number(track.playcount),
           listeners: Number(track.listeners),

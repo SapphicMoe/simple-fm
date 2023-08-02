@@ -37,26 +37,6 @@ import type {
 
 export default class User extends Base {
   /**
-   * Returns information about a user's profile.
-   * @param username - The name of the user.
-   * */
-  async getInfo(params: UserGetInfoParams): Promise<UserGetInfoType> {
-    const { user } = await this.sendRequest<UserGetInfoResponse>({
-      method: 'user.getInfo',
-      user: params.username,
-    });
-
-    return {
-      name: user.name,
-      realName: user.realname || null,
-      country: user.country,
-      registered: new Date(user.registered['#text'] * 1000),
-      url: user.url,
-      image: convertImageSizes(user.image) || null,
-    };
-  }
-
-  /**
    * Returns a list of the user's friends.
    * @param username - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50.
@@ -92,6 +72,26 @@ export default class User extends Base {
   }
 
   /**
+   * Returns information about a user's profile.
+   * @param username - The name of the user.
+   * */
+  async getInfo(params: UserGetInfoParams): Promise<UserGetInfoType> {
+    const { user } = await this.sendRequest<UserGetInfoResponse>({
+      method: 'user.getInfo',
+      user: params.username,
+    });
+
+    return {
+      name: user.name,
+      realName: user.realname || null,
+      country: user.country,
+      registered: new Date(user.registered['#text'] * 1000),
+      url: user.url,
+      image: convertImageSizes(user.image) || null,
+    };
+  }
+
+  /**
    * Returns the loved tracks as set by the user.
    * @param username - The name of the user.
    * @param limit - The number of results to fetch per page. Defaults to 50.
@@ -117,9 +117,11 @@ export default class User extends Base {
       },
       tracks: track.map((track) => ({
         name: track.name,
+        mbid: track.mbid,
         date: new Date(Number(track.date.uts) * 1000),
         artist: {
           name: track.artist.name,
+          mbid: track.artist.mbid,
           url: track.artist.url,
         },
         url: track.url,
@@ -213,13 +215,17 @@ export default class User extends Base {
       },
       tracks: track.map((track) => ({
         name: track.name,
+        mbid: track.mbid,
         artist: {
           name: track.artist['#text'],
           url: `https://www.last.fm/music/${convertURL(track.artist['#text'])}`,
         },
-        album: track.album['#text'] || null,
+        album: {
+          name: track.album['#text'],
+          mbid: track.album.mbid,
+        },
         url: track.url,
-        image: convertImageSizes(track.image) || null,
+        image: convertImageSizes(track.image),
       })),
     };
   }
@@ -251,9 +257,11 @@ export default class User extends Base {
       albums: album.map((album) => ({
         rank: Number(album['@attr'].rank),
         name: album.name,
+        mbid: album.mbid,
         playCount: Number(album.playcount),
         artist: {
           name: album.artist.name,
+          mbid: album.artist.mbid,
           url: album.artist.url,
         },
         url: album.url,
@@ -289,6 +297,7 @@ export default class User extends Base {
       artists: artist.map((artist) => ({
         rank: Number(artist['@attr'].rank),
         name: artist.name,
+        mbid: artist.mbid,
         scrobbles: Number(artist.playcount),
         url: artist.url,
       })),
@@ -348,12 +357,14 @@ export default class User extends Base {
       tracks: track.map((track) => ({
         rank: Number(track['@attr'].rank),
         name: track.name,
+        mbid: track.mbid,
         stats: {
           duration: Number(track.duration) || null,
           userPlayCount: Number(track.playcount),
         },
         artist: {
           name: track.artist.name,
+          mbid: track.artist.mbid,
           url: track.artist.url,
         },
         url: track.url,

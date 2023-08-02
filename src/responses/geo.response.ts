@@ -4,6 +4,7 @@ export declare interface GeoGetTopArtistsResponse {
   topartists: {
     artist: Array<
       Artist & {
+        mbid: string;
         listeners: string;
       }
     >;
@@ -15,9 +16,12 @@ export declare interface GeoGetTopTracksResponse {
   tracks: {
     track: Array<
       Track & {
+        mbid: string;
         duration: string;
         listeners: string;
-        artist: Artist;
+        artist: Artist & {
+          mbid: string;
+        };
         '@attr': {
           rank: string;
         };

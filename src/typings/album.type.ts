@@ -2,6 +2,7 @@ import type { ImageType, ObjArray } from '@typings/index.js';
 
 export declare interface AlbumGetInfoType {
   name: string;
+  mbid: string;
   artist: {
     name: string;
     url: string;
@@ -49,6 +50,7 @@ export declare interface AlbumSearchType {
   };
   albums: Array<{
     name: string;
+    mbid: string;
     artist: {
       name: string;
       url: string;

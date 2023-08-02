@@ -2,6 +2,7 @@ import type { Album, Artist, AttrMeta, OpenSearchMeta, Track, Tag } from '@typin
 
 export declare interface ArtistGetInfoResponse {
   artist: Artist & {
+    mbid: string;
     stats: {
       listeners: string;
       playcount: string;
@@ -16,6 +17,7 @@ export declare interface ArtistGetSimilarResponse {
   similarartists: {
     artist: Array<
       Artist & {
+        mbid: string;
         match: string;
       }
     >;
@@ -55,6 +57,7 @@ export declare interface ArtistGetTopTracksResponse {
   toptracks: {
     track: Array<
       Track & {
+        mbid: string;
         listeners: string;
         playcount: string;
         artist: Artist;
@@ -75,6 +78,7 @@ export declare interface ArtistSearchResponse {
     artistmatches: {
       artist: Array<
         Artist & {
+          mbid: string;
           listeners: string;
         }
       >;

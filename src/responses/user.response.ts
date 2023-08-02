@@ -1,9 +1,5 @@
 import type { Album, Artist, AttrMeta, Image, Tag, Track, User } from '@typings/index.js';
 
-export declare interface UserGetInfoResponse {
-  user: User;
-}
-
 export declare interface UserGetFriendsResponse {
   friends: {
     user: User[];
@@ -11,11 +7,18 @@ export declare interface UserGetFriendsResponse {
   };
 }
 
+export declare interface UserGetInfoResponse {
+  user: User;
+}
+
 export declare interface UserGetLovedTracksResponse {
   lovedtracks: {
     track: Array<
       Track & {
-        artist: Artist;
+        mbid: string;
+        artist: Artist & {
+          mbid: string;
+        };
         date: {
           uts: string;
           '#text': string;
@@ -30,17 +33,31 @@ export declare interface UserGetPersonalTagsResponse {
   taggings: {
     albums?: {
       album: Array<{
+        mbid: string;
         name: string;
-        artist: Artist;
+        artist: Artist & {
+          mbid: string;
+        };
         url: string;
         image: Image[];
       }>;
     };
     artists?: {
-      artist: Artist[];
+      artist: Array<
+        Artist & {
+          mbid: string;
+        }
+      >;
     };
     tracks?: {
-      track: Track[];
+      track: Array<
+        Track & {
+          mbid: string;
+          artist: Artist & {
+            mbid: string;
+          };
+        }
+      >;
     };
     '@attr': AttrMeta & { user: string; tag: string };
   };
@@ -50,19 +67,34 @@ export declare interface UserGetRecentTracksResponse {
   recenttracks: {
     track: Array<
       Track & {
-        artist: { '#text': string };
-        album: { '#text': string };
+        mbid: string;
+        artist: {
+          mbid: string;
+          '#text': string;
+        };
+        album: {
+          mbid: string;
+          '#text': string;
+        };
+        date: {
+          uts: string;
+          '#text': string;
+        };
         '@attr'?: { nowplaying: string };
       }
     >;
     '@attr': AttrMeta & { user: string };
   };
 }
+
 export declare interface UserGetTopAlbumsResponse {
   topalbums: {
     album: Array<
       Album & {
-        artist: Artist;
+        mbid: string;
+        artist: Artist & {
+          mbid: string;
+        };
         playcount: string;
         '@attr': {
           rank: string;
@@ -77,6 +109,7 @@ export declare interface UserGetTopArtistsResponse {
   topartists: {
     artist: Array<
       Artist & {
+        mbid: string;
         playcount: string;
         '@attr': {
           rank: number;
@@ -105,8 +138,11 @@ export declare interface UserGetTopTracksResponse {
   toptracks: {
     track: Array<
       Track & {
+        mbid: string;
         duration: string;
-        artist: Artist;
+        artist: Artist & {
+          mbid: string;
+        };
         '@attr': {
           rank: string;
         };

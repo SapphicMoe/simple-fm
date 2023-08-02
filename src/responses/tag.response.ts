@@ -14,7 +14,10 @@ export declare interface TagGetTopAlbumsResponse {
   albums: {
     album: Array<
       Album & {
-        artist: Artist;
+        mbid: string;
+        artist: Artist & {
+          mbid: string;
+        };
         '@attr': {
           rank: number;
         };
@@ -28,6 +31,7 @@ export declare interface TagGetTopArtistsResponse {
   topartists: {
     artist: Array<
       Artist & {
+        mbid: string;
         '@attr': {
           rank: number;
         };
@@ -41,8 +45,11 @@ export declare interface TagGetTopTracksResponse {
   tracks: {
     track: Array<
       Track & {
+        mbid: string;
         duration: string;
-        artist: Artist;
+        artist: Artist & {
+          mbid: string;
+        };
         '@attr': {
           rank: string;
         };

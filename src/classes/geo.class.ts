@@ -31,6 +31,7 @@ export default class Geo extends Base {
       },
       artists: artist.map((artist) => ({
         name: artist.name,
+        mbid: artist.mbid,
         listeners: Number(artist.listeners),
         url: artist.url,
       })),
@@ -64,10 +65,12 @@ export default class Geo extends Base {
       tracks: track.map((track) => ({
         rank: Number(track['@attr'].rank),
         name: track.name,
+        mbid: track.mbid,
         duration: Number(track.duration) || null,
         listeners: Number(track.listeners),
         artist: {
           name: track.artist.name,
+          mbid: track.artist.mbid,
           url: track.artist.url,
         },
         url: track.url,

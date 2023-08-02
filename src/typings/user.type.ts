@@ -37,9 +37,11 @@ export declare interface UserGetLovedTracksType {
   };
   tracks: Array<{
     name: string;
+    mbid: string;
     date: Date;
     artist: {
       name: string;
+      mbid: string;
       url: string;
     };
     url: string;
@@ -69,7 +71,11 @@ export declare interface UserGetRecentTracksType {
   };
   tracks: Array<{
     name: string;
-    album: string | null;
+    mbid: string;
+    album: {
+      name: string;
+      mbid: string;
+    };
     artist: {
       name: string;
       url: string;
@@ -90,9 +96,11 @@ export declare interface UserGetTopAlbumsType {
   albums: Array<{
     rank: number;
     name: string;
+    mbid: string;
     playCount: number;
     artist: {
       name: string;
+      mbid: string;
       url: string;
     };
     url: string;
@@ -111,6 +119,7 @@ export declare interface UserGetTopArtistsType {
   artists: Array<{
     rank: number;
     name: string;
+    mbid: string;
     scrobbles: number;
     url: string;
   }>;
@@ -138,12 +147,14 @@ export declare interface UserGetTopTracksType {
   tracks: Array<{
     rank: number;
     name: string;
+    mbid: string;
     stats: {
       duration: number | null;
       userPlayCount: number;
     };
     artist: {
       name: string;
+      mbid: string;
       url: string;
     };
     url: string;

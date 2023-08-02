@@ -12,6 +12,7 @@ export declare interface AlbumGetInfoResponse {
       >;
     };
     artist: string;
+    mbid: string;
     listeners: string;
     playcount: string;
     userplaycount?: number;
@@ -55,6 +56,7 @@ export declare interface AlbumSearchResponse {
       album: Array<
         Album & {
           artist: string;
+          mbid: string;
         }
       >;
     };

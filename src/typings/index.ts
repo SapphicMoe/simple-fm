@@ -86,7 +86,9 @@ export interface Registered {
 
 export interface PersonalTagType {
   name: string;
-  artist?: Artist;
+  artist?: Artist & {
+    mbid: string;
+  };
   url: string;
   image?: Image[];
 }
@@ -100,6 +102,7 @@ export interface Album {
 
 export interface Artist {
   name: string;
+  mbid?: string;
   url: string;
   image?: Image[];
 }

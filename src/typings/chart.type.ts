@@ -7,6 +7,7 @@ export declare interface ChartGetTopArtistsType {
   };
   artists: Array<{
     name: string;
+    mbid: string;
     stats: {
       scrobbles: number;
       listeners: number;
@@ -41,6 +42,7 @@ export declare interface ChartGetTopTracksType {
   };
   tracks: Array<{
     name: string;
+    mbid: string;
     stats: {
       scrobbles: number;
       listeners: number;

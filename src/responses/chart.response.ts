@@ -4,6 +4,7 @@ export declare interface ChartGetTopArtistsResponse {
   artists: {
     artist: Array<
       Artist & {
+        mbid: string;
         playcount: string;
         listeners: string;
       }
@@ -28,9 +29,12 @@ export declare interface ChartGetTopTracksResponse {
   tracks: {
     track: Array<
       Track & {
+        mbid: string;
         playcount: string;
         listeners: string;
-        artist: Artist;
+        artist: Artist & {
+          mbid: string;
+        };
       }
     >;
     '@attr': AttrMeta;

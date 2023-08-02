@@ -38,6 +38,7 @@ export default class Track extends Base {
 
     return {
       name: track.name,
+      mbid: track.mbid,
       duration: Number(track.duration) || null,
       stats: {
         scrobbles: Number(track.playcount),
@@ -49,11 +50,13 @@ export default class Track extends Base {
       },
       artist: {
         name: track.artist.name,
+        mbid: track.artist.mbid,
         url: track.artist.url,
       },
       album: {
         position: Number(album?.['@attr']?.position) || null,
         name: album?.title || null,
+        mbid: album?.mbid,
         image: convertImageSizes(album?.image || null) || null,
         url: album?.url || null,
       },
@@ -160,6 +163,7 @@ export default class Track extends Base {
       },
       tracks: track.map((track) => ({
         name: track.name,
+        mbid: track.mbid,
         listeners: Number(track.listeners),
         artist: {
           name: track.artist,

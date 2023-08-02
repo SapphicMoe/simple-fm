@@ -40,6 +40,7 @@ export default class Album extends Base {
 
     return {
       name: album.name,
+      mbid: album.mbid,
       artist: {
         name: album.artist,
         url: `https://www.last.fm/music/${convertURL(album.artist)}`,
@@ -117,6 +118,7 @@ export default class Album extends Base {
       },
       albums: album.map((album) => ({
         name: album.name,
+        mbid: album.mbid,
         artist: {
           name: album.artist,
           url: `https://www.last.fm/music/${convertURL(album.artist)}`,

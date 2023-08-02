@@ -72,12 +72,14 @@ export default class Tag extends Base {
       albums: album.map((album) => ({
         rank: Number(album['@attr'].rank),
         name: album.name,
+        mbid: album.mbid,
         artist: {
           name: album.artist.name,
+          mbid: album.artist.mbid,
           url: album.artist.url,
         },
-        url: `https://www.last.fm/music/${convertURL(album.artist.name)}/${convertURL(album.name)}`,
-        image: convertImageSizes(album.image) || null,
+        url: `https://www.last.fm/music/${convertURL(album.artist.name)}/${convertURL(a.name)}`,
+        image: convertImageSizes(album.image),
       })),
     };
   }
@@ -109,6 +111,7 @@ export default class Tag extends Base {
       artists: artist.map((artist) => ({
         rank: Number(artist['@attr'].rank),
         name: artist.name,
+        mbid: artist.mbid,
         url: artist.url,
       })),
     };
@@ -141,9 +144,11 @@ export default class Tag extends Base {
       tracks: track.map((track) => ({
         rank: Number(track['@attr'].rank),
         name: track.name,
+        mbid: track.mbid,
         duration: Number(track.duration) || null,
         artist: {
           name: track.artist.name,
+          mbid: track.artist.mbid,
           url: track.artist.url,
         },
         url: track.url,
