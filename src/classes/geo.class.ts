@@ -1,6 +1,6 @@
 import Base from '~/base.js';
 
-import type { GeoGetTopArtistsParams, GeoGetTopTracksParams } from '@params/index.js';
+import type { GeoGetTopArtistsParams, GeoGetTopTracksParams } from '@params/geo.params.js';
 import type { GeoGetTopArtistsResponse, GeoGetTopTracksResponse } from '@responses/index.js';
 import type { GeoGetTopArtistsType, GeoGetTopTracksType } from '@typings/index.js';
 
@@ -29,11 +29,11 @@ export default class Geo extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists: artist.map((artist) => ({
-        name: artist.name,
-        mbid: artist.mbid,
-        listeners: Number(artist.listeners),
-        url: artist.url,
+      artists: artist.map((a) => ({
+        name: a.name,
+        mbid: a.mbid,
+        listeners: Number(a.listeners),
+        url: a.url,
       })),
     };
   }
@@ -62,18 +62,18 @@ export default class Geo extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((track) => ({
-        rank: Number(track['@attr'].rank),
-        name: track.name,
-        mbid: track.mbid,
+      tracks: track.map((t) => ({
+        rank: Number(t['@attr'].rank),
+        name: t.name,
+        mbid: t.mbid,
         duration: Number(track.duration) || null,
-        listeners: Number(track.listeners),
+        listeners: Number(t.listeners),
         artist: {
-          name: track.artist.name,
-          mbid: track.artist.mbid,
-          url: track.artist.url,
+          name: t.artist.name,
+          mbid: t.artist.mbid,
+          url: t.artist.url,
         },
-        url: track.url,
+        url: t.url,
       })),
     };
   }

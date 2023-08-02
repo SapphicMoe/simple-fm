@@ -60,12 +60,12 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      friends: user.map((user) => ({
-        name: user.name,
+      friends: user.map((u) => ({
+        name: u.name,
         realName: user.realname || null,
         country: user.country,
-        registered: new Date(Number(user.registered.unixtime) * 1000),
-        url: user.url,
+        registered: new Date(Number(u.registered.unixtime) * 1000),
+        url: u.url,
         image: convertImageSizes(user.image) || null,
       })),
     };
@@ -115,16 +115,16 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((track) => ({
-        name: track.name,
-        mbid: track.mbid,
-        date: new Date(Number(track.date.uts) * 1000),
+      tracks: track.map((t) => ({
+        name: t.name,
+        mbid: t.mbid,
+        date: new Date(Number(t.date.uts) * 1000),
         artist: {
-          name: track.artist.name,
-          mbid: track.artist.mbid,
-          url: track.artist.url,
+          name: t.artist.name,
+          mbid: t.artist.mbid,
+          url: t.artist.url,
         },
-        url: track.url,
+        url: t.url,
       })),
     };
   }
@@ -174,7 +174,6 @@ export default class User extends Base {
     };
 
     const response = responseTypes[params.tagType] || null;
-
     return {
       search: {
         user: attr.user,
@@ -213,19 +212,19 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((track) => ({
-        name: track.name,
-        mbid: track.mbid,
+      tracks: track.map((t) => ({
+        name: t.name,
+        mbid: t.mbid,
         artist: {
-          name: track.artist['#text'],
-          url: `https://www.last.fm/music/${convertURL(track.artist['#text'])}`,
+          name: t.artist['#text'],
+          url: `https://www.last.fm/music/${convertURL(t.artist['#text'])}`,
         },
         album: {
-          name: track.album['#text'],
-          mbid: track.album.mbid,
+          name: t.album['#text'],
+          mbid: t.album.mbid,
         },
-        url: track.url,
-        image: convertImageSizes(track.image),
+        url: t.url,
+        image: convertImageSizes(t.image),
       })),
     };
   }
@@ -254,17 +253,17 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      albums: album.map((album) => ({
-        rank: Number(album['@attr'].rank),
-        name: album.name,
-        mbid: album.mbid,
-        playCount: Number(album.playcount),
+      albums: album.map((a) => ({
+        rank: Number(a['@attr'].rank),
+        name: a.name,
+        mbid: a.mbid,
+        playCount: Number(a.playcount),
         artist: {
-          name: album.artist.name,
-          mbid: album.artist.mbid,
-          url: album.artist.url,
+          name: a.artist.name,
+          mbid: a.artist.mbid,
+          url: a.artist.url,
         },
-        url: album.url,
+        url: a.url,
         image: convertImageSizes(album.image) || null,
       })),
     };
@@ -294,12 +293,12 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists: artist.map((artist) => ({
-        rank: Number(artist['@attr'].rank),
-        name: artist.name,
-        mbid: artist.mbid,
-        scrobbles: Number(artist.playcount),
-        url: artist.url,
+      artists: artist.map((a) => ({
+        rank: Number(a['@attr'].rank),
+        name: a.name,
+        mbid: a.mbid,
+        scrobbles: Number(a.playcount),
+        url: a.url,
       })),
     };
   }
@@ -322,10 +321,10 @@ export default class User extends Base {
       search: {
         user: attr.user,
       },
-      tags: tag.map((tag) => ({
-        count: Number(tag.count),
-        name: tag.name,
-        url: tag.url,
+      tags: tag.map((t) => ({
+        count: Number(t.count),
+        name: t.name,
+        url: t.url,
       })),
     };
   }
@@ -354,20 +353,20 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((track) => ({
-        rank: Number(track['@attr'].rank),
-        name: track.name,
-        mbid: track.mbid,
+      tracks: track.map((t) => ({
+        rank: Number(t['@attr'].rank),
+        name: t.name,
+        mbid: t.mbid,
         stats: {
           duration: Number(track.duration) || null,
-          userPlayCount: Number(track.playcount),
+          userPlayCount: Number(t.playcount),
         },
         artist: {
-          name: track.artist.name,
-          mbid: track.artist.mbid,
-          url: track.artist.url,
+          name: t.artist.name,
+          mbid: t.artist.mbid,
+          url: t.artist.url,
         },
-        url: track.url,
+        url: t.url,
         image: convertImageSizes(track.image) || null,
       })),
     };

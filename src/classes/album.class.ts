@@ -52,11 +52,11 @@ export default class Album extends Base {
       userStats: {
         userPlayCount: (params.username && Number(album.userplaycount)) || null,
       },
-      tags: tag.map((tag) => ({
-        name: tag.name,
-        url: tag.url,
+      tags: tag.map((t) => ({
+        name: t.name,
+        url: t.url,
       })),
-      tracks: Array.isArray(track) ? track.map((track) => returnTrack(track)) : returnTrack(track),
+      tracks: Array.isArray(track) ? track.map((t) => returnTrack(t)) : returnTrack(track),
       url: album.url,
       image: convertImageSizes(album.image) || null,
     };
@@ -82,10 +82,10 @@ export default class Album extends Base {
         name: attr.artist,
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
-      tags: tag.map((tag) => ({
-        count: tag.count,
-        name: tag.name,
-        url: tag.url,
+      tags: tag.map((t) => ({
+        count: t.count,
+        name: t.name,
+        url: t.url,
       })),
     };
   }
@@ -116,15 +116,15 @@ export default class Album extends Base {
         itemsPerPage: Number(results['opensearch:itemsPerPage']),
         totalResults: Number(results['opensearch:totalResults']),
       },
-      albums: album.map((album) => ({
-        name: album.name,
-        mbid: album.mbid,
+      albums: album.map((a) => ({
+        name: a.name,
+        mbid: a.mbid,
         artist: {
-          name: album.artist,
-          url: `https://www.last.fm/music/${convertURL(album.artist)}`,
+          name: a.artist,
+          url: `https://www.last.fm/music/${convertURL(a.artist)}`,
         },
-        url: album.url,
-        image: convertImageSizes(album.image) || null,
+        url: a.url,
+        image: convertImageSizes(album.image),
       })),
     };
   }

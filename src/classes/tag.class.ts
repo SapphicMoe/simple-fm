@@ -69,17 +69,17 @@ export default class Tag extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      albums: album.map((album) => ({
-        rank: Number(album['@attr'].rank),
-        name: album.name,
-        mbid: album.mbid,
+      albums: album.map((a) => ({
+        rank: Number(a['@attr'].rank),
+        name: a.name,
+        mbid: a.mbid,
         artist: {
-          name: album.artist.name,
-          mbid: album.artist.mbid,
-          url: album.artist.url,
+          name: a.artist.name,
+          mbid: a.artist.mbid,
+          url: a.artist.url,
         },
-        url: `https://www.last.fm/music/${convertURL(album.artist.name)}/${convertURL(a.name)}`,
-        image: convertImageSizes(album.image),
+        url: `https://www.last.fm/music/${convertURL(a.artist.name)}/${convertURL(a.name)}`,
+        image: convertImageSizes(a.image),
       })),
     };
   }
@@ -108,11 +108,11 @@ export default class Tag extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists: artist.map((artist) => ({
-        rank: Number(artist['@attr'].rank),
-        name: artist.name,
-        mbid: artist.mbid,
-        url: artist.url,
+      artists: artist.map((a) => ({
+        rank: Number(a['@attr'].rank),
+        name: a.name,
+        mbid: a.mbid,
+        url: a.url,
       })),
     };
   }
@@ -141,17 +141,17 @@ export default class Tag extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((track) => ({
-        rank: Number(track['@attr'].rank),
-        name: track.name,
-        mbid: track.mbid,
+      tracks: track.map((t) => ({
+        rank: Number(t['@attr'].rank),
+        name: t.name,
+        mbid: t.mbid,
         duration: Number(track.duration) || null,
         artist: {
-          name: track.artist.name,
-          mbid: track.artist.mbid,
-          url: track.artist.url,
+          name: t.artist.name,
+          mbid: t.artist.mbid,
+          url: t.artist.url,
         },
-        url: track.url,
+        url: t.url,
       })),
     };
   }
@@ -172,9 +172,9 @@ export default class Tag extends Base {
       search: {
         tag: attr.tag,
       },
-      positions: chart.map((chart) => ({
-        from: new Date(Number(chart.from) * 1000),
-        to: new Date(Number(chart.to) * 1000),
+      positions: chart.map((c) => ({
+        from: new Date(Number(c.from) * 1000),
+        to: new Date(Number(c.to) * 1000),
       })),
     };
   }

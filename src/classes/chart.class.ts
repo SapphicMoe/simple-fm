@@ -1,6 +1,6 @@
 import Base from '~/base.js';
 
-import type { ChartGetTopArtistParams, ChartGetTopTagsParams, ChartGetTopTracksParams } from '@params/index.js';
+import type { ChartGetTopArtistParams, ChartGetTopTagsParams, ChartGetTopTracksParams } from '@params/chart.params.js';
 import type {
   ChartGetTopArtistsResponse,
   ChartGetTopTagsResponse,
@@ -30,14 +30,14 @@ export default class Chart extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists: artist.map((artist) => ({
-        name: artist.name,
-        mbid: artist.mbid,
+      artists: artist.map((a) => ({
+        name: a.name,
+        mbid: a.mbid,
         stats: {
-          scrobbles: Number(artist.playcount),
-          listeners: Number(artist.listeners),
+          scrobbles: Number(a.playcount),
+          listeners: Number(a.listeners),
         },
-        url: artist.url,
+        url: a.url,
       })),
     };
   }
@@ -63,13 +63,13 @@ export default class Chart extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tags: tag.map((tag) => ({
-        name: tag.name,
+      tags: tag.map((t) => ({
+        name: t.name,
         stats: {
-          count: Number(tag.taggings),
-          reach: Number(tag.reach),
+          count: Number(t.taggings),
+          reach: Number(t.reach),
         },
-        url: tag.url,
+        url: t.url,
       })),
     };
   }
@@ -95,18 +95,18 @@ export default class Chart extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((track) => ({
-        name: track.name,
-        mbid: track.mbid,
+      tracks: track.map((t) => ({
+        name: t.name,
+        mbid: t.mbid,
         stats: {
-          scrobbles: Number(track.playcount),
-          listeners: Number(track.listeners),
+          scrobbles: Number(t.playcount),
+          listeners: Number(t.listeners),
         },
         artist: {
-          name: track.artist.name,
-          url: track.artist.url,
+          name: t.artist.name,
+          url: t.artist.url,
         },
-        url: track.url,
+        url: t.url,
       })),
     };
   }

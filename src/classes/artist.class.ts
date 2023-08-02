@@ -76,11 +76,11 @@ export default class Artist extends Base {
           url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
         },
       },
-      artists: artist.map((artist) => ({
-        match: Number(artist.match),
-        name: artist.name,
-        mbid: artist.mbid,
-        url: artist.url,
+      artists: artist.map((a) => ({
+        match: Number(a.match),
+        name: a.name,
+        mbid: a.mbid,
+        url: a.url,
       })),
     };
   }
@@ -112,14 +112,14 @@ export default class Artist extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      albums: album.map((album) => ({
-        name: album.name,
-        scrobbles: Number(album.playcount),
+      albums: album.map((a) => ({
+        name: a.name,
+        scrobbles: Number(a.playcount),
         artist: {
-          name: album.artist.name,
-          url: album.artist.url,
+          name: a.artist.name,
+          url: a.artist.url,
         },
-        url: album.url,
+        url: a.url,
         image: convertImageSizes(album.image) || null,
       })),
     };
@@ -142,10 +142,10 @@ export default class Artist extends Base {
         name: attr.artist,
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
-      tags: tag.map((tag) => ({
-        count: tag.count,
-        name: tag.name,
-        url: tag.url,
+      tags: tag.map((t) => ({
+        count: t.count,
+        name: t.name,
+        url: t.url,
       })),
     };
   }
@@ -177,19 +177,19 @@ export default class Artist extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((track) => ({
-        rank: Number(track['@attr'].rank),
-        name: track.name,
-        mbid: track.mbid,
+      tracks: track.map((t) => ({
+        rank: Number(t['@attr'].rank),
+        name: t.name,
+        mbid: t.mbid,
         artist: {
-          name: track.artist.name,
-          url: track.artist.url,
+          name: t.artist.name,
+          url: t.artist.url,
         },
         stats: {
-          scrobbles: Number(track.playcount),
-          listeners: Number(track.listeners),
+          scrobbles: Number(t.playcount),
+          listeners: Number(t.listeners),
         },
-        url: track.url,
+        url: t.url,
       })),
     };
   }
@@ -220,11 +220,11 @@ export default class Artist extends Base {
         itemsPerPage: Number(results['opensearch:itemsPerPage']),
         totalResults: Number(results['opensearch:totalResults']),
       },
-      artists: artist.map((artist) => ({
-        name: artist.name,
-        mbid: artist.mbid,
-        listeners: Number(artist.listeners),
-        url: artist.url,
+      artists: artist.map((a) => ({
+        name: a.name,
+        mbid: a.mbid,
+        listeners: Number(a.listeners),
+        url: a.url,
       })),
     };
   }

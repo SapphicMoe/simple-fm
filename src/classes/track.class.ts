@@ -60,9 +60,9 @@ export default class Track extends Base {
         image: convertImageSizes(album?.image || null) || null,
         url: album?.url || null,
       },
-      tags: tag.map((tag) => ({
-        name: tag.name,
-        url: tag.url,
+      tags: tag.map((t) => ({
+        name: t.name,
+        url: t.url,
       })),
       url: track.url,
     };
@@ -91,16 +91,16 @@ export default class Track extends Base {
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
       url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(params.track)}`,
-      tracks: track.map((track) => ({
-        match: Number(track.match),
-        name: track.name,
+      tracks: track.map((t) => ({
+        match: Number(t.match),
+        name: t.name,
         duration: Number(track.duration) || null,
-        scrobbles: Number(track.playcount),
+        scrobbles: Number(t.playcount),
         artist: {
-          name: track.artist.name,
-          url: track.artist.url,
+          name: t.artist.name,
+          url: t.artist.url,
         },
-        url: track.url,
+        url: t.url,
         image: convertImageSizes(track.image) || null,
       })),
     };
@@ -127,10 +127,10 @@ export default class Track extends Base {
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
       url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(attr.track)}`,
-      tags: tag.map((tag) => ({
-        count: Number(tag.count),
-        name: tag.name,
-        url: tag.url,
+      tags: tag.map((t) => ({
+        count: Number(t.count),
+        name: t.name,
+        url: t.url,
       })),
     };
   }
@@ -161,15 +161,15 @@ export default class Track extends Base {
         itemsPerPage: Number(results['opensearch:itemsPerPage']),
         totalResults: Number(results['opensearch:totalResults']),
       },
-      tracks: track.map((track) => ({
-        name: track.name,
-        mbid: track.mbid,
-        listeners: Number(track.listeners),
+      tracks: track.map((t) => ({
+        name: t.name,
+        mbid: t.mbid,
+        listeners: Number(t.listeners),
         artist: {
-          name: track.artist,
-          url: `https://www.last.fm/music/${convertURL(track.artist)}`,
+          name: t.artist,
+          url: `https://www.last.fm/music/${convertURL(t.artist)}`,
         },
-        url: track.url,
+        url: t.url,
       })),
     };
   }
