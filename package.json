@@ -10,7 +10,7 @@
     "./dist"
   ],
   "scripts": {
-    "build": "tsc && tsconfig-replace-paths -p tsconfig.json -s src/",
+    "build": "tsc -p tsconfig.build.json && tsconfig-replace-paths -p tsconfig.build.json -s src/",
     "dev": "tsc --watch",
     "lint": "yarn eslint .",
     "package": "tar -xvf package.tgz && rimraf ./package.tgz",

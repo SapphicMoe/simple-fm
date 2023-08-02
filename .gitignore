@@ -22,6 +22,7 @@ pnpm-debug.log*
 .DS_Store
 desktop.ini
 
-/index.ts
 /package/
 /package.tgz
+
+/src/local.ts
