@@ -13,7 +13,7 @@ export default class Base {
   }
 
   protected async sendRequest<T = unknown>(params: LastFMArgument): Promise<T> {
-    const response = await new LastFMRequest(this.key, this.userAgent, params).get();
+    const response = await new LastFMRequest(this.key, this.userAgent, params).execute();
 
     return response as Promise<T>;
   }

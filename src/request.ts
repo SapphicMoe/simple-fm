@@ -17,6 +17,10 @@ export interface LastFMArgument {
   location?: string;
   username?: string;
 
+  sk?: string;
+  token?: string;
+  api_sig?: string;
+
   page?: number;
   limit?: number;
 
@@ -38,7 +42,16 @@ export class LastFMRequest {
     this.userAgent = userAgent;
   }
 
-  async get<T = unknown>(): Promise<T> {
+  // TODO: Implement post.
+  private isPostRequest() {
+    return Object.hasOwn(this.params, 'sk');
+  }
+
+  private post<T = unknown>(): Promise<T> {
+    throw new Error('Method not implemented yet.');
+  }
+
+  private async get<T = unknown>(): Promise<T> {
     const baseURL = 'https://ws.audioscrobbler.com/2.0';
 
     const params = {
@@ -59,5 +72,10 @@ export class LastFMRequest {
     if (data.error === 6) throw new LastFMError(data);
 
     return data;
+  }
+
+  execute() {
+    if (this.isPostRequest()) return this.post();
+    else return this.get();
   }
 }
