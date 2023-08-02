@@ -39,14 +39,14 @@ export default class Track extends Base {
     return {
       name: track.name,
       mbid: track.mbid,
-      duration: Number(track.duration) || null,
+      duration: Number(track.duration),
       stats: {
         scrobbles: Number(track.playcount),
         listeners: Number(track.listeners),
       },
       userStats: {
-        userLoved: (params.username && Boolean(Number(track.userloved)).valueOf()) || null,
-        userPlayCount: (params.username && Number(track.userplaycount)) || null,
+        userLoved: Boolean(Number(track.userloved)).valueOf(),
+        userPlayCount: Number(track.userplaycount),
       },
       artist: {
         name: track.artist.name,
@@ -54,11 +54,11 @@ export default class Track extends Base {
         url: track.artist.url,
       },
       album: {
-        position: Number(album?.['@attr']?.position) || null,
-        name: album?.title || null,
+        position: Number(album?.['@attr']?.position),
+        name: album?.title,
         mbid: album?.mbid,
-        image: convertImageSizes(album?.image || null) || null,
-        url: album?.url || null,
+        image: convertImageSizes(album?.image),
+        url: album?.url,
       },
       tags: tag.map((t) => ({
         name: t.name,
@@ -94,14 +94,14 @@ export default class Track extends Base {
       tracks: track.map((t) => ({
         match: Number(t.match),
         name: t.name,
-        duration: Number(track.duration) || null,
+        duration: Number(t.duration),
         scrobbles: Number(t.playcount),
         artist: {
           name: t.artist.name,
           url: t.artist.url,
         },
         url: t.url,
-        image: convertImageSizes(track.image) || null,
+        image: convertImageSizes(t.image),
       })),
     };
   }

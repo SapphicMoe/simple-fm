@@ -10,21 +10,21 @@ export declare interface UserGetFriendsType {
   };
   friends: Array<{
     name: string;
-    realName: string | null;
-    country: string | null;
+    realName?: string;
+    country?: string;
     registered: Date;
     url: string;
-    image: ImageType[] | null;
+    image?: ImageType[];
   }>;
 }
 
 export declare interface UserGetInfoType {
   name: string;
-  realName: string | null;
-  country: string | null;
+  realName?: string;
+  country?: string;
   registered: Date;
   url: string;
-  image: ImageType[] | null;
+  image?: ImageType[];
 }
 
 export declare interface UserGetLovedTracksType {
@@ -57,7 +57,7 @@ export declare interface UserGetPersonalTagsType {
     totalPages: number;
     totalResults: number;
   };
-  response: PersonalTagType[] | null;
+  response?: PersonalTagType[];
 }
 
 export declare interface UserGetRecentTracksType {
@@ -81,7 +81,7 @@ export declare interface UserGetRecentTracksType {
       url: string;
     };
     url: string;
-    image: ImageType[] | null;
+    image?: ImageType[];
   }>;
 }
 
@@ -104,7 +104,7 @@ export declare interface UserGetTopAlbumsType {
       url: string;
     };
     url: string;
-    image: ImageType[] | null;
+    image?: ImageType[];
   }>;
 }
 
@@ -149,7 +149,7 @@ export declare interface UserGetTopTracksType {
     name: string;
     mbid: string;
     stats: {
-      duration: number | null;
+      duration?: number;
       userPlayCount: number;
     };
     artist: {
@@ -158,6 +158,6 @@ export declare interface UserGetTopTracksType {
       url: string;
     };
     url: string;
-    image: ImageType[] | null;
+    image?: ImageType[];
   }>;
 }

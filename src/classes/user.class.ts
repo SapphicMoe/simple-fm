@@ -62,11 +62,11 @@ export default class User extends Base {
       },
       friends: user.map((u) => ({
         name: u.name,
-        realName: user.realname || null,
-        country: user.country,
+        realName: u.realname === '' ? undefined : u.realname,
+        country: u.country === 'None' ? undefined : u.country,
         registered: new Date(Number(u.registered.unixtime) * 1000),
         url: u.url,
-        image: convertImageSizes(user.image) || null,
+        image: convertImageSizes(u.image),
       })),
     };
   }
@@ -83,11 +83,11 @@ export default class User extends Base {
 
     return {
       name: user.name,
-      realName: user.realname || null,
-      country: user.country,
+      realName: user.realname === '' ? undefined : user.realname,
+      country: user.country === 'None' ? undefined : user.country,
       registered: new Date(user.registered['#text'] * 1000),
       url: user.url,
-      image: convertImageSizes(user.image) || null,
+      image: convertImageSizes(user.image),
     };
   }
 
@@ -146,34 +146,30 @@ export default class User extends Base {
     });
 
     const responseTypes = {
-      album:
-        albums?.album.map((album) => ({
-          name: album.name,
-          artist: {
-            name: album.artist.name,
-            url: album.artist.url,
-          },
-          url: album.url,
-        })) || null,
+      album: albums?.album.map((a) => ({
+        name: a.name,
+        artist: {
+          name: a.artist.name,
+          url: a.artist.url,
+        },
+        url: a.url,
+      })),
 
-      artist:
-        artists?.artist.map((artist) => ({
-          name: artist.name,
-          url: artist.url,
-        })) || null,
+      artist: artists?.artist.map((a) => ({
+        name: a.name,
+        url: a.url,
+      })),
 
-      track:
-        tracks?.track.map((track) => ({
-          name: track.name,
-          artist: {
-            name: typeof track.artist === 'string' ? track.artist : track.artist.name,
-            url: typeof track.artist === 'string' ? track.artist : track.artist.url,
-          },
-          url: track.url,
-        })) || null,
+      track: tracks?.track.map((t) => ({
+        name: t.name,
+        artist: {
+          name: t.artist.name,
+          url: t.artist.url,
+        },
+        url: t.url,
+      })),
     };
 
-    const response = responseTypes[params.tagType] || null;
     return {
       search: {
         user: attr.user,
@@ -183,7 +179,7 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      response,
+      response: responseTypes[params.tagType] || undefined,
     };
   }
 
@@ -264,7 +260,7 @@ export default class User extends Base {
           url: a.artist.url,
         },
         url: a.url,
-        image: convertImageSizes(album.image) || null,
+        image: convertImageSizes(a.image),
       })),
     };
   }
@@ -358,7 +354,7 @@ export default class User extends Base {
         name: t.name,
         mbid: t.mbid,
         stats: {
-          duration: Number(track.duration) || null,
+          duration: Number(t.duration),
           userPlayCount: Number(t.playcount),
         },
         artist: {
@@ -367,7 +363,7 @@ export default class User extends Base {
           url: t.artist.url,
         },
         url: t.url,
-        image: convertImageSizes(track.image) || null,
+        image: convertImageSizes(t.image),
       })),
     };
   }

@@ -3,14 +3,14 @@ import type { ImageType } from '@typings/index.js';
 export declare interface TrackGetInfoType {
   name: string;
   mbid: string;
-  duration: number | null;
+  duration?: number;
   stats: {
     scrobbles: number;
     listeners: number;
   };
   userStats: {
-    userPlayCount?: number | null;
-    userLoved?: boolean | null;
+    userPlayCount?: number;
+    userLoved?: boolean;
   };
   artist: {
     name: string;
@@ -18,11 +18,11 @@ export declare interface TrackGetInfoType {
     url: string;
   };
   album: {
-    position: number | null;
-    name: string | null;
+    position?: number;
+    name?: string;
     mbid?: string;
-    image: ImageType[] | null;
-    url: string | null;
+    image?: ImageType[];
+    url?: string;
   };
   tags?: object[];
   url: string;
@@ -38,14 +38,14 @@ export declare interface TrackGetSimilarType {
   tracks: Array<{
     match: number;
     name: string;
-    duration: number | null;
+    duration?: number;
     scrobbles: number;
     artist: {
       name: string;
       url: string;
     };
     url: string;
-    image: ImageType[] | null;
+    image?: ImageType[];
   }>;
 }
 

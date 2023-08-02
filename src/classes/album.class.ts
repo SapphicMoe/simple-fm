@@ -34,7 +34,7 @@ export default class Album extends Base {
     const returnTrack = (track: TrackResponse) => ({
       rank: Number(track['@attr'].rank),
       name: track.name,
-      duration: Number(track.duration) || null,
+      duration: Number(track.duration),
       url: track.url,
     });
 
@@ -50,7 +50,7 @@ export default class Album extends Base {
         listeners: Number(album.listeners),
       },
       userStats: {
-        userPlayCount: (params.username && Number(album.userplaycount)) || null,
+        userPlayCount: Number(album.userplaycount),
       },
       tags: tag.map((t) => ({
         name: t.name,
@@ -58,7 +58,7 @@ export default class Album extends Base {
       })),
       tracks: Array.isArray(track) ? track.map((t) => returnTrack(t)) : returnTrack(track),
       url: album.url,
-      image: convertImageSizes(album.image) || null,
+      image: convertImageSizes(album.image),
     };
   }
 
@@ -124,7 +124,7 @@ export default class Album extends Base {
           url: `https://www.last.fm/music/${convertURL(a.artist)}`,
         },
         url: a.url,
-        image: convertImageSizes(album.image),
+        image: convertImageSizes(a.image),
       })),
     };
   }

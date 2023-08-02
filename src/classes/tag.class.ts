@@ -145,7 +145,7 @@ export default class Tag extends Base {
         rank: Number(t['@attr'].rank),
         name: t.name,
         mbid: t.mbid,
-        duration: Number(track.duration) || null,
+        duration: Number(t.duration),
         artist: {
           name: t.artist.name,
           mbid: t.artist.mbid,

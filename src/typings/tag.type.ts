@@ -21,12 +21,14 @@ export declare interface TagGetTopAlbumsType {
   albums: Array<{
     rank: number;
     name: string;
+    mbid: string;
     artist: {
       name: string;
+      mbid: string;
       url: string;
     };
     url: string;
-    image: ImageType[] | null;
+    image?: ImageType[];
   }>;
 }
 
@@ -41,6 +43,7 @@ export declare interface TagGetTopArtistsType {
   artists: Array<{
     rank: number;
     name: string;
+    mbid: string;
     url: string;
   }>;
 }
@@ -56,9 +59,11 @@ export declare interface TagGetTopTracksType {
   tracks: Array<{
     rank: number;
     name: string;
-    duration: number | null;
+    mbid: string;
+    duration?: number;
     artist: {
       name: string;
+      mbid: string;
       url: string;
     };
     url: string;

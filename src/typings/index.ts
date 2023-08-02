@@ -97,7 +97,7 @@ export interface Album {
   name: string;
   artist: Artist | string;
   url: string;
-  image: Image[] | null;
+  image: Image[];
 }
 
 export interface Artist {
@@ -124,17 +124,17 @@ export interface Track {
 
 export interface User {
   name: string;
-  realname: string | null;
-  country: string | null;
+  realname?: string;
+  country?: string;
   registered: Registered;
   url: string;
-  image: Image[];
+  image?: Image[];
 }
 
-export type * from '@typings/album.type.js';
-export type * from '@typings/artist.type.js';
-export type * from '@typings/chart.type.js';
-export type * from '@typings/geo.type.js';
-export type * from '@typings/tag.type.js';
-export type * from '@typings/track.type.js';
-export type * from '@typings/user.type.js';
+export * from '@typings/album.type.js';
+export * from '@typings/artist.type.js';
+export * from '@typings/chart.type.js';
+export * from '@typings/geo.type.js';
+export * from '@typings/tag.type.js';
+export * from '@typings/track.type.js';
+export * from '@typings/user.type.js';

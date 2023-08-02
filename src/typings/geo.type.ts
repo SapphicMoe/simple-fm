@@ -26,7 +26,7 @@ export declare interface GeoGetTopTracksType {
     rank: number;
     name: string;
     mbid: string;
-    duration: number | null;
+    duration?: number;
     listeners: number;
     artist: {
       name: string;

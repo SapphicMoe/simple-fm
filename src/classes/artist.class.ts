@@ -49,7 +49,7 @@ export default class Artist extends Base {
         listeners: Number(artist.stats.listeners),
       },
       userStats: {
-        userPlayCount: (params.username && Number(artist.stats.userplaycount)) || null,
+        userPlayCount: Number(artist.stats.userplaycount),
       },
       url: artist.url,
     };
@@ -120,7 +120,7 @@ export default class Artist extends Base {
           url: a.artist.url,
         },
         url: a.url,
-        image: convertImageSizes(album.image) || null,
+        image: convertImageSizes(a.image),
       })),
     };
   }

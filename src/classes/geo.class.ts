@@ -66,7 +66,7 @@ export default class Geo extends Base {
         rank: Number(t['@attr'].rank),
         name: t.name,
         mbid: t.mbid,
-        duration: Number(track.duration) || null,
+        duration: Number(t.duration),
         listeners: Number(t.listeners),
         artist: {
           name: t.artist.name,

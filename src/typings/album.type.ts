@@ -12,7 +12,7 @@ export declare interface AlbumGetInfoType {
     listeners: number;
   };
   userStats?: {
-    userPlayCount?: number | null;
+    userPlayCount?: number;
   };
   tags: Array<{
     name: string;
@@ -21,11 +21,11 @@ export declare interface AlbumGetInfoType {
   tracks: ObjArray<{
     rank: number;
     name: string;
-    duration: number | null;
+    duration?: number;
     url: string;
   }>;
   url: string;
-  image: ImageType[] | null;
+  image?: ImageType[];
 }
 
 export declare interface AlbumGetTopTagsType {
@@ -56,6 +56,6 @@ export declare interface AlbumSearchType {
       url: string;
     };
     url: string;
-    image: ImageType[] | null;
+    image?: ImageType[];
   }>;
 }

@@ -10,7 +10,7 @@ export declare interface ArtistGetInfoType {
     listeners: number;
   };
   userStats: {
-    userPlayCount?: number | null;
+    userPlayCount?: number;
   };
   url: string;
 }
@@ -49,7 +49,7 @@ export declare interface ArtistGetTopAlbumsType {
       url: string;
     };
     url: string;
-    image: ImageType[] | null;
+    image?: ImageType[];
   }>;
 }
 
