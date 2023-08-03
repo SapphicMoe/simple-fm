@@ -1,4 +1,4 @@
-import type { ImageType } from '@typings/index.js';
+import type { ImageType, SearchMeta } from '@typings/index.js';
 
 export declare interface TagGetInfoType {
   name: string;
@@ -11,12 +11,8 @@ export declare interface TagGetInfoType {
 }
 
 export declare interface TagGetTopAlbumsType {
-  search: {
+  search: SearchMeta & {
     tag: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   albums: Array<{
     rank: number;
@@ -33,12 +29,8 @@ export declare interface TagGetTopAlbumsType {
 }
 
 export declare interface TagGetTopArtistsType {
-  search: {
+  search: SearchMeta & {
     tag: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   artists: Array<{
     rank: number;
@@ -49,12 +41,8 @@ export declare interface TagGetTopArtistsType {
 }
 
 export declare interface TagGetTopTracksType {
-  search: {
+  search: SearchMeta & {
     tag: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   tracks: Array<{
     rank: number;

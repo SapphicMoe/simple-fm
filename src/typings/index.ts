@@ -1,4 +1,4 @@
-export type ObjArray<T> = T | T[];
+export type ObjectArray<T> = T | T[];
 
 export type RequestMethod =
   | 'album.addTags'
@@ -61,6 +61,13 @@ export interface AttrMeta {
   total: string;
 }
 
+export interface SearchMeta {
+  page: number;
+  itemsPerPage: number;
+  totalPages?: number;
+  totalResults: number;
+}
+
 export interface OpenSearchMeta {
   'opensearch:Query': {
     startPage: string;
@@ -84,7 +91,7 @@ export interface Registered {
   unixtime: string;
 }
 
-export interface PersonalTagType {
+export interface PersonalTag {
   name: string;
   artist?: Artist & {
     mbid: string;

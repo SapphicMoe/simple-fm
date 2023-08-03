@@ -1,10 +1,8 @@
+import type { SearchMeta } from '@typings/index.js';
+
 export declare interface GeoGetTopArtistsType {
-  search: {
+  search: SearchMeta & {
     country: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   artists: Array<{
     name: string;
@@ -15,12 +13,8 @@ export declare interface GeoGetTopArtistsType {
 }
 
 export declare interface GeoGetTopTracksType {
-  search: {
+  search: SearchMeta & {
     country: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   tracks: Array<{
     rank: number;

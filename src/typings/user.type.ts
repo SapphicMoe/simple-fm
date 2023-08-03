@@ -1,12 +1,8 @@
-import type { ImageType, PersonalTagType } from '@typings/index.js';
+import type { ImageType, PersonalTag, SearchMeta } from '@typings/index.js';
 
 export declare interface UserGetFriendsType {
-  search: {
+  search: SearchMeta & {
     user: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   friends: Array<{
     name: string;
@@ -28,12 +24,8 @@ export declare interface UserGetInfoType {
 }
 
 export declare interface UserGetLovedTracksType {
-  search: {
+  search: SearchMeta & {
     user: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   tracks: Array<{
     name: string;
@@ -49,25 +41,17 @@ export declare interface UserGetLovedTracksType {
 }
 
 export declare interface UserGetPersonalTagsType {
-  search: {
+  search: SearchMeta & {
     user: string;
     tag: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
-  response?: PersonalTagType[];
+  response?: PersonalTag[];
 }
 
 export declare interface UserGetRecentTracksType {
-  search: {
+  search: SearchMeta & {
     user: string;
     nowPlaying: boolean;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   tracks: Array<{
     name: string;
@@ -86,12 +70,8 @@ export declare interface UserGetRecentTracksType {
 }
 
 export declare interface UserGetTopAlbumsType {
-  search: {
+  search: SearchMeta & {
     user: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   albums: Array<{
     rank: number;
@@ -109,12 +89,8 @@ export declare interface UserGetTopAlbumsType {
 }
 
 export declare interface UserGetTopArtistsType {
-  search: {
+  search: SearchMeta & {
     user: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   artists: Array<{
     rank: number;
@@ -137,12 +113,8 @@ export declare interface UserGetTopTagsType {
 }
 
 export declare interface UserGetTopTracksType {
-  search: {
+  search: SearchMeta & {
     user: string;
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   tracks: Array<{
     rank: number;

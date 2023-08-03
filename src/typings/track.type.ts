@@ -1,4 +1,4 @@
-import type { ImageType } from '@typings/index.js';
+import type { ImageType, SearchMeta } from '@typings/index.js';
 
 export declare interface TrackGetInfoType {
   name: string;
@@ -64,11 +64,8 @@ export declare interface TrackGetTopTagsType {
 }
 
 export declare interface TrackSearchType {
-  search: {
+  search: SearchMeta & {
     query: string;
-    page: number;
-    itemsPerPage: number;
-    totalResults: number;
   };
   tracks: Array<{
     name: string;

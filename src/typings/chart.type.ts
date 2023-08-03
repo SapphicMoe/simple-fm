@@ -1,10 +1,7 @@
+import type { SearchMeta } from '@typings/index.js';
+
 export declare interface ChartGetTopArtistsType {
-  search: {
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
-  };
+  search: SearchMeta;
   artists: Array<{
     name: string;
     mbid: string;
@@ -17,12 +14,7 @@ export declare interface ChartGetTopArtistsType {
 }
 
 export declare interface ChartGetTopTagsType {
-  search: {
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
-  };
+  search: SearchMeta;
   tags: Array<{
     name: string;
     stats: {
@@ -34,12 +26,7 @@ export declare interface ChartGetTopTagsType {
 }
 
 export declare interface ChartGetTopTracksType {
-  search: {
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
-  };
+  search: SearchMeta;
   tracks: Array<{
     name: string;
     mbid: string;

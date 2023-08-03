@@ -1,4 +1,4 @@
-import type { ImageType, ObjArray } from '@typings/index.js';
+import type { ImageType, ObjectArray, SearchMeta } from '@typings/index.js';
 
 export declare interface AlbumGetInfoType {
   name: string;
@@ -18,7 +18,7 @@ export declare interface AlbumGetInfoType {
     name: string;
     url: string;
   }>;
-  tracks: ObjArray<{
+  tracks: ObjectArray<{
     rank: number;
     name: string;
     duration?: number;
@@ -42,11 +42,8 @@ export declare interface AlbumGetTopTagsType {
 }
 
 export declare interface AlbumSearchType {
-  search: {
+  search: SearchMeta & {
     query: string;
-    page: number;
-    itemsPerPage: number;
-    totalResults: number;
   };
   albums: Array<{
     name: string;

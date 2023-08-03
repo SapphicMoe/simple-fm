@@ -1,4 +1,4 @@
-import type { ImageType } from '@typings/index.js';
+import type { ImageType, SearchMeta } from '@typings/index.js';
 
 export declare interface ArtistGetInfoType {
   name: string;
@@ -31,15 +31,11 @@ export declare interface ArtistGetSimilarType {
 }
 
 export declare interface ArtistGetTopAlbumsType {
-  search: {
+  search: SearchMeta & {
     artist: {
       name: string;
       url: string;
     };
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   albums: Array<{
     name: string;
@@ -66,15 +62,11 @@ export declare interface ArtistGetTopTagsType {
 }
 
 export declare interface ArtistGetTopTracksType {
-  search: {
+  search: SearchMeta & {
     artist: {
       name: string;
       url: string;
     };
-    page: number;
-    itemsPerPage: number;
-    totalPages: number;
-    totalResults: number;
   };
   tracks: Array<{
     rank: number;
@@ -93,11 +85,8 @@ export declare interface ArtistGetTopTracksType {
 }
 
 export declare interface ArtistSearchType {
-  search: {
+  search: SearchMeta & {
     query: string;
-    page: number;
-    itemsPerPage: number;
-    totalResults: number;
   };
   artists: Array<{
     name: string;
