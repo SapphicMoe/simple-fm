@@ -86,6 +86,12 @@ export default class User extends Base {
       realName: user.realname === '' ? undefined : user.realname,
       country: user.country === 'None' ? undefined : user.country,
       registered: new Date(user.registered['#text'] * 1000),
+      stats: {
+        albumCount: Number(user.album_count),
+        artistCount: Number(user.artist_count),
+        playCount: Number(user.playcount),
+        trackCount: Number(user.track_count),
+      },
       url: user.url,
       image: convertImageSizes(user.image),
     };
@@ -209,6 +215,7 @@ export default class User extends Base {
         totalResults: Number(attr.total),
       },
       tracks: track.map((t) => ({
+        dateAdded: new Date(Number(t.date.uts) * 1000),
         name: t.name,
         mbid: t.mbid,
         artist: {

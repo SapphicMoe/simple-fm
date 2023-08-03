@@ -19,6 +19,12 @@ export declare interface UserGetInfoType {
   realName?: string;
   country?: string;
   registered: Date;
+  stats: {
+    albumCount: number;
+    artistCount: number;
+    playCount: number;
+    trackCount: number;
+  };
   url: string;
   image?: ImageType[];
 }
@@ -54,6 +60,7 @@ export declare interface UserGetRecentTracksType {
     nowPlaying: boolean;
   };
   tracks: Array<{
+    dateAdded: Date;
     name: string;
     mbid: string;
     album: {

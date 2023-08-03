@@ -8,7 +8,12 @@ export declare interface UserGetFriendsResponse {
 }
 
 export declare interface UserGetInfoResponse {
-  user: User;
+  user: User & {
+    album_count: string;
+    artist_count: string;
+    playcount: string;
+    track_count: string;
+  };
 }
 
 export declare interface UserGetLovedTracksResponse {
