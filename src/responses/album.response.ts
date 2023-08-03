@@ -1,6 +1,4 @@
-import type { Album, Artist, Image, OpenSearchMeta, Tag, Track } from '@typings/index.js';
-
-type ObjArray<T> = T | T[];
+import type { Album, Artist, Image, ObjectArray, OpenSearchMeta, Tag, Track } from '@typings/index.js';
 
 export declare interface AlbumGetInfoResponse {
   album: Album & {
@@ -17,7 +15,7 @@ export declare interface AlbumGetInfoResponse {
     playcount: string;
     userplaycount?: number;
     tracks: {
-      track: ObjArray<
+      track: ObjectArray<
         Track & {
           duration: string;
           '@attr': {
@@ -28,7 +26,7 @@ export declare interface AlbumGetInfoResponse {
       >;
     };
     url: string;
-    image: Image[] | null;
+    image?: Image[];
   };
 }
 
