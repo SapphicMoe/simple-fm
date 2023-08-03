@@ -14,8 +14,8 @@
     "dev": "tsc --watch",
     "lint": "yarn eslint .",
     "package": "tar -xvf package.tgz && rimraf ./package.tgz",
-    "prepare": "yarn pack && yarn package && yarn changeset publish",
-    "prepack": "rimraf ./dist && yarn build",
+    "prepublish": "rimraf ./dist && yarn build",
+    "preview": "yarn pack && yarn package",
     "test": "vitest",
     "version": "yarn changeset version"
   },
@@ -32,6 +32,9 @@
     "last.fm-api",
     "last-fm-api"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "packageManager": "yarn@3.6.1",
   "dependencies": {
     "ofetch": "^1.1.1"
