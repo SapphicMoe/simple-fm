@@ -2,13 +2,8 @@ import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
 
 import type { AlbumGetInfoParams, AlbumGetTopTagsParams, AlbumSearchParams } from '@params/index.js';
-import type {
-  AlbumGetInfoResponse,
-  AlbumGetTopTagsResponse,
-  AlbumSearchResponse,
-  TrackResponse,
-} from '@responses/index.js';
-import type { AlbumGetInfoType, AlbumGetTopTagsType, AlbumSearchType } from '@typings/index.js';
+import type { AlbumGetInfoResponse, AlbumGetTopTagsResponse, AlbumSearchResponse } from '@responses/index.js';
+import type { AlbumGetInfoType, AlbumGetTopTagsType, AlbumSearchType, TrackReturnType } from '@typings/index.js';
 
 export default class Album extends Base {
   /**
@@ -31,7 +26,7 @@ export default class Album extends Base {
       username: params.username,
     });
 
-    const returnTrack = (track: TrackResponse) => ({
+    const returnTrack = (track: TrackReturnType) => ({
       rank: Number(track['@attr'].rank),
       name: track.name,
       duration: Number(track.duration),

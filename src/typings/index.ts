@@ -138,6 +138,13 @@ export interface User {
   image?: Image[];
 }
 
+export interface TrackReturnType extends Track {
+  duration: string;
+  '@attr': {
+    rank: number;
+  };
+}
+
 export * from '@typings/album.type.js';
 export * from '@typings/artist.type.js';
 export * from '@typings/chart.type.js';
