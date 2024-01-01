@@ -35,7 +35,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Add .env file
       - run: |
           touch .env
           echo LASTFM_TOKEN=${{ secrets.LASTFM_TOKEN }} >> .env
