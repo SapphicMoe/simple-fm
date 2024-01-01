@@ -85,10 +85,12 @@ export declare interface UserGetRecentTracksResponse {
           mbid: string;
           '#text': string;
         };
-        date: {
-          uts: string;
-          '#text': string;
-        };
+        date:
+          | {
+              uts: string;
+              '#text': string;
+            }
+          | undefined;
         '@attr'?: { nowplaying: string };
       }
     >;

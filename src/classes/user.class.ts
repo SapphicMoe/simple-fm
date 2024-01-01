@@ -213,7 +213,7 @@ export default class User extends Base {
         totalResults: Number(attr.total),
       },
       tracks: trackMatches.map((track) => ({
-        dateAdded: new Date(Number(track.date.uts) * 1000),
+        dateAdded: track.date ? new Date(Number(track.date.uts) * 1000) : undefined,
         name: track.name,
         mbid: track.mbid === '' ? undefined : track.mbid,
         artist: {

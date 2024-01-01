@@ -64,7 +64,7 @@ export declare interface UserGetRecentTracksType {
   };
   tracks: Array<
     TrackType & {
-      dateAdded: Date;
+      dateAdded: Date | undefined;
       mbid?: string;
       album: {
         mbid: string;
