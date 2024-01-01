@@ -35,7 +35,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "packageManager": "yarn@3.6.1",
   "dependencies": {
     "ofetch": "^1.1.1"
   },
