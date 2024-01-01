@@ -1,42 +1,41 @@
-import type { Artist, AttrMeta, Track, Tag } from '@typings/index.js';
+import type { ArtistResponse, AttrResponse, TagResponse, TrackResponse } from '@responses/index.js';
 
 export declare interface ChartGetTopArtistsResponse {
   artists: {
     artist: Array<
-      Artist & {
+      ArtistResponse & {
         mbid: string;
         playcount: string;
         listeners: string;
       }
     >;
-    '@attr': AttrMeta;
+    '@attr': AttrResponse;
   };
 }
 
 export declare interface ChartGetTopTagsResponse {
   tags: {
     tag: Array<
-      Tag & {
+      TagResponse & {
         taggings: string;
         url: string;
       }
     >;
-    '@attr': AttrMeta;
+    '@attr': AttrResponse;
   };
 }
 
 export declare interface ChartGetTopTracksResponse {
   tracks: {
     track: Array<
-      Track & {
-        mbid: string;
+      TrackResponse & {
         playcount: string;
         listeners: string;
-        artist: Artist & {
+        artist: ArtistResponse & {
           mbid: string;
         };
       }
     >;
-    '@attr': AttrMeta;
+    '@attr': AttrResponse;
   };
 }

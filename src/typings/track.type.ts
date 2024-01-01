@@ -1,7 +1,6 @@
-import type { ImageType, SearchMeta } from '@typings/index.js';
+import type { AlbumType, ImageType, SearchMeta, TagType, TrackType } from '@typings/index.js';
 
-export declare interface TrackGetInfoType {
-  name: string;
+export declare interface TrackGetInfoType extends TrackType {
   mbid: string;
   duration?: number;
   stats: {
@@ -17,64 +16,55 @@ export declare interface TrackGetInfoType {
     mbid: string;
     url: string;
   };
-  album: {
-    position?: number;
+  album: AlbumType & {
+    position: number;
     name?: string;
     mbid?: string;
     image?: ImageType[];
     url?: string;
   };
   tags?: object[];
-  url: string;
 }
 
 export declare interface TrackGetSimilarType {
   name: string;
   artist: {
     name: string;
-    url: string;
+    url?: string;
   };
-  url: string;
-  tracks: Array<{
-    match: number;
-    name: string;
-    duration?: number;
-    scrobbles: number;
-    artist: {
-      name: string;
-      url: string;
-    };
-    url: string;
-    image?: ImageType[];
-  }>;
+  url?: string;
+  tracks: Array<
+    TrackType & {
+      match: number;
+      duration?: number;
+      scrobbles: number;
+      image?: ImageType[];
+    }
+  >;
 }
 
 export declare interface TrackGetTopTagsType {
   name: string;
   artist: {
     name: string;
-    url: string;
+    url?: string;
   };
-  url: string;
-  tags: Array<{
-    count: number;
-    name: string;
-    url: string;
-  }>;
+  url?: string;
+  tags: Array<
+    TagType & {
+      count: number;
+    }
+  >;
 }
 
 export declare interface TrackSearchType {
   search: SearchMeta & {
     query: string;
   };
-  tracks: Array<{
-    name: string;
-    mbid: string;
-    listeners: number;
-    artist: {
-      name: string;
-      url: string;
-    };
-    url: string;
-  }>;
+  tracks: Array<
+    TrackType & {
+      mbid: string;
+      listeners: number;
+    }
+  >;
 }

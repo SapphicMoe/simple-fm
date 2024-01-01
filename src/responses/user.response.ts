@@ -1,14 +1,22 @@
-import type { Album, Artist, AttrMeta, Image, Tag, Track, User } from '@typings/index.js';
+import type {
+  ArtistResponse,
+  AlbumResponse,
+  AttrResponse,
+  ImageResponse,
+  TagResponse,
+  TrackResponse,
+  UserResponse,
+} from '@responses/index.js';
 
 export declare interface UserGetFriendsResponse {
   friends: {
-    user: User[];
-    '@attr': AttrMeta & { user: string };
+    user: UserResponse[];
+    '@attr': AttrResponse & { user: string };
   };
 }
 
 export declare interface UserGetInfoResponse {
-  user: User & {
+  user: UserResponse & {
     album_count: string;
     artist_count: string;
     playcount: string;
@@ -19,9 +27,8 @@ export declare interface UserGetInfoResponse {
 export declare interface UserGetLovedTracksResponse {
   lovedtracks: {
     track: Array<
-      Track & {
-        mbid: string;
-        artist: Artist & {
+      TrackResponse & {
+        artist: ArtistResponse & {
           mbid: string;
         };
         date: {
@@ -30,7 +37,7 @@ export declare interface UserGetLovedTracksResponse {
         };
       }
     >;
-    '@attr': AttrMeta & { user: string };
+    '@attr': AttrResponse & { user: string };
   };
 }
 
@@ -38,41 +45,38 @@ export declare interface UserGetPersonalTagsResponse {
   taggings: {
     albums?: {
       album: Array<{
-        mbid: string;
         name: string;
-        artist: Artist & {
+        artist: ArtistResponse & {
           mbid: string;
         };
         url: string;
-        image: Image[];
+        image: ImageResponse[];
       }>;
     };
     artists?: {
       artist: Array<
-        Artist & {
+        ArtistResponse & {
           mbid: string;
         }
       >;
     };
     tracks?: {
       track: Array<
-        Track & {
-          mbid: string;
-          artist: Artist & {
+        TrackResponse & {
+          artist: ArtistResponse & {
             mbid: string;
           };
         }
       >;
     };
-    '@attr': AttrMeta & { user: string; tag: string };
+    '@attr': AttrResponse & { user: string; tag: string };
   };
 }
 
 export declare interface UserGetRecentTracksResponse {
   recenttracks: {
     track: Array<
-      Track & {
-        mbid: string;
+      TrackResponse & {
         artist: {
           mbid: string;
           '#text': string;
@@ -88,16 +92,15 @@ export declare interface UserGetRecentTracksResponse {
         '@attr'?: { nowplaying: string };
       }
     >;
-    '@attr': AttrMeta & { user: string };
+    '@attr': AttrResponse & { user: string };
   };
 }
 
 export declare interface UserGetTopAlbumsResponse {
   topalbums: {
     album: Array<
-      Album & {
-        mbid: string;
-        artist: Artist & {
+      AlbumResponse & {
+        artist: ArtistResponse & {
           mbid: string;
         };
         playcount: string;
@@ -106,14 +109,14 @@ export declare interface UserGetTopAlbumsResponse {
         };
       }
     >;
-    '@attr': AttrMeta & { user: string };
+    '@attr': AttrResponse & { user: string };
   };
 }
 
 export declare interface UserGetTopArtistsResponse {
   topartists: {
     artist: Array<
-      Artist & {
+      ArtistResponse & {
         mbid: string;
         playcount: string;
         '@attr': {
@@ -121,14 +124,14 @@ export declare interface UserGetTopArtistsResponse {
         };
       }
     >;
-    '@attr': AttrMeta & { user: string };
+    '@attr': AttrResponse & { user: string };
   };
 }
 
 export declare interface UserGetTopTagsResponse {
   toptags: {
     tag: Array<
-      Tag & {
+      TagResponse & {
         count: number;
         url: string;
       }
@@ -142,10 +145,9 @@ export declare interface UserGetTopTagsResponse {
 export declare interface UserGetTopTracksResponse {
   toptracks: {
     track: Array<
-      Track & {
-        mbid: string;
+      TrackResponse & {
         duration: string;
-        artist: Artist & {
+        artist: ArtistResponse & {
           mbid: string;
         };
         '@attr': {
@@ -154,6 +156,6 @@ export declare interface UserGetTopTracksResponse {
         playcount: string;
       }
     >;
-    '@attr': AttrMeta & { user: string };
+    '@attr': AttrResponse & { user: string };
   };
 }

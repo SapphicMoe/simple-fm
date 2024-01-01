@@ -1,7 +1,14 @@
-import type { Album, Artist, AttrMeta, OpenSearchMeta, Track, Tag } from '@typings/index.js';
+import type {
+  AlbumResponse,
+  ArtistResponse,
+  AttrResponse,
+  OpenSearchResponse,
+  TagResponse,
+  TrackResponse,
+} from '@responses/index.js';
 
 export declare interface ArtistGetInfoResponse {
-  artist: Artist & {
+  artist: ArtistResponse & {
     mbid: string;
     stats: {
       listeners: string;
@@ -16,7 +23,7 @@ export declare interface ArtistGetInfoResponse {
 export declare interface ArtistGetSimilarResponse {
   similarartists: {
     artist: Array<
-      Artist & {
+      ArtistResponse & {
         mbid: string;
         match: string;
       }
@@ -30,19 +37,19 @@ export declare interface ArtistGetSimilarResponse {
 export declare interface ArtistGetTopAlbumsResponse {
   topalbums: {
     album: Array<
-      Album & {
+      AlbumResponse & {
         playcount: number;
-        artist: Artist;
+        artist: ArtistResponse;
       }
     >;
-    '@attr': AttrMeta & { artist: string };
+    '@attr': AttrResponse & { artist: string };
   };
 }
 
 export declare interface ArtistGetTopTagsResponse {
   toptags: {
     tag: Array<
-      Tag & {
+      TagResponse & {
         url: string;
         count: number;
       }
@@ -56,28 +63,27 @@ export declare interface ArtistGetTopTagsResponse {
 export declare interface ArtistGetTopTracksResponse {
   toptracks: {
     track: Array<
-      Track & {
-        mbid: string;
+      TrackResponse & {
         listeners: string;
         playcount: string;
-        artist: Artist;
+        artist: ArtistResponse;
         '@attr': {
           rank: string;
         };
       }
     >;
-    '@attr': AttrMeta & { artist: string };
+    '@attr': AttrResponse & { artist: string };
   };
 }
 
 export declare interface ArtistSearchResponse {
-  results: OpenSearchMeta & {
+  results: OpenSearchResponse & {
     'opensearch:Query': {
       searchTerms: string;
     };
     artistmatches: {
       artist: Array<
-        Artist & {
+        ArtistResponse & {
           mbid: string;
           listeners: string;
         }

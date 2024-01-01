@@ -1,39 +1,46 @@
-import type { Album, Artist, Image, ObjectArray, OpenSearchMeta, Tag, Track } from '@typings/index.js';
+import type {
+  AlbumResponse,
+  ArtistResponse,
+  ImageResponse,
+  ObjectArray,
+  OpenSearchResponse,
+  TagResponse,
+  TrackResponse,
+} from '@responses/index.js';
 
 export declare interface AlbumGetInfoResponse {
-  album: Album & {
+  album: AlbumResponse & {
     tags: {
       tag: Array<
-        Tag & {
+        TagResponse & {
           url: string;
         }
       >;
     };
     artist: string;
-    mbid: string;
     listeners: string;
     playcount: string;
     userplaycount?: number;
     tracks: {
       track: ObjectArray<
-        Track & {
+        TrackResponse & {
           duration: string;
           '@attr': {
             rank: number;
           };
-          artist: Artist;
+          artist: ArtistResponse;
         }
       >;
     };
     url: string;
-    image?: Image[];
+    image?: ImageResponse[];
   };
 }
 
 export declare interface AlbumGetTopTagsResponse {
   toptags: {
     tag: Array<
-      Tag & {
+      TagResponse & {
         count: number;
         url: string;
       }
@@ -46,15 +53,14 @@ export declare interface AlbumGetTopTagsResponse {
 }
 
 export declare interface AlbumSearchResponse {
-  results: OpenSearchMeta & {
+  results: OpenSearchResponse & {
     'opensearch:Query': {
       searchTerms: string;
     };
     albummatches: {
       album: Array<
-        Album & {
+        AlbumResponse & {
           artist: string;
-          mbid: string;
         }
       >;
     };

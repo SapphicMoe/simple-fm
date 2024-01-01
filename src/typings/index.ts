@@ -1,4 +1,4 @@
-export type ObjectArray<T> = T | T[];
+import type { TrackResponse } from '@responses/index.js';
 
 export type RequestMethod =
   | 'album.addTags'
@@ -54,13 +54,6 @@ export type RequestMethod =
   | 'user.getWeeklyChartList'
   | 'user.getWeeklyTrackList';
 
-export interface AttrMeta {
-  page: string;
-  perPage: string;
-  totalPages: string;
-  total: string;
-}
-
 export interface SearchMeta {
   page: number;
   itemsPerPage: number;
@@ -68,77 +61,58 @@ export interface SearchMeta {
   totalResults: number;
 }
 
-export interface OpenSearchMeta {
-  'opensearch:Query': {
-    startPage: string;
-  };
-  'opensearch:totalResults': string;
-  'opensearch:itemsPerPage': string;
-}
-
-export interface Image {
-  size: string;
-  '#text': string;
-}
-
 export interface ImageType {
   size: string;
   url: string;
 }
 
-export interface Registered {
-  '#text': number;
-  unixtime: string;
-}
-
 export interface PersonalTag {
   name: string;
-  artist?: Artist & {
+  artist?: ArtistType & {
     mbid: string;
   };
   url: string;
-  image?: Image[];
+  image?: ImageType[];
 }
 
-export interface Album {
-  name: string;
-  artist: Artist | string;
-  url: string;
-  image: Image[];
+export interface AlbumType {
+  position?: number;
+  name?: string;
+  mbid?: string;
+  artist?: ArtistType;
+  url?: string;
+  image?: ImageType[];
 }
 
-export interface Artist {
+export interface ArtistType {
   name: string;
   mbid?: string;
-  url: string;
-  image?: Image[];
+  url?: string;
 }
 
-export interface Tag {
+export interface TagType {
   name: string;
   url?: string;
-  count?: number;
-  total?: number;
-  reach?: number;
 }
 
-export interface Track {
+export interface TrackType {
   name: string;
-  artist: Artist | string;
+  mbid?: string;
+  artist?: ArtistType;
+  album?: AlbumType;
   url: string;
-  image: Image[];
 }
 
-export interface User {
+export interface UserType {
   name: string;
-  realname?: string;
+  realName?: string;
   country?: string;
-  registered: Registered;
+  registered: Date;
   url: string;
-  image?: Image[];
+  image?: ImageType[];
 }
 
-export interface TrackReturnType extends Track {
+export interface TrackReturnType extends TrackResponse {
   duration: string;
   '@attr': {
     rank: number;

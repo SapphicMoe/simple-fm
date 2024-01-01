@@ -1,31 +1,36 @@
-import type { ImageType, PersonalTag, SearchMeta } from '@typings/index.js';
+import type {
+  AlbumType,
+  ArtistType,
+  ImageType,
+  PersonalTag,
+  SearchMeta,
+  TagType,
+  TrackType,
+  UserType,
+} from '@typings/index.js';
 
 export declare interface UserGetFriendsType {
   search: SearchMeta & {
     user: string;
   };
-  friends: Array<{
-    name: string;
-    realName?: string;
-    country?: string;
-    registered: Date;
-    url: string;
-    image?: ImageType[];
-  }>;
+  friends: Array<
+    UserType & {
+      realName?: string;
+      country?: string;
+      image?: ImageType[];
+    }
+  >;
 }
 
-export declare interface UserGetInfoType {
-  name: string;
+export declare interface UserGetInfoType extends UserType {
   realName?: string;
   country?: string;
-  registered: Date;
   stats: {
     albumCount: number;
     artistCount: number;
     playCount: number;
     trackCount: number;
   };
-  url: string;
   image?: ImageType[];
 }
 
@@ -33,17 +38,15 @@ export declare interface UserGetLovedTracksType {
   search: SearchMeta & {
     user: string;
   };
-  tracks: Array<{
-    name: string;
-    mbid: string;
-    date: Date;
-    artist: {
-      name: string;
+  tracks: Array<
+    TrackType & {
       mbid: string;
-      url: string;
-    };
-    url: string;
-  }>;
+      date: Date;
+      artist: {
+        mbid: string;
+      };
+    }
+  >;
 }
 
 export declare interface UserGetPersonalTagsType {
@@ -59,84 +62,76 @@ export declare interface UserGetRecentTracksType {
     user: string;
     nowPlaying: boolean;
   };
-  tracks: Array<{
-    dateAdded: Date;
-    name: string;
-    mbid: string;
-    album: {
-      name: string;
-      mbid: string;
-    };
-    artist: {
-      name: string;
-      url: string;
-    };
-    url: string;
-    image?: ImageType[];
-  }>;
+  tracks: Array<
+    TrackType & {
+      dateAdded: Date;
+      mbid?: string;
+      album: {
+        mbid: string;
+      };
+      image?: ImageType[];
+    }
+  >;
 }
 
 export declare interface UserGetTopAlbumsType {
   search: SearchMeta & {
     user: string;
   };
-  albums: Array<{
-    rank: number;
-    name: string;
-    mbid: string;
-    playCount: number;
-    artist: {
-      name: string;
-      mbid: string;
-      url: string;
-    };
-    url: string;
-    image?: ImageType[];
-  }>;
+  albums: Array<
+    AlbumType & {
+      rank: number;
+      mbid?: string;
+      playCount: number;
+      artist: {
+        mbid: string;
+      };
+      image?: ImageType[];
+    }
+  >;
 }
 
 export declare interface UserGetTopArtistsType {
   search: SearchMeta & {
     user: string;
   };
-  artists: Array<{
-    rank: number;
-    name: string;
-    mbid: string;
-    scrobbles: number;
-    url: string;
-  }>;
+  artists: Array<
+    ArtistType & {
+      rank: number;
+      mbid: string;
+      scrobbles: number;
+    }
+  >;
 }
 
 export declare interface UserGetTopTagsType {
   search: {
     user: string;
   };
-  tags: Array<{
-    count: number;
-    name: string;
-    url?: string;
-  }>;
+  tags: Array<
+    TagType & {
+      count: number;
+      url: string;
+    }
+  >;
 }
 
 export declare interface UserGetTopTracksType {
   search: SearchMeta & {
     user: string;
   };
-  tracks: Array<{
-    rank: number;
-    name: string;
-    mbid: string;
-    stats: {
-      duration?: number;
-      userPlayCount: number;
-    };
-    artist: {
-      name: string;
+  tracks: Array<
+    TrackType & {
+      rank: number;
       mbid: string;
-      url: string;
-    };
-    url: string;
-    image?: ImageType[];
-  }>;
+      stats: {
+        duration?: number;
+        userPlayCount: number;
+      };
+      artist: {
+        mbid: string;
+      };
+      image?: ImageType[];
+    }
+  >;
 }

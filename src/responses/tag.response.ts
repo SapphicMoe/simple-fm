@@ -1,7 +1,7 @@
-import type { Album, Artist, AttrMeta, Track, Tag } from '@typings/index.js';
+import type { AlbumResponse, ArtistResponse, AttrResponse, TagResponse, TrackResponse } from '@responses/index.js';
 
 export declare interface TagGetInfoResponse {
-  tag: Tag & {
+  tag: TagResponse & {
     total: number;
     wiki: {
       summary: string;
@@ -13,9 +13,8 @@ export declare interface TagGetInfoResponse {
 export declare interface TagGetTopAlbumsResponse {
   albums: {
     album: Array<
-      Album & {
-        mbid: string;
-        artist: Artist & {
+      AlbumResponse & {
+        artist: ArtistResponse & {
           mbid: string;
         };
         '@attr': {
@@ -23,31 +22,30 @@ export declare interface TagGetTopAlbumsResponse {
         };
       }
     >;
-    '@attr': AttrMeta & { tag: string };
+    '@attr': AttrResponse & { tag: string };
   };
 }
 
 export declare interface TagGetTopArtistsResponse {
   topartists: {
     artist: Array<
-      Artist & {
+      ArtistResponse & {
         mbid: string;
         '@attr': {
           rank: number;
         };
       }
     >;
-    '@attr': AttrMeta & { tag: string };
+    '@attr': AttrResponse & { tag: string };
   };
 }
 
 export declare interface TagGetTopTracksResponse {
   tracks: {
     track: Array<
-      Track & {
-        mbid: string;
+      TrackResponse & {
         duration: string;
-        artist: Artist & {
+        artist: ArtistResponse & {
           mbid: string;
         };
         '@attr': {
@@ -55,7 +53,7 @@ export declare interface TagGetTopTracksResponse {
         };
       }
     >;
-    '@attr': AttrMeta & { tag: string };
+    '@attr': AttrResponse & { tag: string };
   };
 }
 

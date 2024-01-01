@@ -1,7 +1,6 @@
-import type { ImageType, SearchMeta } from '@typings/index.js';
+import type { ArtistType, AlbumType, ImageType, SearchMeta, TagType, TrackType } from '@typings/index.js';
 
-export declare interface ArtistGetInfoType {
-  name: string;
+export declare interface ArtistGetInfoType extends ArtistType {
   mbid: string;
   description?: string;
   onTour: boolean;
@@ -12,86 +11,65 @@ export declare interface ArtistGetInfoType {
   userStats: {
     userPlayCount?: number;
   };
-  url: string;
 }
 
 export declare interface ArtistGetSimilarType {
   search: {
-    artist: {
-      name: string;
-      url: string;
-    };
+    artist: ArtistType;
   };
-  artists: Array<{
-    match: number;
-    name: string;
-    mbid: string;
-    url: string;
-  }>;
+  artists: Array<
+    ArtistType & {
+      match: number;
+      mbid: string;
+    }
+  >;
 }
 
 export declare interface ArtistGetTopAlbumsType {
   search: SearchMeta & {
-    artist: {
-      name: string;
-      url: string;
-    };
+    artist: ArtistType;
   };
-  albums: Array<{
-    name: string;
-    scrobbles: number;
-    artist: {
-      name: string;
-      url: string;
-    };
-    url: string;
-    image?: ImageType[];
-  }>;
+  albums: Array<
+    AlbumType & {
+      scrobbles: number;
+      image?: ImageType[];
+    }
+  >;
 }
 
 export declare interface ArtistGetTopTagsType {
-  artist: {
-    name: string;
-    url: string;
-  };
-  tags: Array<{
-    name: string;
-    count: number;
-    url: string;
-  }>;
+  artist: ArtistType;
+  tags: Array<
+    TagType & {
+      count: number;
+    }
+  >;
 }
 
 export declare interface ArtistGetTopTracksType {
   search: SearchMeta & {
-    artist: {
-      name: string;
-      url: string;
-    };
+    artist: ArtistType;
   };
-  tracks: Array<{
-    rank: number;
-    name: string;
-    mbid: string;
-    stats: {
-      scrobbles: number;
-      listeners: number;
-    };
-    artist: {
-      name: string;
-      url: string;
-    };
-    url: string;
-  }>;
+  tracks: Array<
+    TrackType & {
+      rank: number;
+      mbid: string;
+      stats: {
+        scrobbles: number;
+        listeners: number;
+      };
+    }
+  >;
 }
 
 export declare interface ArtistSearchType {
   search: SearchMeta & {
     query: string;
   };
-  artists: Array<{
-    name: string;
-    mbid: string;
-    listeners: number;
-    url: string;
-  }>;
+  artists: Array<
+    ArtistType & {
+      mbid: string;
+      listeners: number;
+    }
+  >;
 }

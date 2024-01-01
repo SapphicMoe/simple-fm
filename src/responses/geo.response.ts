@@ -1,25 +1,24 @@
-import type { Artist, AttrMeta, Track } from '@typings/index.js';
+import type { ArtistResponse, AttrResponse, TrackResponse } from '@responses/index.js';
 
 export declare interface GeoGetTopArtistsResponse {
   topartists: {
     artist: Array<
-      Artist & {
+      ArtistResponse & {
         mbid: string;
         listeners: string;
       }
     >;
-    '@attr': AttrMeta & { country: string };
+    '@attr': AttrResponse & { country: string };
   };
 }
 
 export declare interface GeoGetTopTracksResponse {
   tracks: {
     track: Array<
-      Track & {
-        mbid: string;
+      TrackResponse & {
         duration: string;
         listeners: string;
-        artist: Artist & {
+        artist: ArtistResponse & {
           mbid: string;
         };
         '@attr': {
@@ -27,6 +26,6 @@ export declare interface GeoGetTopTracksResponse {
         };
       }
     >;
-    '@attr': AttrMeta & { country: string };
+    '@attr': AttrResponse & { country: string };
   };
 }

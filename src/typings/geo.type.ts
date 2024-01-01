@@ -1,32 +1,30 @@
-import type { SearchMeta } from '@typings/index.js';
+import type { ArtistType, TrackType, SearchMeta } from '@typings/index.js';
 
 export declare interface GeoGetTopArtistsType {
   search: SearchMeta & {
     country: string;
   };
-  artists: Array<{
-    name: string;
-    mbid: string;
-    listeners: number;
-    url: string;
-  }>;
+  artists: Array<
+    ArtistType & {
+      mbid: string;
+      listeners: number;
+    }
+  >;
 }
 
 export declare interface GeoGetTopTracksType {
   search: SearchMeta & {
     country: string;
   };
-  tracks: Array<{
-    rank: number;
-    name: string;
-    mbid: string;
-    duration?: number;
-    listeners: number;
-    artist: {
-      name: string;
+  tracks: Array<
+    TrackType & {
+      rank: number;
       mbid: string;
-      url: string;
-    };
-    url: string;
-  }>;
+      duration?: number;
+      listeners: number;
+      artist: {
+        mbid: string;
+      };
+    }
+  >;
 }

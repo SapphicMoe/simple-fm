@@ -1,22 +1,26 @@
-import type { Artist, Album, OpenSearchMeta, Tag, Track } from '@typings/index.js';
+import type {
+  ArtistResponse,
+  AlbumResponse,
+  OpenSearchResponse,
+  TagResponse,
+  TrackResponse,
+} from '@responses/index.js';
 
 export declare interface TrackGetInfoResponse {
-  track: Track & {
-    mbid: string;
+  track: TrackResponse & {
     duration: string;
     listeners: string;
     playcount: string;
-    artist: Artist & {
+    artist: ArtistResponse & {
       mbid: string;
     };
-    album?: Album & {
-      mbid: string;
+    album?: AlbumResponse & {
       title: string;
       '@attr'?: { position: string };
     };
     toptags: {
       tag: Array<
-        Tag & {
+        TagResponse & {
           url: string;
         }
       >;
@@ -29,12 +33,11 @@ export declare interface TrackGetInfoResponse {
 export declare interface TrackGetSimilarResponse {
   similartracks: {
     track: Array<
-      Track & {
-        mbid: string;
+      TrackResponse & {
         playcount: number;
         match: number;
         duration: number;
-        artist: Artist & {
+        artist: ArtistResponse & {
           mbid: string;
         };
       }
@@ -48,7 +51,7 @@ export declare interface TrackGetSimilarResponse {
 export declare interface TrackGetTopTagsResponse {
   toptags: {
     tag: Array<
-      Tag & {
+      TagResponse & {
         count: number;
         url: string;
       }
@@ -61,11 +64,10 @@ export declare interface TrackGetTopTagsResponse {
 }
 
 export declare interface TrackSearchResponse {
-  results: OpenSearchMeta & {
+  results: OpenSearchResponse & {
     trackmatches: {
       track: Array<
-        Track & {
-          mbid: string;
+        TrackResponse & {
           artist: string;
           listeners: string;
         }
