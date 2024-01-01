@@ -16,7 +16,7 @@ export default class Geo extends Base {
       topartists: { artist, '@attr': attr },
     } = await this.sendRequest<GeoGetTopArtistsResponse>({
       method: 'geo.getTopArtists',
-      country: params.country,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -49,7 +49,7 @@ export default class Geo extends Base {
       tracks: { track, '@attr': attr },
     } = await this.sendRequest<GeoGetTopTracksResponse>({
       method: 'geo.getTopTracks',
-      country: params.country,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });

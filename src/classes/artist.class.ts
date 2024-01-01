@@ -35,8 +35,7 @@ export default class Artist extends Base {
   async getInfo(params: ArtistGetInfoParams): Promise<ArtistGetInfoType> {
     const { artist } = await this.sendRequest<ArtistGetInfoResponse>({
       method: 'artist.getInfo',
-      artist: params.artist,
-      username: params.username,
+      ...params,
     });
 
     return {
@@ -65,7 +64,7 @@ export default class Artist extends Base {
       similarartists: { artist, '@attr': attr },
     } = await this.sendRequest<ArtistGetSimilarResponse>({
       method: 'artist.getSimilar',
-      artist: params.artist,
+      ...params,
       limit: params.limit ?? 30,
     });
 
@@ -96,7 +95,7 @@ export default class Artist extends Base {
       topalbums: { album, '@attr': attr },
     } = await this.sendRequest<ArtistGetTopAlbumsResponse>({
       method: 'artist.getTopAlbums',
-      artist: params.artist,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -134,7 +133,7 @@ export default class Artist extends Base {
       toptags: { tag, '@attr': attr },
     } = await this.sendRequest<ArtistGetTopTagsResponse>({
       method: 'artist.getTopTags',
-      artist: params.artist,
+      ...params,
     });
 
     return {
@@ -161,7 +160,7 @@ export default class Artist extends Base {
       toptracks: { track, '@attr': attr },
     } = await this.sendRequest<ArtistGetTopTracksResponse>({
       method: 'artist.getTopTracks',
-      artist: params.artist,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -208,7 +207,7 @@ export default class Artist extends Base {
       },
     } = await this.sendRequest<ArtistSearchResponse>({
       method: 'artist.search',
-      artist: params.artist,
+      ...params,
       limit: params.limit ?? 30,
       page: params.page ?? 1,
     });

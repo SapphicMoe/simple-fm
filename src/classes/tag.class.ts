@@ -1,4 +1,4 @@
-import { convertImageSizes, convertURL } from '@utils/convert.js';
+import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
 
 import type {
@@ -56,7 +56,7 @@ export default class Tag extends Base {
       albums: { album, '@attr': attr },
     } = await this.sendRequest<TagGetTopAlbumsResponse>({
       method: 'tag.getTopAlbums',
-      tag: params.tag,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -95,7 +95,7 @@ export default class Tag extends Base {
       topartists: { artist, '@attr': attr },
     } = await this.sendRequest<TagGetTopArtistsResponse>({
       method: 'tag.getTopArtists',
-      tag: params.tag,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -128,7 +128,7 @@ export default class Tag extends Base {
       tracks: { track, '@attr': attr },
     } = await this.sendRequest<TagGetTopTracksResponse>({
       method: 'tag.getTopTracks',
-      tag: params.tag,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -165,7 +165,7 @@ export default class Tag extends Base {
       weeklychartlist: { chart, '@attr': attr },
     } = await this.sendRequest<TagGetWeeklyChartListResponse>({
       method: 'tag.getWeeklyChartList',
-      tag: params.tag,
+      ...params,
     });
 
     return {

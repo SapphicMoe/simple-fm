@@ -21,9 +21,7 @@ export default class Album extends Base {
       },
     } = await this.sendRequest<AlbumGetInfoResponse>({
       method: 'album.getInfo',
-      artist: params.artist,
-      album: params.album,
-      username: params.username,
+      ...params,
     });
 
     const returnTrack = (track: TrackReturnType) => ({
@@ -67,8 +65,7 @@ export default class Album extends Base {
       toptags: { tag, '@attr': attr },
     } = await this.sendRequest<AlbumGetTopTagsResponse>({
       method: 'album.getTopTags',
-      artist: params.artist,
-      album: params.album,
+      ...params,
     });
 
     return {
@@ -99,7 +96,7 @@ export default class Album extends Base {
       },
     } = await this.sendRequest<AlbumSearchResponse>({
       method: 'album.search',
-      album: params.album,
+      ...params,
       limit: params.limit ?? 30,
       page: params.page ?? 1,
     });

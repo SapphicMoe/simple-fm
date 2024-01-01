@@ -31,9 +31,7 @@ export default class Track extends Base {
       },
     } = await this.sendRequest<TrackGetInfoResponse>({
       method: 'track.getInfo',
-      artist: params.artist,
-      track: params.track,
-      username: params.username,
+      ...params,
     });
 
     return {
@@ -79,8 +77,7 @@ export default class Track extends Base {
       similartracks: { track, '@attr': attr },
     } = await this.sendRequest<TrackGetSimilarResponse>({
       method: 'track.getSimilar',
-      artist: params.artist,
-      track: params.track,
+      ...params,
       limit: params.limit ?? 30,
     });
 
@@ -111,13 +108,12 @@ export default class Track extends Base {
    * @param artist - The name of the artist.
    * @param track - The name of the track.
    */
-  async getTopTags(parmas: TrackGetTopTagsParams): Promise<TrackGetTopTagsType> {
+  async getTopTags(params: TrackGetTopTagsParams): Promise<TrackGetTopTagsType> {
     const {
       toptags: { tag, '@attr': attr },
     } = await this.sendRequest<TrackGetTopTagsResponse>({
       method: 'track.getTopTags',
-      artist: parmas.artist,
-      track: parmas.track,
+      ...params,
     });
 
     return {
@@ -149,7 +145,7 @@ export default class Track extends Base {
       },
     } = await this.sendRequest<TrackSearchResponse>({
       method: 'track.search',
-      track: params.track,
+      ...params,
       limit: params.limit ?? 30,
       page: params.page ?? 1,
     });

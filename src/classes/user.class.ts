@@ -47,7 +47,7 @@ export default class User extends Base {
       friends: { user, '@attr': attr },
     } = await this.sendRequest<UserGetFriendsResponse>({
       method: 'user.getFriends',
-      user: params.username,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -78,7 +78,7 @@ export default class User extends Base {
   async getInfo(params: UserGetInfoParams): Promise<UserGetInfoType> {
     const { user } = await this.sendRequest<UserGetInfoResponse>({
       method: 'user.getInfo',
-      user: params.username,
+      ...params,
     });
 
     return {
@@ -108,7 +108,7 @@ export default class User extends Base {
       lovedtracks: { track, '@attr': attr },
     } = await this.sendRequest<UserGetLovedTracksResponse>({
       method: 'user.getLovedTracks',
-      user: params.username,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -146,9 +146,7 @@ export default class User extends Base {
       taggings: { albums, artists, tracks, '@attr': attr },
     } = await this.sendRequest<UserGetPersonalTagsResponse>({
       method: 'user.getPersonalTags',
-      user: params.username,
-      tag: params.tag,
-      taggingtype: params.tagType,
+      ...params,
     });
 
     const responseTypes = {
@@ -200,7 +198,7 @@ export default class User extends Base {
       recenttracks: { track, '@attr': attr },
     } = await this.sendRequest<UserGetRecentTracksResponse>({
       method: 'user.getRecentTracks',
-      user: params.username,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -243,7 +241,7 @@ export default class User extends Base {
       topalbums: { album, '@attr': attr },
     } = await this.sendRequest<UserGetTopAlbumsResponse>({
       method: 'user.getTopAlbums',
-      user: params.username,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -283,7 +281,7 @@ export default class User extends Base {
       topartists: { artist, '@attr': attr },
     } = await this.sendRequest<UserGetTopArtistsResponse>({
       method: 'user.getTopArtists',
-      user: params.username,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
@@ -316,7 +314,7 @@ export default class User extends Base {
       toptags: { tag, '@attr': attr },
     } = await this.sendRequest<UserGetTopTagsResponse>({
       method: 'user.getTopTags',
-      user: params.username,
+      ...params,
       limit: params.limit ?? 50,
     });
 
@@ -343,7 +341,7 @@ export default class User extends Base {
       toptracks: { track, '@attr': attr },
     } = await this.sendRequest<UserGetTopTracksResponse>({
       method: 'user.getTopTracks',
-      user: params.username,
+      ...params,
       limit: params.limit ?? 50,
       page: params.page ?? 1,
     });
