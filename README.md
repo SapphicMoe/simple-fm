@@ -49,7 +49,7 @@ const SimpleFM = require('@solely/simple-fm'); // CommonJS
 const client = new SimpleFM('Last.fm API key');
 
 // Fetch the recent track from a user.
-const json = await client.user.getRecentTracks({ user: 'solelychloe' });
+const json = await client.user.getRecentTracks({ username: 'solelychloe' });
 
 console.log(json);
 // => { search: { user: 'solelychloe', nowPlaying: true, ... }, tracks: [...] }
@@ -65,7 +65,7 @@ import SimpleFM from 'https://esm.sh/@solely/simple-fm';
 
 This package is licensed under the [zlib][license] license.
 
-© 2023 Chloe Arciniega.
+© 2024 Chloe Arciniega.
 
 [actions-image]:
   https://img.shields.io/github/actions/workflow/status/solelychloe/simple-fm/main.yml?colorA=18181B&colorB=de3931
