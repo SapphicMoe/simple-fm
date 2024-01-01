@@ -1,5 +1,11 @@
 # @solely/simple-fm
 
+## 1.6.1
+
+### Patch Changes
+
+- bce6394: Remove redundant "node:" module specifiers
+
 ## 1.6.0
 
 ### Minor Changes
