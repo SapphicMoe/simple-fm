@@ -78,7 +78,7 @@ export class LastFMRequest {
 
       return data;
     } catch (err) {
-      if (err instanceof FetchError) throw new LastFMError(err.data);
+      if (err instanceof FetchError) throw new FetchError(err.message);
       else if (err instanceof LastFMError) throw new LastFMError(err.response);
       else console.error(err);
     }

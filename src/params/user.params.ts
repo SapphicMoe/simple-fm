@@ -17,7 +17,7 @@ export interface UserGetLovedTracksParams {
 export interface UserGetPersonalTagsParams {
   username: string;
   tag: string;
-  tagType: 'album' | 'artist' | 'track';
+  taggingtype: 'album' | 'artist' | 'track';
 }
 
 export interface UserGetRecentTracksParams {
