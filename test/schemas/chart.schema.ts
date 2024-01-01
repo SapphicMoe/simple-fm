@@ -1,6 +1,6 @@
 import { z, ZodObject, ZodRawShape, UnknownKeysParam, ZodTypeAny } from 'zod';
 
-import { ChartGetTopArtistsType, ChartGetTopTagsType, ChartGetTopTracksType } from '@typings/chart.type.js';
+import { ChartGetTopArtistsType, ChartGetTopTagsType, ChartGetTopTracksType } from '../../src/typings/chart.type.js';
 
 export const ChartGetTopArtistsSchema = z.array(
   z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, ChartGetTopArtistsType>

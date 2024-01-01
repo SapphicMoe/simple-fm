@@ -6,7 +6,7 @@ import {
   TagGetTopArtistsType,
   TagGetTopTracksType,
   TagGetWeeklyChartListType,
-} from '@typings/tag.type.js';
+} from '../../src/typings/tag.type.js';
 
 export const TagGetInfoSchema = z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, TagGetInfoType>;
 

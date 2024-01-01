@@ -1,6 +1,11 @@
 import { z, ZodObject, ZodRawShape, UnknownKeysParam, ZodTypeAny } from 'zod';
 
-import { TrackGetInfoType, TrackGetSimilarType, TrackGetTopTagsType, TrackSearchType } from '@typings/track.type.js';
+import {
+  TrackGetInfoType,
+  TrackGetSimilarType,
+  TrackGetTopTagsType,
+  TrackSearchType,
+} from '../../src/typings/track.type.js';
 
 export const TrackGetInfoSchema = z.object({}) as ZodObject<
   ZodRawShape,

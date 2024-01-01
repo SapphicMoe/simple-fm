@@ -9,7 +9,7 @@ import {
   UserGetTopArtistsType,
   UserGetTopTagsType,
   UserGetTopTracksType,
-} from '@typings/user.type.js';
+} from '../../src/typings/user.type.js';
 
 export const UserGetFriendsSchema = z.array(
   z.object({}) as ZodObject<ZodRawShape, UnknownKeysParam, ZodTypeAny, UserGetInfoType>
