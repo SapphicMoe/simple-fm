@@ -183,7 +183,7 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      response: responseTypes[params.taggingType] || undefined,
+      response: responseTypes[params.tagType] || undefined,
     };
   }
 
