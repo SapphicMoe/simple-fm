@@ -61,7 +61,7 @@ export default class Artist extends Base {
    * */
   async getSimilar(params: ArtistGetSimilarParams): Promise<ArtistGetSimilarType> {
     const {
-      similarartists: { artist, '@attr': attr },
+      similarartists: { artist: artistMatches, '@attr': attr },
     } = await this.sendRequest<ArtistGetSimilarResponse>({
       method: 'artist.getSimilar',
       ...params,
@@ -75,11 +75,11 @@ export default class Artist extends Base {
           url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
         },
       },
-      artists: artist.map((a) => ({
-        match: Number(a.match),
-        name: a.name,
-        mbid: a.mbid,
-        url: a.url,
+      artists: artistMatches.map((artist) => ({
+        match: Number(artist.match),
+        name: artist.name,
+        mbid: artist.mbid,
+        url: artist.url,
       })),
     };
   }
@@ -92,7 +92,7 @@ export default class Artist extends Base {
    * */
   async getTopAlbums(params: ArtistGetTopAlbumsParams): Promise<ArtistGetTopAlbumsType> {
     const {
-      topalbums: { album, '@attr': attr },
+      topalbums: { album: albumMatches, '@attr': attr },
     } = await this.sendRequest<ArtistGetTopAlbumsResponse>({
       method: 'artist.getTopAlbums',
       ...params,
@@ -111,15 +111,15 @@ export default class Artist extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      albums: album.map((a) => ({
-        name: a.name,
-        scrobbles: Number(a.playcount),
+      albums: albumMatches.map((album) => ({
+        name: album.name,
+        scrobbles: Number(album.playcount),
         artist: {
-          name: a.artist.name,
-          url: a.artist.url,
+          name: album.artist.name,
+          url: album.artist.url,
         },
-        url: a.url,
-        image: convertImageSizes(a.image),
+        url: album.url,
+        image: convertImageSizes(album.image),
       })),
     };
   }
@@ -130,7 +130,7 @@ export default class Artist extends Base {
    * */
   async getTopTags(params: ArtistGetTopTagsParams): Promise<ArtistGetTopTagsType> {
     const {
-      toptags: { tag, '@attr': attr },
+      toptags: { tag: tagMatches, '@attr': attr },
     } = await this.sendRequest<ArtistGetTopTagsResponse>({
       method: 'artist.getTopTags',
       ...params,
@@ -141,10 +141,10 @@ export default class Artist extends Base {
         name: attr.artist,
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
-      tags: tag.map((t) => ({
-        count: t.count,
-        name: t.name,
-        url: t.url,
+      tags: tagMatches.map((tag) => ({
+        count: tag.count,
+        name: tag.name,
+        url: tag.url,
       })),
     };
   }
@@ -157,7 +157,7 @@ export default class Artist extends Base {
    * */
   async getTopTracks(params: ArtistGetTopTracksParams): Promise<ArtistGetTopTracksType> {
     const {
-      toptracks: { track, '@attr': attr },
+      toptracks: { track: trackMatches, '@attr': attr },
     } = await this.sendRequest<ArtistGetTopTracksResponse>({
       method: 'artist.getTopTracks',
       ...params,
@@ -176,19 +176,19 @@ export default class Artist extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((t) => ({
-        rank: Number(t['@attr'].rank),
-        name: t.name,
-        mbid: t.mbid,
+      tracks: trackMatches.map((track) => ({
+        rank: Number(track['@attr'].rank),
+        name: track.name,
+        mbid: track.mbid,
         artist: {
-          name: t.artist.name,
-          url: t.artist.url,
+          name: track.artist.name,
+          url: track.artist.url,
         },
         stats: {
-          scrobbles: Number(t.playcount),
-          listeners: Number(t.listeners),
+          scrobbles: Number(track.playcount),
+          listeners: Number(track.listeners),
         },
-        url: t.url,
+        url: track.url,
       })),
     };
   }
@@ -203,7 +203,7 @@ export default class Artist extends Base {
     const {
       results,
       results: {
-        artistmatches: { artist },
+        artistmatches: { artist: artistMatches },
       },
     } = await this.sendRequest<ArtistSearchResponse>({
       method: 'artist.search',
@@ -219,11 +219,11 @@ export default class Artist extends Base {
         itemsPerPage: Number(results['opensearch:itemsPerPage']),
         totalResults: Number(results['opensearch:totalResults']),
       },
-      artists: artist.map((a) => ({
-        name: a.name,
-        mbid: a.mbid,
-        listeners: Number(a.listeners),
-        url: a.url,
+      artists: artistMatches.map((artist) => ({
+        name: artist.name,
+        mbid: artist.mbid,
+        listeners: Number(artist.listeners),
+        url: artist.url,
       })),
     };
   }

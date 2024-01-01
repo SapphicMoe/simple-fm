@@ -16,20 +16,21 @@ export default class Album extends Base {
     const {
       album,
       album: {
-        tracks: { track },
-        tags: { tag },
+        tracks: { track: trackMatches },
+        tags: { tag: tagMatches },
       },
     } = await this.sendRequest<AlbumGetInfoResponse>({
       method: 'album.getInfo',
       ...params,
     });
 
-    const returnTrack = (track: TrackReturnType) => ({
-      rank: Number(track['@attr'].rank),
-      name: track.name,
-      duration: Number(track.duration),
-      url: track.url,
-    });
+    const createTrackObject = (track: TrackReturnType) =>
+      ({
+        rank: Number(track['@attr'].rank),
+        name: track.name,
+        duration: Number(track.duration),
+        url: track.url,
+      }) satisfies AlbumGetInfoType['tracks'];
 
     return {
       name: album.name,
@@ -43,13 +44,12 @@ export default class Album extends Base {
         listeners: Number(album.listeners),
       },
       userStats: {
-        userPlayCount: Number(album.userplaycount),
+        userPlayCount: album.userplaycount,
       },
-      tags: tag.map((t) => ({
-        name: t.name,
-        url: t.url,
-      })),
-      tracks: Array.isArray(track) ? track.map((t) => returnTrack(t)) : returnTrack(track),
+      tags: tagMatches.map((tag) => ({ name: tag.name, url: tag.url })),
+      tracks: Array.isArray(trackMatches)
+        ? trackMatches.map((track) => createTrackObject(track))
+        : createTrackObject(trackMatches),
       url: album.url,
       image: convertImageSizes(album.image),
     };
@@ -62,7 +62,7 @@ export default class Album extends Base {
    */
   async getTopTags(params: AlbumGetTopTagsParams): Promise<AlbumGetTopTagsType> {
     const {
-      toptags: { tag, '@attr': attr },
+      toptags: { tag: tagMatches, '@attr': attr },
     } = await this.sendRequest<AlbumGetTopTagsResponse>({
       method: 'album.getTopTags',
       ...params,
@@ -74,10 +74,10 @@ export default class Album extends Base {
         name: attr.artist,
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
-      tags: tag.map((t) => ({
-        count: t.count,
-        name: t.name,
-        url: t.url,
+      tags: tagMatches.map((tag) => ({
+        count: tag.count,
+        name: tag.name,
+        url: tag.url,
       })),
     };
   }
@@ -92,7 +92,7 @@ export default class Album extends Base {
     const {
       results,
       results: {
-        albummatches: { album },
+        albummatches: { album: albumMatches },
       },
     } = await this.sendRequest<AlbumSearchResponse>({
       method: 'album.search',
@@ -108,15 +108,15 @@ export default class Album extends Base {
         itemsPerPage: Number(results['opensearch:itemsPerPage']),
         totalResults: Number(results['opensearch:totalResults']),
       },
-      albums: album.map((a) => ({
-        name: a.name,
-        mbid: a.mbid,
+      albums: albumMatches.map((album) => ({
+        name: album.name,
+        mbid: album.mbid === '' ? undefined : album.mbid,
         artist: {
-          name: a.artist,
-          url: `https://www.last.fm/music/${convertURL(a.artist)}`,
+          name: album.artist,
+          url: `https://www.last.fm/music/${convertURL(album.artist)}`,
         },
-        url: a.url,
-        image: convertImageSizes(a.image),
+        url: album.url,
+        image: convertImageSizes(album.image),
       })),
     };
   }

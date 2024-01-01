@@ -16,7 +16,7 @@ export default class Chart extends Base {
    * */
   async getTopArtists(params?: ChartGetTopArtistParams): Promise<ChartGetTopArtistsType> {
     const {
-      artists: { artist, '@attr': attr },
+      artists: { artist: artistMatches, '@attr': attr },
     } = await this.sendRequest<ChartGetTopArtistsResponse>({
       method: 'chart.getTopArtists',
       limit: params?.limit ?? 30,
@@ -30,14 +30,14 @@ export default class Chart extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists: artist.map((a) => ({
-        name: a.name,
-        mbid: a.mbid,
+      artists: artistMatches.map((artist) => ({
+        name: artist.name,
+        mbid: artist.mbid,
         stats: {
-          scrobbles: Number(a.playcount),
-          listeners: Number(a.listeners),
+          scrobbles: Number(artist.playcount),
+          listeners: Number(artist.listeners),
         },
-        url: a.url,
+        url: artist.url,
       })),
     };
   }
@@ -49,7 +49,7 @@ export default class Chart extends Base {
    * */
   async getTopTags(params?: ChartGetTopTagsParams): Promise<ChartGetTopTagsType> {
     const {
-      tags: { tag, '@attr': attr },
+      tags: { tag: tagMatches, '@attr': attr },
     } = await this.sendRequest<ChartGetTopTagsResponse>({
       method: 'chart.getTopTags',
       limit: params?.limit ?? 30,
@@ -63,13 +63,13 @@ export default class Chart extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tags: tag.map((t) => ({
-        name: t.name,
+      tags: tagMatches.map((tag) => ({
+        name: tag.name,
         stats: {
-          count: Number(t.taggings),
-          reach: Number(t.reach),
+          count: Number(tag.taggings),
+          reach: Number(tag.reach),
         },
-        url: t.url,
+        url: tag.url,
       })),
     };
   }
@@ -81,7 +81,7 @@ export default class Chart extends Base {
    * */
   async getTopTracks(params?: ChartGetTopTracksParams): Promise<ChartGetTopTracksType> {
     const {
-      tracks: { track, '@attr': attr },
+      tracks: { track: trackMatches, '@attr': attr },
     } = await this.sendRequest<ChartGetTopTracksResponse>({
       method: 'chart.getTopTracks',
       limit: params?.limit ?? 30,
@@ -95,18 +95,18 @@ export default class Chart extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((t) => ({
-        name: t.name,
-        mbid: t.mbid,
+      tracks: trackMatches.map((tag) => ({
+        name: tag.name,
+        mbid: tag.mbid,
         stats: {
-          scrobbles: Number(t.playcount),
-          listeners: Number(t.listeners),
+          scrobbles: Number(tag.playcount),
+          listeners: Number(tag.listeners),
         },
         artist: {
-          name: t.artist.name,
-          url: t.artist.url,
+          name: tag.artist.name,
+          url: tag.artist.url,
         },
-        url: t.url,
+        url: tag.url,
       })),
     };
   }

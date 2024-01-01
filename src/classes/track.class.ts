@@ -27,7 +27,7 @@ export default class Track extends Base {
       track,
       track: {
         album,
-        toptags: { tag },
+        toptags: { tag: tagMatches },
       },
     } = await this.sendRequest<TrackGetInfoResponse>({
       method: 'track.getInfo',
@@ -58,9 +58,9 @@ export default class Track extends Base {
         image: convertImageSizes(album?.image),
         url: album?.url,
       },
-      tags: tag.map((t) => ({
-        name: t.name,
-        url: t.url,
+      tags: tagMatches.map((tag) => ({
+        name: tag.name,
+        url: tag.url,
       })),
       url: track.url,
     };
@@ -74,7 +74,7 @@ export default class Track extends Base {
    */
   async getSimilar(params: TrackGetSimilarParams): Promise<TrackGetSimilarType> {
     const {
-      similartracks: { track, '@attr': attr },
+      similartracks: { track: trackMatches, '@attr': attr },
     } = await this.sendRequest<TrackGetSimilarResponse>({
       method: 'track.getSimilar',
       ...params,
@@ -88,17 +88,17 @@ export default class Track extends Base {
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
       url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(params.track)}`,
-      tracks: track.map((t) => ({
-        match: Number(t.match),
-        name: t.name,
-        duration: Number(t.duration),
-        scrobbles: Number(t.playcount),
+      tracks: trackMatches.map((track) => ({
+        match: Number(track.match),
+        name: track.name,
+        duration: Number(track.duration),
+        scrobbles: Number(track.playcount),
         artist: {
-          name: t.artist.name,
-          url: t.artist.url,
+          name: track.artist.name,
+          url: track.artist.url,
         },
-        url: t.url,
-        image: convertImageSizes(t.image),
+        url: track.url,
+        image: convertImageSizes(track.image),
       })),
     };
   }
@@ -110,7 +110,7 @@ export default class Track extends Base {
    */
   async getTopTags(params: TrackGetTopTagsParams): Promise<TrackGetTopTagsType> {
     const {
-      toptags: { tag, '@attr': attr },
+      toptags: { tag: tagMatches, '@attr': attr },
     } = await this.sendRequest<TrackGetTopTagsResponse>({
       method: 'track.getTopTags',
       ...params,
@@ -123,10 +123,10 @@ export default class Track extends Base {
         url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
       },
       url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(attr.track)}`,
-      tags: tag.map((t) => ({
-        count: Number(t.count),
-        name: t.name,
-        url: t.url,
+      tags: tagMatches.map((tag) => ({
+        count: Number(tag.count),
+        name: tag.name,
+        url: tag.url,
       })),
     };
   }
@@ -141,7 +141,7 @@ export default class Track extends Base {
     const {
       results,
       results: {
-        trackmatches: { track },
+        trackmatches: { track: trackMatches },
       },
     } = await this.sendRequest<TrackSearchResponse>({
       method: 'track.search',
@@ -157,15 +157,15 @@ export default class Track extends Base {
         itemsPerPage: Number(results['opensearch:itemsPerPage']),
         totalResults: Number(results['opensearch:totalResults']),
       },
-      tracks: track.map((t) => ({
-        name: t.name,
-        mbid: t.mbid,
-        listeners: Number(t.listeners),
+      tracks: trackMatches.map((track) => ({
+        name: track.name,
+        mbid: track.mbid,
+        listeners: Number(track.listeners),
         artist: {
-          name: t.artist,
+          name: track.artist,
           url: `https://www.last.fm/music/${convertURL(t.artist)}`,
         },
-        url: t.url,
+        url: track.url,
       })),
     };
   }

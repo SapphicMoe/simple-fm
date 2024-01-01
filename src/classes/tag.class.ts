@@ -1,4 +1,4 @@
-import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
+import { convertImageSizes, convertURL } from '@utils/convert.js';
 import Base from '~/base.js';
 
 import type {
@@ -53,7 +53,7 @@ export default class Tag extends Base {
    * */
   async getTopAlbums(params: TagGetTopAlbumsParams): Promise<TagGetTopAlbumsType> {
     const {
-      albums: { album, '@attr': attr },
+      albums: { album: albumMatches, '@attr': attr },
     } = await this.sendRequest<TagGetTopAlbumsResponse>({
       method: 'tag.getTopAlbums',
       ...params,
@@ -69,17 +69,17 @@ export default class Tag extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      albums: album.map((a) => ({
-        rank: Number(a['@attr'].rank),
-        name: a.name,
-        mbid: a.mbid,
+      albums: albumMatches.map((album) => ({
+        rank: Number(album['@attr'].rank),
+        name: album.name,
+        mbid: album.mbid,
         artist: {
-          name: a.artist.name,
-          mbid: a.artist.mbid,
-          url: a.artist.url,
+          name: album.artist.name,
+          mbid: album.artist.mbid,
+          url: album.artist.url,
         },
         url: `https://www.last.fm/music/${convertURL(a.artist.name)}/${convertURL(a.name)}`,
-        image: convertImageSizes(a.image),
+        image: convertImageSizes(album.image),
       })),
     };
   }
@@ -92,7 +92,7 @@ export default class Tag extends Base {
    * */
   async getTopArtists(params: TagGetTopArtistsParams): Promise<TagGetTopArtistsType> {
     const {
-      topartists: { artist, '@attr': attr },
+      topartists: { artist: artistMatches, '@attr': attr },
     } = await this.sendRequest<TagGetTopArtistsResponse>({
       method: 'tag.getTopArtists',
       ...params,
@@ -108,11 +108,11 @@ export default class Tag extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists: artist.map((a) => ({
-        rank: Number(a['@attr'].rank),
-        name: a.name,
-        mbid: a.mbid,
-        url: a.url,
+      artists: artistMatches.map((artist) => ({
+        rank: Number(artist['@attr'].rank),
+        name: artist.name,
+        mbid: artist.mbid,
+        url: artist.url,
       })),
     };
   }
@@ -125,7 +125,7 @@ export default class Tag extends Base {
    * */
   async getTopTracks(params: TagGetTopTracksParams): Promise<TagGetTopTracksType> {
     const {
-      tracks: { track, '@attr': attr },
+      tracks: { track: trackMatches, '@attr': attr },
     } = await this.sendRequest<TagGetTopTracksResponse>({
       method: 'tag.getTopTracks',
       ...params,
@@ -141,17 +141,17 @@ export default class Tag extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((t) => ({
-        rank: Number(t['@attr'].rank),
-        name: t.name,
-        mbid: t.mbid,
-        duration: Number(t.duration),
+      tracks: trackMatches.map((track) => ({
+        rank: Number(track['@attr'].rank),
+        name: track.name,
+        mbid: track.mbid,
+        duration: Number(track.duration),
         artist: {
-          name: t.artist.name,
-          mbid: t.artist.mbid,
-          url: t.artist.url,
+          name: track.artist.name,
+          mbid: track.artist.mbid,
+          url: track.artist.url,
         },
-        url: t.url,
+        url: track.url,
       })),
     };
   }
@@ -162,7 +162,7 @@ export default class Tag extends Base {
    * */
   async getWeeklyChartList(params: TagGetWeeklyChartListParams): Promise<TagGetWeeklyChartListType> {
     const {
-      weeklychartlist: { chart, '@attr': attr },
+      weeklychartlist: { chart: chartMatches, '@attr': attr },
     } = await this.sendRequest<TagGetWeeklyChartListResponse>({
       method: 'tag.getWeeklyChartList',
       ...params,
@@ -172,9 +172,9 @@ export default class Tag extends Base {
       search: {
         tag: attr.tag,
       },
-      positions: chart.map((c) => ({
-        from: new Date(Number(c.from) * 1000),
-        to: new Date(Number(c.to) * 1000),
+      positions: chartMatches.map((chart) => ({
+        from: new Date(Number(chart.from) * 1000),
+        to: new Date(Number(chart.to) * 1000),
       })),
     };
   }

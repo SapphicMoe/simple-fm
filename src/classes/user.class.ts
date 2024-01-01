@@ -44,7 +44,7 @@ export default class User extends Base {
    * */
   async getFriends(params: UserGetFriendsParams): Promise<UserGetFriendsType> {
     const {
-      friends: { user, '@attr': attr },
+      friends: { user: userMatches, '@attr': attr },
     } = await this.sendRequest<UserGetFriendsResponse>({
       method: 'user.getFriends',
       ...params,
@@ -60,13 +60,13 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      friends: user.map((u) => ({
-        name: u.name,
-        realName: u.realname === '' ? undefined : u.realname,
-        country: u.country === 'None' ? undefined : u.country,
-        registered: new Date(Number(u.registered.unixtime) * 1000),
-        url: u.url,
-        image: convertImageSizes(u.image),
+      friends: userMatches.map((user) => ({
+        name: user.name,
+        realName: user.realname === '' ? undefined : user.realname,
+        country: user.country === 'None' ? undefined : user.country,
+        registered: new Date(Number(user.registered.unixtime) * 1000),
+        url: user.url,
+        image: convertImageSizes(user.image),
       })),
     };
   }
@@ -105,7 +105,7 @@ export default class User extends Base {
    * */
   async getLovedTracks(params: UserGetLovedTracksParams): Promise<UserGetLovedTracksType> {
     const {
-      lovedtracks: { track, '@attr': attr },
+      lovedtracks: { track: trackMatches, '@attr': attr },
     } = await this.sendRequest<UserGetLovedTracksResponse>({
       method: 'user.getLovedTracks',
       ...params,
@@ -121,16 +121,16 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((t) => ({
-        name: t.name,
-        mbid: t.mbid,
-        date: new Date(Number(t.date.uts) * 1000),
+      tracks: trackMatches.map((track) => ({
+        name: track.name,
+        mbid: track.mbid,
+        date: new Date(Number(track.date.uts) * 1000),
         artist: {
-          name: t.artist.name,
-          mbid: t.artist.mbid,
-          url: t.artist.url,
+          name: track.artist.name,
+          mbid: track.artist.mbid,
+          url: track.artist.url,
         },
-        url: t.url,
+        url: track.url,
       })),
     };
   }
@@ -150,27 +150,27 @@ export default class User extends Base {
     });
 
     const responseTypes = {
-      album: albums?.album.map((a) => ({
-        name: a.name,
+      album: albums?.album.map((album) => ({
+        name: album.name,
         artist: {
-          name: a.artist.name,
-          url: a.artist.url,
+          name: album.artist.name,
+          url: album.artist.url,
         },
-        url: a.url,
+        url: album.url,
       })),
 
-      artist: artists?.artist.map((a) => ({
-        name: a.name,
-        url: a.url,
+      artist: artists?.artist.map((artist) => ({
+        name: artist.name,
+        url: artist.url,
       })),
 
-      track: tracks?.track.map((t) => ({
-        name: t.name,
+      track: tracks?.track.map((track) => ({
+        name: track.name,
         artist: {
-          name: t.artist.name,
-          url: t.artist.url,
+          name: track.artist.name,
+          url: track.artist.url,
         },
-        url: t.url,
+        url: track.url,
       })),
     };
 
@@ -195,7 +195,7 @@ export default class User extends Base {
    * */
   async getRecentTracks(params: UserGetRecentTracksParams): Promise<UserGetRecentTracksType> {
     const {
-      recenttracks: { track, '@attr': attr },
+      recenttracks: { track: trackMatches, '@attr': attr },
     } = await this.sendRequest<UserGetRecentTracksResponse>({
       method: 'user.getRecentTracks',
       ...params,
@@ -206,26 +206,26 @@ export default class User extends Base {
     return {
       search: {
         user: attr.user,
-        nowPlaying: track[0]['@attr']?.nowplaying === 'true',
+        nowPlaying: trackMatches[0]['@attr']?.nowplaying === 'true',
         page: Number(attr.page),
         itemsPerPage: Number(attr.perPage),
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((t) => ({
-        dateAdded: new Date(Number(t.date.uts) * 1000),
-        name: t.name,
-        mbid: t.mbid,
+      tracks: trackMatches.map((track) => ({
+        dateAdded: new Date(Number(track.date.uts) * 1000),
+        name: track.name,
+        mbid: track.mbid === '' ? undefined : track.mbid,
         artist: {
-          name: t.artist['#text'],
-          url: `https://www.last.fm/music/${convertURL(t.artist['#text'])}`,
+          name: track.artist['#text'],
+          url: `https://www.last.fm/music/${convertURL(track.artist['#text'])}`,
         },
         album: {
-          name: t.album['#text'],
-          mbid: t.album.mbid,
+          name: track.album['#text'],
+          mbid: track.album.mbid,
         },
-        url: t.url,
-        image: convertImageSizes(t.image),
+        url: track.url,
+        image: convertImageSizes(track.image),
       })),
     };
   }
@@ -238,7 +238,7 @@ export default class User extends Base {
    * */
   async getTopAlbums(params: UserGetTopAlbumsParams): Promise<UserGetTopAlbumsType> {
     const {
-      topalbums: { album, '@attr': attr },
+      topalbums: { album: albumMatches, '@attr': attr },
     } = await this.sendRequest<UserGetTopAlbumsResponse>({
       method: 'user.getTopAlbums',
       ...params,
@@ -254,18 +254,18 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      albums: album.map((a) => ({
-        rank: Number(a['@attr'].rank),
-        name: a.name,
-        mbid: a.mbid,
-        playCount: Number(a.playcount),
+      albums: albumMatches.map((album) => ({
+        rank: Number(album['@attr'].rank),
+        name: album.name,
+        mbid: album.mbid,
+        playCount: Number(album.playcount),
         artist: {
-          name: a.artist.name,
-          mbid: a.artist.mbid,
-          url: a.artist.url,
+          name: album.artist.name,
+          mbid: album.artist.mbid,
+          url: album.artist.url,
         },
-        url: a.url,
-        image: convertImageSizes(a.image),
+        url: album.url,
+        image: convertImageSizes(album.image),
       })),
     };
   }
@@ -278,7 +278,7 @@ export default class User extends Base {
    * */
   async getTopArtists(params: UserGetTopArtistsParams): Promise<UserGetTopArtistsType> {
     const {
-      topartists: { artist, '@attr': attr },
+      topartists: { artist: artistMatches, '@attr': attr },
     } = await this.sendRequest<UserGetTopArtistsResponse>({
       method: 'user.getTopArtists',
       ...params,
@@ -294,12 +294,12 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists: artist.map((a) => ({
-        rank: Number(a['@attr'].rank),
-        name: a.name,
-        mbid: a.mbid,
-        scrobbles: Number(a.playcount),
-        url: a.url,
+      artists: artistMatches.map((artist) => ({
+        rank: Number(artist['@attr'].rank),
+        name: artist.name,
+        mbid: artist.mbid,
+        scrobbles: Number(artist.playcount),
+        url: artist.url,
       })),
     };
   }
@@ -311,7 +311,7 @@ export default class User extends Base {
    * */
   async getTopTags(params: UserGetTopTagsParams): Promise<UserGetTopTagsType> {
     const {
-      toptags: { tag, '@attr': attr },
+      toptags: { tag: tagMatches, '@attr': attr },
     } = await this.sendRequest<UserGetTopTagsResponse>({
       method: 'user.getTopTags',
       ...params,
@@ -322,10 +322,10 @@ export default class User extends Base {
       search: {
         user: attr.user,
       },
-      tags: tag.map((t) => ({
-        count: Number(t.count),
-        name: t.name,
-        url: t.url,
+      tags: tagMatches.map((tag) => ({
+        count: Number(tag.count),
+        name: tag.name,
+        url: tag.url,
       })),
     };
   }
@@ -338,7 +338,7 @@ export default class User extends Base {
    * */
   async getTopTracks(params: UserGetTopTracksParams): Promise<UserGetTopTracksType> {
     const {
-      toptracks: { track, '@attr': attr },
+      toptracks: { track: trackMatches, '@attr': attr },
     } = await this.sendRequest<UserGetTopTracksResponse>({
       method: 'user.getTopTracks',
       ...params,
@@ -354,21 +354,21 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((t) => ({
-        rank: Number(t['@attr'].rank),
-        name: t.name,
-        mbid: t.mbid,
+      tracks: trackMatches.map((track) => ({
+        rank: Number(track['@attr'].rank),
+        name: track.name,
+        mbid: track.mbid,
         stats: {
-          duration: Number(t.duration),
-          userPlayCount: Number(t.playcount),
+          duration: Number(track.duration),
+          userPlayCount: Number(track.playcount),
         },
         artist: {
-          name: t.artist.name,
-          mbid: t.artist.mbid,
-          url: t.artist.url,
+          name: track.artist.name,
+          mbid: track.artist.mbid,
+          url: track.artist.url,
         },
-        url: t.url,
-        image: convertImageSizes(t.image),
+        url: track.url,
+        image: convertImageSizes(track.image),
       })),
     };
   }
