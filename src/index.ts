@@ -6,8 +6,7 @@ import Tag from '@classes/tag.class.js';
 import Track from '@classes/track.class.js';
 import User from '@classes/user.class.js';
 import LastFMError from '@utils/error.js';
-
-export type * from '@typings/index.js';
+import { pkg } from '@utils/package.js';
 
 export default class SimpleFMClient {
   readonly album: Album;
@@ -22,13 +21,9 @@ export default class SimpleFMClient {
     private readonly key: string,
     options: { userAgent?: string } = {}
   ) {
-    if (!key)
-      throw new LastFMError({
-        message: 'You have not specified a Last.fm API key. Get one here: https://www.last.fm/api/account/create',
-        error: 6,
-      });
+    this.validateApiKey();
 
-    options.userAgent ??= `simple-fm - a simple Last.fm wrapper written in TypeScript (GitHub: https://github.com/solelychloe/simple-fm)`;
+    options.userAgent ??= `simple-fm v${pkg.version} - a simple Last.fm wrapper written in TypeScript (https://github.com/solelychloe/simple-fm)`;
 
     this.album = new Album(key, options.userAgent);
     this.artist = new Artist(key, options.userAgent);
@@ -37,5 +32,13 @@ export default class SimpleFMClient {
     this.tag = new Tag(key, options.userAgent);
     this.track = new Track(key, options.userAgent);
     this.user = new User(key, options.userAgent);
+  }
+
+  private validateApiKey() {
+    if (!this.key)
+      throw new LastFMError({
+        message: 'A Last.fm API key is required. Get one here: https://www.last.fm/api/account/create',
+        error: 6,
+      });
   }
 }
