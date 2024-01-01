@@ -13,7 +13,7 @@ export default class Geo extends Base {
    * */
   async getTopArtists(params: GeoGetTopArtistsParams): Promise<GeoGetTopArtistsType> {
     const {
-      topartists: { artist, '@attr': attr },
+      topartists: { artist: artistMatches, '@attr': attr },
     } = await this.sendRequest<GeoGetTopArtistsResponse>({
       method: 'geo.getTopArtists',
       ...params,
@@ -29,11 +29,11 @@ export default class Geo extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      artists: artist.map((a) => ({
-        name: a.name,
-        mbid: a.mbid,
-        listeners: Number(a.listeners),
-        url: a.url,
+      artists: artistMatches.map((artist) => ({
+        name: artist.name,
+        mbid: artist.mbid,
+        listeners: Number(artist.listeners),
+        url: artist.url,
       })),
     };
   }
@@ -46,7 +46,7 @@ export default class Geo extends Base {
    * */
   async getTopTracks(params: GeoGetTopTracksParams): Promise<GeoGetTopTracksType> {
     const {
-      tracks: { track, '@attr': attr },
+      tracks: { track: trackMatches, '@attr': attr },
     } = await this.sendRequest<GeoGetTopTracksResponse>({
       method: 'geo.getTopTracks',
       ...params,
@@ -62,18 +62,18 @@ export default class Geo extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      tracks: track.map((t) => ({
-        rank: Number(t['@attr'].rank),
-        name: t.name,
-        mbid: t.mbid,
-        duration: Number(t.duration),
-        listeners: Number(t.listeners),
+      tracks: trackMatches.map((track) => ({
+        rank: Number(track['@attr'].rank),
+        name: track.name,
+        mbid: track.mbid,
+        duration: Number(track.duration),
+        listeners: Number(track.listeners),
         artist: {
-          name: t.artist.name,
-          mbid: t.artist.mbid,
-          url: t.artist.url,
+          name: track.artist.name,
+          mbid: track.artist.mbid,
+          url: track.artist.url,
         },
-        url: t.url,
+        url: track.url,
       })),
     };
   }
