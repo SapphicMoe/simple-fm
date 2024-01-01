@@ -11,13 +11,14 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsconfig-replace-paths -p tsconfig.build.json -s src/",
+    "ci:publish": "pnpm publish -r",
+    "ci:version": "pnpm changeset version",
     "dev": "tsc --watch",
     "lint": "pnpm eslint .",
     "package": "tar -xvf solely-simple-fm-*.tgz && pnpm rimraf ./solely-simple-fm-*.tgz",
     "prepublish": "rimraf ./dist && pnpm build",
     "preview": "pnpm pack && pnpm package",
-    "test": "vitest",
-    "version": "pnpm changeset version"
+    "test": "vitest"
   },
   "publishConfig": {
     "access": "public"
