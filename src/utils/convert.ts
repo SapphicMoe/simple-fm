@@ -1,18 +1,17 @@
-import type { Image, ImageType } from '~/index.js';
+import type { ImageResponse } from '@responses/index.js';
+import type { ImageType } from '@typings/index.js';
 
 const ImageSize = ['extralarge', 'large', 'medium', 'small'];
 
-export const convertImageSizes = (image?: Image[]) => {
-  const data = image
-    ?.filter((i) => {
-      if (!i['#text']) return undefined;
+export const convertImageSizes = (images?: ImageResponse[]) => {
+  if (!images) return undefined;
 
-      return ImageSize.includes(i.size);
-    })
-    ?.map(
-      (i): ImageType => ({
-        size: i.size,
-        url: i['#text'],
+  const data = images
+    .filter((image) => image['#text'] && ImageSize.includes(image.size))
+    .map(
+      (image): ImageType => ({
+        size: image.size,
+        url: image['#text'],
       })
     );
 
