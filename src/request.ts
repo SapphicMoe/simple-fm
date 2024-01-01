@@ -1,6 +1,7 @@
 import { $fetch, FetchError } from 'ofetch';
 
 import LastFMError from '@utils/error.js';
+
 import type { RequestMethod } from '@typings/index.js';
 
 export interface LastFMArgument {
@@ -31,6 +32,11 @@ export interface LastFMArgument {
   recenttracks?: boolean | number;
 }
 
+type Data<T> = T & {
+  message: string;
+  error: number;
+};
+
 export class LastFMRequest {
   private readonly key: string;
   private readonly params: LastFMArgument;
@@ -42,7 +48,7 @@ export class LastFMRequest {
     this.userAgent = userAgent;
   }
 
-  // TODO: Implement post.
+  // TODO: Implement post methods.
   private isPostRequest() {
     return Object.hasOwn(this.params, 'sk');
   }
@@ -51,7 +57,7 @@ export class LastFMRequest {
     throw new Error('Method not implemented yet.');
   }
 
-  private async get<T = unknown>(): Promise<T> {
+  private async get<T>(): Promise<T | undefined> {
     const baseURL = 'https://ws.audioscrobbler.com/2.0';
 
     const params = {
@@ -60,18 +66,22 @@ export class LastFMRequest {
       ...this.params,
     };
 
-    const data: any = await $fetch<T>(baseURL, {
-      params,
-      headers: {
-        'User-Agent': this.userAgent,
-      },
-    }).catch((err) => {
-      if (err instanceof FetchError && !err.response?.ok) throw new LastFMError(err.data);
-    });
+    try {
+      const data = await $fetch<Data<T>>(baseURL, {
+        params,
+        headers: {
+          'User-Agent': this.userAgent,
+        },
+      });
 
-    if (data.error === 6) throw new LastFMError(data);
+      if (data.error === 6) throw new LastFMError(data);
 
-    return data;
+      return data;
+    } catch (err) {
+      if (err instanceof FetchError) throw new LastFMError(err.data);
+      else if (err instanceof LastFMError) throw new LastFMError(err.response);
+      else console.error(err);
+    }
   }
 
   execute() {
