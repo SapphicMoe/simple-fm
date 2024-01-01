@@ -2,9 +2,9 @@
   "name": "@solely/simple-fm",
   "version": "1.5.5",
   "license": "Zlib",
-  "type": "module",
-  "author": "Chloe Arciniega <solely@riseup.net>",
+  "author": "Chloe Arciniega <solely@riseup.net> (https://arciniega.one)",
   "description": "A simple, asynchronous Last.fm wrapper in TypeScript.",
+  "type": "module",
   "main": "./dist/index.js",
   "files": [
     "./dist"
@@ -12,18 +12,28 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsconfig-replace-paths -p tsconfig.build.json -s src/",
     "dev": "tsc --watch",
-    "lint": "yarn eslint .",
-    "package": "tar -xvf package.tgz && rimraf ./package.tgz",
-    "prepublish": "rimraf ./dist && yarn build",
-    "preview": "yarn pack && yarn package",
+    "lint": "pnpm eslint .",
+    "package": "tar -xvf solely-simple-fm-*.tgz && pnpm rimraf ./solely-simple-fm-*.tgz",
+    "prepublish": "rimraf ./dist && pnpm build",
+    "preview": "pnpm pack && pnpm package",
     "test": "vitest",
-    "version": "yarn changeset version"
+    "version": "pnpm changeset version"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "exports": {
     ".": "./dist/index.js",
     "./package.json": "./package.json"
   },
-  "repository": "https://github.com/solelychloe/simple-fm",
+  "homepage": "https://github.com/solelychloe/simple-fm#README",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solelychloe/simple-fm.git"
+  },
   "keywords": [
     "lastfm",
     "last.fm",
@@ -32,8 +42,9 @@
     "last.fm-api",
     "last-fm-api"
   ],
-  "publishConfig": {
-    "access": "public"
+  "funding": {
+    "type": "individual",
+    "url": "https://ko-fi.com/solelychloe"
   },
   "dependencies": {
     "ofetch": "^1.1.1"
