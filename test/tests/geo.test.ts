@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import { ENV } from '../env.js';
+import simpleFM from '../../src/index.js';
+import LastFMError from '../../src/utils/error.js';
+import { env } from '../env.js';
 import { GeoGetTopArtistsSchema, GeoGetTopTracksSchema } from '../schemas/geo.schema.js';
 
-import simpleFM from '~/index.js';
-
-const client = new simpleFM(ENV.LASTFM_TOKEN);
+const client = new simpleFM(env.LASTFM_TOKEN);
 
 describe('Geo', () => {
   describe('getTopArtists', () => {
@@ -21,7 +21,7 @@ describe('Geo', () => {
 
         expect(() => GeoGetTopArtistsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('country param invalid');
+        if (err instanceof LastFMError) expect(err.message).toEqual('country param invalid');
       }
     });
   });
@@ -39,7 +39,7 @@ describe('Geo', () => {
 
         expect(() => GeoGetTopTracksSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('country param required');
+        if (err instanceof LastFMError) expect(err.message).toEqual('country param required');
       }
     });
   });

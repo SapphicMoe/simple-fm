@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { ENV } from '../env.js';
+import simpleFM from '../../src/index.js';
+import LastFMError from '../../src/utils/error.js';
+import { env } from '../env.js';
 import {
   ArtistGetInfoSchema,
   ArtistGetSimilarSchema,
@@ -9,9 +11,9 @@ import {
   ArtistGetTopTracksSchema,
 } from '../schemas/artist.schema.js';
 
-import simpleFM from '~/index.js';
+const client = new simpleFM(env.LASTFM_TOKEN);
 
-const client = new simpleFM(ENV.LASTFM_TOKEN);
+const errorMessage = 'The artist you supplied could not be found';
 
 describe('Artist', () => {
   describe('getInfo', () => {
@@ -27,7 +29,7 @@ describe('Artist', () => {
 
         expect(() => ArtistGetInfoSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -45,7 +47,7 @@ describe('Artist', () => {
 
         expect(() => ArtistGetSimilarSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -63,7 +65,7 @@ describe('Artist', () => {
 
         expect(() => ArtistGetTopAlbumsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -81,7 +83,7 @@ describe('Artist', () => {
 
         expect(() => ArtistGetTopTagsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -98,7 +100,7 @@ describe('Artist', () => {
 
         expect(() => ArtistGetTopTracksSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('The artist you supplied could not be found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });

@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
-import { ENV } from '../env.js';
+import simpleFM from '../../src/index.js';
+import LastFMError from '../../src/utils/error.js';
+import { env } from '../env.js';
 import { AlbumGetInfoSchema, AlbumGetTopTagsSchema, AlbumSearchSchema } from '../schemas/album.schema.js';
 
-import simpleFM from '~/index.js';
+const client = new simpleFM(env.LASTFM_TOKEN);
 
-const client = new simpleFM(ENV.LASTFM_TOKEN);
+const errorMessage = 'Album not found';
 
 describe('Album', () => {
   describe('getInfo', () => {
@@ -21,7 +23,7 @@ describe('Album', () => {
 
         expect(() => AlbumGetInfoSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('Album not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -39,7 +41,7 @@ describe('Album', () => {
 
         expect(() => AlbumGetTopTagsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('Album not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { ENV } from '../env.js';
+import simpleFM from '../../src/index.js';
+import { env } from '../env.js';
 import {
   TagGetInfoSchema,
   TagGetTopAlbumsSchema,
@@ -9,9 +10,7 @@ import {
   TagGetWeeklyChartListSchema,
 } from '../schemas/tag.schema.js';
 
-import simpleFM from '~/index.js';
-
-const client = new simpleFM(ENV.LASTFM_TOKEN);
+const client = new simpleFM(env.LASTFM_TOKEN);
 
 describe('Tag', () => {
   describe('getInfo', () => {

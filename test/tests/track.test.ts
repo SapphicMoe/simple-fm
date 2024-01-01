@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { ENV } from '../env.js';
+import simpleFM from '../../src/index.js';
+import LastFMError from '../../src/utils/error.js';
+import { env } from '../env.js';
 import {
   TrackGetInfoSchema,
   TrackGetSimilarSchema,
@@ -8,9 +10,9 @@ import {
   TrackSearchSchema,
 } from '../schemas/track.schema.js';
 
-import simpleFM from '~/index.js';
+const client = new simpleFM(env.LASTFM_TOKEN);
 
-const client = new simpleFM(ENV.LASTFM_TOKEN);
+const errorMessage = 'Track not found';
 
 describe('Track', () => {
   describe('getInfo', () => {
@@ -26,7 +28,7 @@ describe('Track', () => {
 
         expect(() => TrackGetInfoSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('Track not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -44,7 +46,7 @@ describe('Track', () => {
 
         expect(() => TrackGetSimilarSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('Track not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -62,7 +64,7 @@ describe('Track', () => {
 
         expect(() => TrackGetTopTagsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('Track not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });

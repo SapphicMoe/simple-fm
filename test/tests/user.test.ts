@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { ENV } from '../env.js';
+import simpleFM from '../../src/index.js';
+import LastFMError from '../../src/utils/error.js';
+import { env } from '../env.js';
 import {
   UserGetFriendsSchema,
   UserGetInfoSchema,
@@ -13,9 +15,9 @@ import {
   UserGetTopTracksSchema,
 } from '../schemas/user.schema.js';
 
-import simpleFM from '~/index.js';
+const client = new simpleFM(env.LASTFM_TOKEN);
 
-const client = new simpleFM(ENV.LASTFM_TOKEN);
+const errorMessage = 'User not found';
 
 describe('User', () => {
   describe('getInfo', () => {
@@ -31,7 +33,7 @@ describe('User', () => {
 
         expect(() => UserGetInfoSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('User not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -49,7 +51,7 @@ describe('User', () => {
 
         expect(() => UserGetFriendsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('User not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -67,32 +69,36 @@ describe('User', () => {
 
         expect(() => UserGetLovedTracksSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('User not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
 
   describe('getPersonalTags', () => {
     it("Should return a user's personal tags", async () => {
-      const data = await client.user.getPersonalTags({ username: 'rj', tag: 'rock', tagType: 'artist' });
+      const data = await client.user.getPersonalTags({ username: 'rj', tag: 'rock', taggingType: 'artist' });
 
       expect(() => UserGetPersonalTagsSchema.parse(data.response)).not.toThrow();
     });
 
     it("Should error when the user doesn't exist", async () => {
       try {
-        const data = await client.user.getPersonalTags({ username: '102edgreth', tag: 'mrrow', tagType: 'album' });
+        const data = await client.user.getPersonalTags({
+          username: 'sawdesrtyuilk;jjhgf',
+          tag: 'mrrow',
+          taggingType: 'album',
+        });
 
         expect(() => UserGetPersonalTagsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('User not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
 
   describe('getRecentTracks', () => {
     it('Should return a list of recent tracks listened by this user', async () => {
-      const data = await client.user.getRecentTracks({ username: 'kanb' });
+      const data = await client.user.getRecentTracks({ username: 'solelychloe' });
 
       expect(() => UserGetRecentTracksSchema.parse(data.tracks)).not.toThrow();
     });
@@ -103,7 +109,7 @@ describe('User', () => {
 
         expect(() => UserGetRecentTracksSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('User not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -121,7 +127,7 @@ describe('User', () => {
 
         expect(() => UserGetTopAlbumsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('User not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -139,7 +145,7 @@ describe('User', () => {
 
         expect(() => UserGetTopArtistsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('User not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -157,7 +163,7 @@ describe('User', () => {
 
         expect(() => UserGetTopTagsSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('User not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });
@@ -175,7 +181,7 @@ describe('User', () => {
 
         expect(() => UserGetTopTracksSchema.parse(data)).toThrow();
       } catch (err) {
-        if (err instanceof Error) expect(err.message).toEqual('User not found');
+        if (err instanceof LastFMError) expect(err.message).toEqual(errorMessage);
       }
     });
   });

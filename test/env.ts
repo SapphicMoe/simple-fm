@@ -4,4 +4,4 @@ const envSchema = z.object({
   LASTFM_TOKEN: z.string(),
 });
 
-export const ENV = envSchema.parse(process.env);
+export const env = envSchema.parse(process.env);
