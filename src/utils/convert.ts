@@ -19,9 +19,7 @@ export const convertImageSizes = (image?: Image[]) => {
   return data;
 };
 
-export const convertURL = (url: string) => {
-  return encodeURIComponent(url).replaceAll('%20', '+');
-};
+const convertURL = (url?: string) => encodeURIComponent(url ?? '').replaceAll(/%20/g, '+');
 
 type LastFmURLType = 'album' | 'artist' | 'tag' | 'track';
 
