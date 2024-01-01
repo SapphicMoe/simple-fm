@@ -1,5 +1,11 @@
 # @solely/simple-fm
 
+## 1.6.2
+
+### Patch Changes
+
+- d27fb25: Fix behavior of dateAdded with a track that's currently playing.
+
 ## 1.6.1
 
 ### Patch Changes
