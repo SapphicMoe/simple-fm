@@ -76,7 +76,7 @@ describe('User', () => {
 
   describe('getPersonalTags', () => {
     it("Should return a user's personal tags", async () => {
-      const data = await client.user.getPersonalTags({ username: 'rj', tag: 'rock', tagType: 'artist' });
+      const data = await client.user.getPersonalTags({ username: 'rj', tag: 'rock', taggingtype: 'artist' });
 
       expect(() => UserGetPersonalTagsSchema.parse(data.response)).not.toThrow();
     });
@@ -86,7 +86,7 @@ describe('User', () => {
         const data = await client.user.getPersonalTags({
           username: 'sawdesrtyuilk;jjhgf',
           tag: 'mrrow',
-          tagType: 'album',
+          taggingtype: 'album',
         });
 
         expect(() => UserGetPersonalTagsSchema.parse(data)).toThrow();
