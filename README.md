@@ -25,11 +25,12 @@ For more information, please visit the [documentation website][docs].
 
 # Install
 
-**Node.js 16+** and **TypeScript v5+** is recommended for this package.
+`simple-fm` requires that you have **Node.js 18** (and above) and **TypeScript v5+** installed.
 
 - npm: `npm i @solely/simple-fm`
 - pnpm: `pnpm i @solely/simple-fm`
 - yarn: `yarn add @solely/simple-fm`
+- bun: `bun i @solely/simple-fm`
 
 # Notice
 
