@@ -1,4 +1,4 @@
-import { convertImageSizes, convertURL } from '@utils/convert.js';
+import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
 
 import type { AlbumGetInfoParams, AlbumGetTopTagsParams, AlbumSearchParams } from '@params/index.js';
@@ -37,7 +37,7 @@ export default class Album extends Base {
       mbid: album.mbid,
       artist: {
         name: album.artist,
-        url: `https://www.last.fm/music/${convertURL(album.artist)}`,
+        url: createLastFmURL('artist', album.artist),
       },
       stats: {
         scrobbles: Number(album.playcount),
@@ -72,7 +72,7 @@ export default class Album extends Base {
       name: attr.album,
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
+        url: createLastFmURL('artist', attr.artist),
       },
       tags: tagMatches.map((tag) => ({
         count: tag.count,
@@ -113,7 +113,7 @@ export default class Album extends Base {
         mbid: album.mbid === '' ? undefined : album.mbid,
         artist: {
           name: album.artist,
-          url: `https://www.last.fm/music/${convertURL(album.artist)}`,
+          url: createLastFmURL('artist', album.artist),
         },
         url: album.url,
         image: convertImageSizes(album.image),

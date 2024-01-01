@@ -22,3 +22,23 @@ export const convertImageSizes = (image?: Image[]) => {
 export const convertURL = (url: string) => {
   return encodeURIComponent(url).replaceAll('%20', '+');
 };
+
+type LastFmURLType = 'album' | 'artist' | 'tag' | 'track';
+
+export const createLastFmURL = <T extends LastFmURLType>(
+  type: T,
+  value: string,
+  track?: T extends 'album' | 'track' ? string : never
+) => {
+  switch (type) {
+    case 'album':
+    case 'track':
+      return `https://www.last.fm/music/${convertURL(value)}/_/${convertURL(track)}`;
+    case 'artist':
+      return `https://www.last.fm/music/${convertURL(value)}`;
+    case 'tag':
+      return `https://www.last.fm/tag/${convertURL(value)}`;
+    default:
+      return undefined;
+  }
+};

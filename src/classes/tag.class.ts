@@ -1,4 +1,4 @@
-import { convertImageSizes, convertURL } from '@utils/convert.js';
+import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
 
 import type {
@@ -41,7 +41,7 @@ export default class Tag extends Base {
         count: tag.total,
         reach: tag.reach,
       },
-      url: `https://www.last.fm/tag/${convertURL(tag.name)}`,
+      url: createLastFmURL('tag', tag.name),
     };
   }
 
@@ -78,7 +78,7 @@ export default class Tag extends Base {
           mbid: album.artist.mbid,
           url: album.artist.url,
         },
-        url: `https://www.last.fm/music/${convertURL(a.artist.name)}/${convertURL(a.name)}`,
+        url: createLastFmURL('album', album.artist.name, album.name),
         image: convertImageSizes(album.image),
       })),
     };

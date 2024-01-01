@@ -1,4 +1,4 @@
-import { convertImageSizes, convertURL } from '@utils/convert.js';
+import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
 
 import type {
@@ -183,7 +183,7 @@ export default class User extends Base {
         totalPages: Number(attr.totalPages),
         totalResults: Number(attr.total),
       },
-      response: responseTypes[params.tagType] || undefined,
+      response: responseTypes[params.taggingType] || undefined,
     };
   }
 
@@ -218,7 +218,7 @@ export default class User extends Base {
         mbid: track.mbid === '' ? undefined : track.mbid,
         artist: {
           name: track.artist['#text'],
-          url: `https://www.last.fm/music/${convertURL(track.artist['#text'])}`,
+          url: createLastFmURL('artist', track.artist['#text']),
         },
         album: {
           name: track.album['#text'],

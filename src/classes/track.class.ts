@@ -1,4 +1,4 @@
-import { convertImageSizes, convertURL } from '@utils/convert.js';
+import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
 
 import type {
@@ -85,9 +85,9 @@ export default class Track extends Base {
       name: params.track,
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
+        url: createLastFmURL('artist', attr.artist),
       },
-      url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(params.track)}`,
+      url: createLastFmURL('track', attr.artist, params.track),
       tracks: trackMatches.map((track) => ({
         match: Number(track.match),
         name: track.name,
@@ -120,9 +120,9 @@ export default class Track extends Base {
       name: attr.track,
       artist: {
         name: attr.artist,
-        url: `https://www.last.fm/music/${convertURL(attr.artist)}`,
+        url: createLastFmURL('artist', attr.artist),
       },
-      url: `https://www.last.fm/music/${convertURL(attr.artist)}/_/${convertURL(attr.track)}`,
+      url: createLastFmURL('track', attr.artist, attr.track),
       tags: tagMatches.map((tag) => ({
         count: Number(tag.count),
         name: tag.name,
@@ -163,7 +163,7 @@ export default class Track extends Base {
         listeners: Number(track.listeners),
         artist: {
           name: track.artist,
-          url: `https://www.last.fm/music/${convertURL(t.artist)}`,
+          url: createLastFmURL('artist', track.artist),
         },
         url: track.url,
       })),
