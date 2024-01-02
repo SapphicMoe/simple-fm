@@ -1,6 +1,6 @@
 {
   "name": "@solely/simple-fm",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "license": "Zlib",
   "author": "Chloe Arciniega <solely@riseup.net> (https://arciniega.one)",
   "description": "A simple, asynchronous Last.fm wrapper in TypeScript.",

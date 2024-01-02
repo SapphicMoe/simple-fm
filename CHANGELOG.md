@@ -1,5 +1,11 @@
 # @solely/simple-fm
 
+## 1.6.3
+
+### Patch Changes
+
+- ffa9047: Use a synchronous call for readFile
+
 ## 1.6.2
 
 ### Patch Changes
