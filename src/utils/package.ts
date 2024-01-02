@@ -1,4 +1,4 @@
-import { readFile } from 'fs/promises';
+import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -27,6 +27,7 @@ interface Package {
 const filePath = fileURLToPath(import.meta.url);
 const dirPath = dirname(filePath);
 
-const file = await readFile(resolve(dirPath, '../../package.json'), 'utf-8');
+const file = readFileSync(resolve(dirPath, '../../package.json'), 'utf-8');
 
 export const pkg = JSON.parse(file) satisfies Package;
+console.log(pkg);
