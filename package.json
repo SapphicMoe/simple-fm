@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsconfig-replace-paths -p tsconfig.build.json -s src/",
+    "change": "pnpm changeset",
     "ci:publish": "pnpm publish -r",
     "ci:version": "pnpm changeset version",
     "dev": "tsc --watch",
