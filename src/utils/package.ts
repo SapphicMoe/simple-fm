@@ -30,4 +30,3 @@ const dirPath = dirname(filePath);
 const file = readFileSync(resolve(dirPath, '../../package.json'), 'utf-8');
 
 export const pkg = JSON.parse(file) satisfies Package;
-console.log(pkg);
