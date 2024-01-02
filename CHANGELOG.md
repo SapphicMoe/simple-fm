@@ -1,5 +1,13 @@
 # @solely/simple-fm
 
+## 1.6.4
+
+### Patch Changes
+
+- ffd2125: Use LastFMError for FetchError
+- 439c491: Add type safety for package
+- b131fc8: Create a separate function for initializing methods
+
 ## 1.6.3
 
 ### Patch Changes
