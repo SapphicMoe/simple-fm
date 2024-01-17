@@ -10,8 +10,8 @@ export declare interface AlbumGetInfoType extends AlbumType {
   userStats?: {
     userPlayCount?: number;
   };
-  tags: TagType[];
-  tracks: ObjectArray<
+  tags: ObjectArray<TagType>;
+  tracks?: ObjectArray<
     TrackType & {
       rank: number;
       duration?: number;

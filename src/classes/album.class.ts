@@ -3,7 +3,13 @@ import Base from '~/base.js';
 
 import type { AlbumGetInfoParams, AlbumGetTopTagsParams, AlbumSearchParams } from '@params/index.js';
 import type { AlbumGetInfoResponse, AlbumGetTopTagsResponse, AlbumSearchResponse } from '@responses/index.js';
-import type { AlbumGetInfoType, AlbumGetTopTagsType, AlbumSearchType, TrackReturnType } from '@typings/index.js';
+import type {
+  AlbumGetInfoType,
+  AlbumGetTopTagsType,
+  AlbumSearchType,
+  TagType,
+  TrackReturnType,
+} from '@typings/index.js';
 
 export default class Album extends Base {
   /**
@@ -24,13 +30,27 @@ export default class Album extends Base {
       ...params,
     });
 
-    const createTrackObject = (track: TrackReturnType) =>
+    const createTagObject = (tag?: TagType) =>
       ({
-        rank: Number(track['@attr'].rank),
-        name: track.name,
-        duration: Number(track.duration),
-        url: track.url,
+        name: tag?.name,
+        url: tag?.url,
+      }) satisfies AlbumGetInfoType['tags'];
+
+    const createTrackObject = (track?: TrackReturnType) =>
+      ({
+        rank: Number(track?.['@attr'].rank),
+        name: track?.name,
+        duration: Number(track?.duration),
+        url: track?.url,
       }) satisfies AlbumGetInfoType['tracks'];
+
+    let tags;
+    if (Array.isArray(tagMatches)) tags = tagMatches.map((tag) => createTagObject(tag));
+    else tags = createTagObject(tagMatches);
+
+    let tracks;
+    if (Array.isArray(trackMatches)) tracks = trackMatches.map((track) => createTrackObject(track));
+    else if (trackMatches) tracks = createTrackObject(trackMatches);
 
     return {
       name: album.name,
@@ -46,10 +66,8 @@ export default class Album extends Base {
       userStats: {
         userPlayCount: album.userplaycount,
       },
-      tags: tagMatches.map((tag) => ({ name: tag.name, url: tag.url })),
-      tracks: Array.isArray(trackMatches)
-        ? trackMatches.map((track) => createTrackObject(track))
-        : createTrackObject(trackMatches),
+      tags,
+      tracks,
       url: album.url,
       image: convertImageSizes(album.image),
     };

@@ -91,16 +91,16 @@ export interface ArtistType {
 }
 
 export interface TagType {
-  name: string;
+  name?: string;
   url?: string;
 }
 
 export interface TrackType {
-  name: string;
+  name?: string;
   mbid?: string;
   artist?: ArtistType;
   album?: AlbumType;
-  url: string;
+  url?: string;
 }
 
 export interface UserType {

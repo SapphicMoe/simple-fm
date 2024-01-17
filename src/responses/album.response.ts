@@ -11,7 +11,7 @@ import type {
 export declare interface AlbumGetInfoResponse {
   album: AlbumResponse & {
     tags: {
-      tag: Array<
+      tag: ObjectArray<
         TagResponse & {
           url: string;
         }
@@ -21,7 +21,7 @@ export declare interface AlbumGetInfoResponse {
     listeners: string;
     playcount: string;
     userplaycount?: number;
-    tracks: {
+    tracks?: {
       track: ObjectArray<
         TrackResponse & {
           duration: string;
