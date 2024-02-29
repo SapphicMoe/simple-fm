@@ -1,5 +1,16 @@
 # @solely/simple-fm
 
+## 1.7.0
+
+### Minor Changes
+
+- aaee298: Use casters for type helpers & improve types
+
+### Patch Changes
+
+- 0513ddc: Make userAgent versioning optional behind an option
+- 2ccf3e6: change node version requirement back to 18
+
 ## 1.6.4
 
 ### Patch Changes
