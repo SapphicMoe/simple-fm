@@ -57,7 +57,7 @@ export type RequestMethod =
 export interface SearchMeta {
   page: number;
   itemsPerPage: number;
-  totalPages?: number;
+  totalPages: number;
   totalResults: number;
 }
 
@@ -67,49 +67,49 @@ export interface ImageType {
 }
 
 export interface PersonalTag {
-  name: string;
-  artist?: ArtistType & {
-    mbid: string;
-  };
-  url: string;
+  name?: string;
+  artist?: Partial<ArtistType>;
+  url?: string;
   image?: ImageType[];
 }
 
 export interface AlbumType {
   position?: number;
-  name?: string;
+  name: string;
   mbid?: string;
-  artist?: ArtistType;
-  url?: string;
-  image?: ImageType[];
+  artist: ArtistType;
+  url: string | undefined;
+  image: ImageType[] | undefined;
 }
 
 export interface ArtistType {
   name: string;
   mbid?: string;
-  url?: string;
+  url: string | undefined;
 }
 
 export interface TagType {
-  name?: string;
-  url?: string;
+  name: string;
+  url: string | undefined;
 }
 
 export interface TrackType {
-  name?: string;
-  mbid?: string;
-  artist?: ArtistType;
+  name: string;
+  mbid: string | undefined;
+  artist: ArtistType | undefined;
   album?: AlbumType;
-  url?: string;
+  url: string | undefined;
 }
 
 export interface UserType {
   name: string;
-  realName?: string;
-  country?: string;
+  realName: string | undefined;
+  country: string | undefined;
+  subscriber: boolean;
+  type: string;
   registered: Date;
-  url: string;
-  image?: ImageType[];
+  url: string | undefined;
+  image: ImageType[] | undefined;
 }
 
 export interface TrackReturnType extends TrackResponse {

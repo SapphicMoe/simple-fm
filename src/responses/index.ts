@@ -43,9 +43,9 @@ export interface ArtistResponse {
 export interface TagResponse {
   name: string;
   url?: string;
-  count?: number;
-  total?: number;
-  reach?: number;
+  count: number;
+  total: number;
+  reach: number;
 }
 
 export interface TrackResponse {
@@ -60,6 +60,8 @@ export interface UserResponse {
   name: string;
   realname?: string;
   country?: string;
+  type: string;
+  subscriber?: string;
   registered: Registered;
   url: string;
   image?: ImageResponse[];

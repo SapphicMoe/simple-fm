@@ -1,4 +1,5 @@
 import Base from '~/base.js';
+import { toArray, toInt } from '~/utils/caster.js';
 
 import type { ChartGetTopArtistParams, ChartGetTopTagsParams, ChartGetTopTracksParams } from '@params/chart.params.js';
 import type {
@@ -25,17 +26,17 @@ export default class Chart extends Base {
 
     return {
       search: {
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      artists: artistMatches.map((artist) => ({
+      artists: toArray(artistMatches).map((artist) => ({
         name: artist.name,
-        mbid: artist.mbid,
+        mbid: artist.mbid === '' ? undefined : artist.mbid,
         stats: {
-          scrobbles: Number(artist.playcount),
-          listeners: Number(artist.listeners),
+          scrobbles: toInt(artist.playcount),
+          listeners: toInt(artist.listeners),
         },
         url: artist.url,
       })),
@@ -58,16 +59,16 @@ export default class Chart extends Base {
 
     return {
       search: {
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      tags: tagMatches.map((tag) => ({
+      tags: toArray(tagMatches).map((tag) => ({
         name: tag.name,
         stats: {
-          count: Number(tag.taggings),
-          reach: Number(tag.reach),
+          count: toInt(tag.taggings),
+          reach: toInt(tag.reach),
         },
         url: tag.url,
       })),
@@ -90,23 +91,23 @@ export default class Chart extends Base {
 
     return {
       search: {
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      tracks: trackMatches.map((tag) => ({
-        name: tag.name,
-        mbid: tag.mbid,
+      tracks: toArray(trackMatches).map((track) => ({
+        name: track.name,
+        mbid: track.mbid === '' ? undefined : track.mbid,
         stats: {
-          scrobbles: Number(tag.playcount),
-          listeners: Number(tag.listeners),
+          scrobbles: toInt(track.playcount),
+          listeners: toInt(track.listeners),
         },
         artist: {
-          name: tag.artist.name,
-          url: tag.artist.url,
+          name: track.artist.name,
+          url: track.artist.url,
         },
-        url: tag.url,
+        url: track.url,
       })),
     };
   }

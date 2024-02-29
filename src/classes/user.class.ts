@@ -1,5 +1,6 @@
 import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
+import { toArray, toBool, toInt } from '~/utils/caster.js';
 
 import type {
   UserGetFriendsParams,
@@ -55,16 +56,18 @@ export default class User extends Base {
     return {
       search: {
         user: attr.user,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      friends: userMatches.map((user) => ({
+      friends: toArray(userMatches).map((user) => ({
         name: user.name,
         realName: user.realname === '' ? undefined : user.realname,
         country: user.country === 'None' ? undefined : user.country,
-        registered: new Date(Number(user.registered.unixtime) * 1000),
+        type: user.type,
+        subscriber: toBool(user.subscriber),
+        registered: new Date(toInt(user.registered.unixtime) * 1000),
         url: user.url,
         image: convertImageSizes(user.image),
       })),
@@ -85,12 +88,14 @@ export default class User extends Base {
       name: user.name,
       realName: user.realname === '' ? undefined : user.realname,
       country: user.country === 'None' ? undefined : user.country,
+      type: user.type,
+      subscriber: toBool(user.subscriber),
       registered: new Date(user.registered['#text'] * 1000),
       stats: {
-        albumCount: Number(user.album_count),
-        artistCount: Number(user.artist_count),
-        playCount: Number(user.playcount),
-        trackCount: Number(user.track_count),
+        albumCount: toInt(user.album_count),
+        artistCount: toInt(user.artist_count),
+        playCount: toInt(user.playcount),
+        trackCount: toInt(user.track_count),
       },
       url: user.url,
       image: convertImageSizes(user.image),
@@ -116,18 +121,18 @@ export default class User extends Base {
     return {
       search: {
         user: attr.user,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      tracks: trackMatches.map((track) => ({
+      tracks: toArray(trackMatches).map((track) => ({
         name: track.name,
-        mbid: track.mbid,
-        date: new Date(Number(track.date.uts) * 1000),
+        mbid: track.mbid === '' ? undefined : track.mbid,
+        date: new Date(toInt(track.date.uts) * 1000),
         artist: {
           name: track.artist.name,
-          mbid: track.artist.mbid,
+          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
           url: track.artist.url,
         },
         url: track.url,
@@ -143,34 +148,43 @@ export default class User extends Base {
    * */
   async getPersonalTags(params: UserGetPersonalTagsParams): Promise<UserGetPersonalTagsType> {
     const {
-      taggings: { albums, artists, tracks, '@attr': attr },
+      taggings: {
+        albums: { album: albumMatches } = { album: undefined },
+        artists: { artist: artistMatches } = { artist: undefined },
+        tracks: { track: trackMatches } = { track: undefined },
+        '@attr': attr,
+      },
     } = await this.sendRequest<UserGetPersonalTagsResponse>({
       method: 'user.getPersonalTags',
       ...params,
     });
-
     const responseTypes = {
-      album: albums?.album.map((album) => ({
-        name: album.name,
+      album: toArray(albumMatches).map((album) => ({
+        name: album?.name,
+        mbid: album?.mbid === '' ? undefined : album?.mbid,
         artist: {
-          name: album.artist.name,
-          url: album.artist.url,
+          name: album?.artist.name,
+          mbid: album?.artist.mbid === '' ? undefined : album?.artist.mbid,
+          url: album?.artist.url,
         },
-        url: album.url,
+        url: album?.url,
       })),
 
-      artist: artists?.artist.map((artist) => ({
-        name: artist.name,
-        url: artist.url,
+      artist: toArray(artistMatches).map((artist) => ({
+        name: artist?.name,
+        mbid: artist?.mbid === '' ? undefined : artist?.mbid,
+        url: artist?.url,
       })),
 
-      track: tracks?.track.map((track) => ({
-        name: track.name,
+      track: toArray(trackMatches).map((track) => ({
+        name: track?.name,
+        mbid: track?.mbid === '' ? undefined : track?.mbid,
         artist: {
-          name: track.artist.name,
-          url: track.artist.url,
+          name: track?.artist.name,
+          mbid: track?.artist.mbid === '' ? undefined : track?.artist.mbid,
+          url: track?.artist.url,
         },
-        url: track.url,
+        url: track?.url,
       })),
     };
 
@@ -178,12 +192,12 @@ export default class User extends Base {
       search: {
         user: attr.user,
         tag: attr.tag,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      response: responseTypes[params.taggingtype] || undefined,
+      response: responseTypes[params.taggingtype],
     };
   }
 
@@ -206,23 +220,24 @@ export default class User extends Base {
     return {
       search: {
         user: attr.user,
-        nowPlaying: trackMatches[0]['@attr']?.nowplaying === 'true',
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        nowPlaying: toBool(trackMatches[0]['@attr']?.nowplaying),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      tracks: trackMatches.map((track) => ({
-        dateAdded: track.date ? new Date(Number(track.date.uts) * 1000) : undefined,
+      tracks: toArray(trackMatches).map((track) => ({
+        dateAdded: track.date ? new Date(toInt(track.date.uts) * 1000) : undefined,
         name: track.name,
         mbid: track.mbid === '' ? undefined : track.mbid,
         artist: {
           name: track.artist['#text'],
-          url: createLastFmURL('artist', track.artist['#text']),
+          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
+          url: createLastFmURL({ type: 'artist', value: track.artist['#text'] }),
         },
         album: {
           name: track.album['#text'],
-          mbid: track.album.mbid,
+          mbid: track.album.mbid === '' ? undefined : track.album.mbid,
         },
         url: track.url,
         image: convertImageSizes(track.image),
@@ -249,19 +264,19 @@ export default class User extends Base {
     return {
       search: {
         user: attr.user,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      albums: albumMatches.map((album) => ({
-        rank: Number(album['@attr'].rank),
+      albums: toArray(albumMatches).map((album) => ({
+        rank: toInt(album['@attr'].rank),
         name: album.name,
-        mbid: album.mbid,
-        playCount: Number(album.playcount),
+        mbid: album.mbid === '' ? undefined : album.mbid,
+        playCount: toInt(album.playcount),
         artist: {
           name: album.artist.name,
-          mbid: album.artist.mbid,
+          mbid: album.artist.mbid === '' ? undefined : album.artist.mbid,
           url: album.artist.url,
         },
         url: album.url,
@@ -289,16 +304,16 @@ export default class User extends Base {
     return {
       search: {
         user: attr.user,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      artists: artistMatches.map((artist) => ({
-        rank: Number(artist['@attr'].rank),
+      artists: toArray(artistMatches).map((artist) => ({
+        rank: toInt(artist['@attr'].rank),
         name: artist.name,
-        mbid: artist.mbid,
-        scrobbles: Number(artist.playcount),
+        mbid: artist.mbid === '' ? undefined : artist.mbid,
+        scrobbles: toInt(artist.playcount),
         url: artist.url,
       })),
     };
@@ -322,8 +337,8 @@ export default class User extends Base {
       search: {
         user: attr.user,
       },
-      tags: tagMatches.map((tag) => ({
-        count: Number(tag.count),
+      tags: toArray(tagMatches).map((tag) => ({
+        count: toInt(tag.count),
         name: tag.name,
         url: tag.url,
       })),
@@ -349,22 +364,22 @@ export default class User extends Base {
     return {
       search: {
         user: attr.user,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      tracks: trackMatches.map((track) => ({
-        rank: Number(track['@attr'].rank),
+      tracks: toArray(trackMatches).map((track) => ({
+        rank: toInt(track['@attr'].rank),
         name: track.name,
-        mbid: track.mbid,
+        mbid: track.mbid === '' ? undefined : track.mbid,
         stats: {
-          duration: Number(track.duration),
-          userPlayCount: Number(track.playcount),
+          duration: toInt(track.duration),
+          userPlayCount: toInt(track.playcount),
         },
         artist: {
           name: track.artist.name,
-          mbid: track.artist.mbid,
+          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
           url: track.artist.url,
         },
         url: track.url,

@@ -1,15 +1,10 @@
 import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
+import { toInt, toArray, convertSearch } from '~/utils/caster.js';
 
 import type { AlbumGetInfoParams, AlbumGetTopTagsParams, AlbumSearchParams } from '@params/index.js';
 import type { AlbumGetInfoResponse, AlbumGetTopTagsResponse, AlbumSearchResponse } from '@responses/index.js';
-import type {
-  AlbumGetInfoType,
-  AlbumGetTopTagsType,
-  AlbumSearchType,
-  TagType,
-  TrackReturnType,
-} from '@typings/index.js';
+import type { AlbumGetInfoType, AlbumGetTopTagsType, AlbumSearchType } from '@typings/index.js';
 
 export default class Album extends Base {
   /**
@@ -30,44 +25,30 @@ export default class Album extends Base {
       ...params,
     });
 
-    const createTagObject = (tag?: TagType) =>
-      ({
-        name: tag?.name,
-        url: tag?.url,
-      }) satisfies AlbumGetInfoType['tags'];
-
-    const createTrackObject = (track?: TrackReturnType) =>
-      ({
-        rank: Number(track?.['@attr'].rank),
-        name: track?.name,
-        duration: Number(track?.duration),
-        url: track?.url,
-      }) satisfies AlbumGetInfoType['tracks'];
-
-    let tags;
-    if (Array.isArray(tagMatches)) tags = tagMatches.map((tag) => createTagObject(tag));
-    else tags = createTagObject(tagMatches);
-
-    let tracks;
-    if (Array.isArray(trackMatches)) tracks = trackMatches.map((track) => createTrackObject(track));
-    else if (trackMatches) tracks = createTrackObject(trackMatches);
-
     return {
       name: album.name,
-      mbid: album.mbid,
+      mbid: album.mbid === '' ? undefined : album.mbid,
       artist: {
         name: album.artist,
-        url: createLastFmURL('artist', album.artist),
+        url: createLastFmURL({ type: 'artist', value: album.artist }),
       },
       stats: {
-        scrobbles: Number(album.playcount),
-        listeners: Number(album.listeners),
+        scrobbles: toInt(album.playcount),
+        listeners: toInt(album.listeners),
       },
       userStats: {
         userPlayCount: album.userplaycount,
       },
-      tags,
-      tracks,
+      tags: toArray(tagMatches).map((tag) => ({
+        name: tag.name,
+        url: tag.url,
+      })),
+      tracks: toArray(trackMatches).map((track) => ({
+        rank: toInt(track['@attr'].rank),
+        name: track.name,
+        duration: toInt(track.duration),
+        url: track.url,
+      })),
       url: album.url,
       image: convertImageSizes(album.image),
     };
@@ -90,9 +71,9 @@ export default class Album extends Base {
       name: attr.album,
       artist: {
         name: attr.artist,
-        url: createLastFmURL('artist', attr.artist),
+        url: createLastFmURL({ type: 'artist', value: attr.artist }),
       },
-      tags: tagMatches.map((tag) => ({
+      tags: toArray(tagMatches).map((tag) => ({
         count: tag.count,
         name: tag.name,
         url: tag.url,
@@ -120,18 +101,13 @@ export default class Album extends Base {
     });
 
     return {
-      search: {
-        query: results['opensearch:Query'].searchTerms,
-        page: Number(results['opensearch:Query'].startPage),
-        itemsPerPage: Number(results['opensearch:itemsPerPage']),
-        totalResults: Number(results['opensearch:totalResults']),
-      },
-      albums: albumMatches.map((album) => ({
+      search: convertSearch(results),
+      albums: toArray(albumMatches).map((album) => ({
         name: album.name,
         mbid: album.mbid === '' ? undefined : album.mbid,
         artist: {
           name: album.artist,
-          url: createLastFmURL('artist', album.artist),
+          url: createLastFmURL({ type: 'artist', value: album.artist }),
         },
         url: album.url,
         image: convertImageSizes(album.image),

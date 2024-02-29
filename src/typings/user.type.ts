@@ -1,37 +1,19 @@
-import type {
-  AlbumType,
-  ArtistType,
-  ImageType,
-  PersonalTag,
-  SearchMeta,
-  TagType,
-  TrackType,
-  UserType,
-} from '@typings/index.js';
+import type { AlbumType, ArtistType, PersonalTag, SearchMeta, TagType, TrackType, UserType } from '@typings/index.js';
 
 export declare interface UserGetFriendsType {
   search: SearchMeta & {
     user: string;
   };
-  friends: Array<
-    UserType & {
-      realName?: string;
-      country?: string;
-      image?: ImageType[];
-    }
-  >;
+  friends: UserType[];
 }
 
 export declare interface UserGetInfoType extends UserType {
-  realName?: string;
-  country?: string;
   stats: {
     albumCount: number;
     artistCount: number;
     playCount: number;
     trackCount: number;
   };
-  image?: ImageType[];
 }
 
 export declare interface UserGetLovedTracksType {
@@ -40,11 +22,7 @@ export declare interface UserGetLovedTracksType {
   };
   tracks: Array<
     TrackType & {
-      mbid: string;
       date: Date;
-      artist: {
-        mbid: string;
-      };
     }
   >;
 }
@@ -63,13 +41,12 @@ export declare interface UserGetRecentTracksType {
     nowPlaying: boolean;
   };
   tracks: Array<
-    TrackType & {
+    Omit<TrackType, 'album'> & {
       dateAdded: Date | undefined;
-      mbid?: string;
+      mbid: string | undefined;
       album: {
-        mbid: string;
+        mbid: string | undefined;
       };
-      image?: ImageType[];
     }
   >;
 }
@@ -81,12 +58,11 @@ export declare interface UserGetTopAlbumsType {
   albums: Array<
     AlbumType & {
       rank: number;
-      mbid?: string;
+      mbid: string | undefined;
       playCount: number;
       artist: {
-        mbid: string;
+        mbid: string | undefined;
       };
-      image?: ImageType[];
     }
   >;
 }
@@ -98,7 +74,7 @@ export declare interface UserGetTopArtistsType {
   artists: Array<
     ArtistType & {
       rank: number;
-      mbid: string;
+      mbid: string | undefined;
       scrobbles: number;
     }
   >;
@@ -111,7 +87,6 @@ export declare interface UserGetTopTagsType {
   tags: Array<
     TagType & {
       count: number;
-      url: string;
     }
   >;
 }
@@ -123,15 +98,14 @@ export declare interface UserGetTopTracksType {
   tracks: Array<
     TrackType & {
       rank: number;
-      mbid: string;
+      mbid: string | undefined;
       stats: {
         duration?: number;
         userPlayCount: number;
       };
       artist: {
-        mbid: string;
+        mbid: string | undefined;
       };
-      image?: ImageType[];
     }
   >;
 }

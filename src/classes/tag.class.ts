@@ -1,5 +1,6 @@
 import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
+import { toArray, toInt } from '~/utils/caster.js';
 
 import type {
   TagGetInfoParams,
@@ -41,7 +42,7 @@ export default class Tag extends Base {
         count: tag.total,
         reach: tag.reach,
       },
-      url: createLastFmURL('tag', tag.name),
+      url: createLastFmURL({ type: 'tag', value: tag.name }),
     };
   }
 
@@ -64,21 +65,21 @@ export default class Tag extends Base {
     return {
       search: {
         tag: attr.tag,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      albums: albumMatches.map((album) => ({
-        rank: Number(album['@attr'].rank),
+      albums: toArray(albumMatches).map((album) => ({
+        rank: toInt(album['@attr'].rank),
         name: album.name,
-        mbid: album.mbid,
+        mbid: album.mbid === '' ? undefined : album.mbid,
         artist: {
           name: album.artist.name,
-          mbid: album.artist.mbid,
+          mbid: album.artist.mbid === '' ? undefined : album.artist.mbid,
           url: album.artist.url,
         },
-        url: createLastFmURL('album', album.artist.name, album.name),
+        url: createLastFmURL({ type: 'album', value: album.artist.name, album: album.name }),
         image: convertImageSizes(album.image),
       })),
     };
@@ -103,15 +104,15 @@ export default class Tag extends Base {
     return {
       search: {
         tag: attr.tag,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      artists: artistMatches.map((artist) => ({
+      artists: toArray(artistMatches).map((artist) => ({
         rank: Number(artist['@attr'].rank),
         name: artist.name,
-        mbid: artist.mbid,
+        mbid: artist.mbid === '' ? undefined : artist.mbid,
         url: artist.url,
       })),
     };
@@ -136,19 +137,19 @@ export default class Tag extends Base {
     return {
       search: {
         tag: attr.tag,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      tracks: trackMatches.map((track) => ({
-        rank: Number(track['@attr'].rank),
+      tracks: toArray(trackMatches).map((track) => ({
+        rank: toInt(track['@attr'].rank),
         name: track.name,
-        mbid: track.mbid,
-        duration: Number(track.duration),
+        mbid: track.mbid === '' ? undefined : track.mbid,
+        duration: toInt(track.duration),
         artist: {
           name: track.artist.name,
-          mbid: track.artist.mbid,
+          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
           url: track.artist.url,
         },
         url: track.url,
@@ -172,9 +173,9 @@ export default class Tag extends Base {
       search: {
         tag: attr.tag,
       },
-      positions: chartMatches.map((chart) => ({
-        from: new Date(Number(chart.from) * 1000),
-        to: new Date(Number(chart.to) * 1000),
+      positions: toArray(chartMatches).map((chart) => ({
+        from: new Date(toInt(chart.from) * 1000),
+        to: new Date(toInt(chart.to) * 1000),
       })),
     };
   }

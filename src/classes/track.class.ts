@@ -1,5 +1,6 @@
 import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
+import { convertSearch, toArray, toBool, toInt } from '~/utils/caster.js';
 
 import type {
   TrackGetInfoParams,
@@ -36,29 +37,32 @@ export default class Track extends Base {
 
     return {
       name: track.name,
-      mbid: track.mbid,
-      duration: Number(track.duration),
+      mbid: track.mbid === '' ? undefined : track.mbid,
+      duration: toInt(track.duration),
       stats: {
-        scrobbles: Number(track.playcount),
-        listeners: Number(track.listeners),
+        scrobbles: toInt(track.playcount),
+        listeners: toInt(track.listeners),
       },
       userStats: {
-        userLoved: Boolean(Number(track.userloved)).valueOf(),
-        userPlayCount: Number(track.userplaycount),
+        userLoved: toBool(track.userloved),
+        userPlayCount: track.userplaycount ? toInt(track.userplaycount) : undefined,
       },
       artist: {
         name: track.artist.name,
-        mbid: track.artist.mbid,
+        mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
         url: track.artist.url,
       },
-      album: {
-        position: Number(album?.['@attr']?.position),
-        name: album?.title,
-        mbid: album?.mbid,
-        image: convertImageSizes(album?.image),
-        url: album?.url,
-      },
-      tags: tagMatches.map((tag) => ({
+      album:
+        album === undefined
+          ? undefined
+          : {
+              position: album['@attr'] ? toInt(album['@attr'].position) : undefined,
+              name: album.title,
+              mbid: album.mbid === '' ? undefined : album.mbid,
+              image: convertImageSizes(album.image),
+              url: album.url,
+            },
+      tags: toArray(tagMatches).map((tag) => ({
         name: tag.name,
         url: tag.url,
       })),
@@ -85,14 +89,15 @@ export default class Track extends Base {
       name: params.track,
       artist: {
         name: attr.artist,
-        url: createLastFmURL('artist', attr.artist),
+        url: createLastFmURL({ type: 'artist', value: attr.artist }),
       },
-      url: createLastFmURL('track', attr.artist, params.track),
-      tracks: trackMatches.map((track) => ({
-        match: Number(track.match),
+      url: createLastFmURL({ type: 'track', value: attr.artist, track: params.track }),
+      tracks: toArray(trackMatches).map((track) => ({
+        match: toInt(track.match),
         name: track.name,
-        duration: Number(track.duration),
-        scrobbles: Number(track.playcount),
+        mbid: track.mbid === '' ? undefined : track.mbid,
+        duration: toInt(track.duration),
+        scrobbles: toInt(track.playcount),
         artist: {
           name: track.artist.name,
           url: track.artist.url,
@@ -120,11 +125,11 @@ export default class Track extends Base {
       name: attr.track,
       artist: {
         name: attr.artist,
-        url: createLastFmURL('artist', attr.artist),
+        url: createLastFmURL({ type: 'artist', value: attr.artist }),
       },
-      url: createLastFmURL('track', attr.artist, attr.track),
-      tags: tagMatches.map((tag) => ({
-        count: Number(tag.count),
+      url: createLastFmURL({ type: 'track', value: attr.artist, track: attr.track }),
+      tags: toArray(tagMatches).map((tag) => ({
+        count: toInt(tag.count),
         name: tag.name,
         url: tag.url,
       })),
@@ -152,18 +157,16 @@ export default class Track extends Base {
 
     return {
       search: {
+        ...convertSearch(results),
         query: params.track,
-        page: Number(results['opensearch:Query'].startPage),
-        itemsPerPage: Number(results['opensearch:itemsPerPage']),
-        totalResults: Number(results['opensearch:totalResults']),
       },
-      tracks: trackMatches.map((track) => ({
+      tracks: toArray(trackMatches).map((track) => ({
         name: track.name,
-        mbid: track.mbid,
-        listeners: Number(track.listeners),
+        mbid: track.mbid === '' ? undefined : track.mbid,
+        listeners: toInt(track.listeners),
         artist: {
           name: track.artist,
-          url: createLastFmURL('artist', track.artist),
+          url: createLastFmURL({ type: 'artist', value: track.artist }),
         },
         url: track.url,
       })),

@@ -1,13 +1,23 @@
 import type { ImageResponse } from '@responses/index.js';
 import type { ImageType } from '@typings/index.js';
 
-const ImageSize = ['extralarge', 'large', 'medium', 'small'];
+const imageSizes = ['extralarge', 'large', 'medium', 'small'];
+const convertURL = (url?: string) => encodeURIComponent(url ?? '').replaceAll(/%20/g, '+');
+
+type LastFmURLType = 'album' | 'artist' | 'tag' | 'track';
+
+interface LastFmURLParams<T> {
+  type: T;
+  value: string;
+  track?: T extends 'track' ? string : never;
+  album?: T extends 'album' ? string : never;
+}
 
 export const convertImageSizes = (images?: ImageResponse[]) => {
   if (!images) return undefined;
 
   const data = images
-    .filter((image) => image['#text'] && ImageSize.includes(image.size))
+    .filter((image) => image['#text'] && imageSizes.includes(image.size))
     .map(
       (image): ImageType => ({
         size: image.size,
@@ -18,23 +28,16 @@ export const convertImageSizes = (images?: ImageResponse[]) => {
   return data;
 };
 
-const convertURL = (url?: string) => encodeURIComponent(url ?? '').replaceAll(/%20/g, '+');
-
-type LastFmURLType = 'album' | 'artist' | 'tag' | 'track';
-
-export const createLastFmURL = <T extends LastFmURLType>(
-  type: T,
-  value: string,
-  track?: T extends 'album' | 'track' ? string : never
-) => {
-  switch (type) {
+export const createLastFmURL = <T extends LastFmURLType>(params: LastFmURLParams<T>) => {
+  switch (params.type) {
     case 'album':
-    case 'track':
-      return `https://www.last.fm/music/${convertURL(value)}/_/${convertURL(track)}`;
+      return `https://www.last.fm/music/${convertURL(params.value)}/_/${convertURL(params.album)}`;
     case 'artist':
-      return `https://www.last.fm/music/${convertURL(value)}`;
+      return `https://www.last.fm/music/${convertURL(params.value)}`;
+    case 'track':
+      return `https://www.last.fm/music/${convertURL(params.value)}/_/${convertURL(params.track)}`;
     case 'tag':
-      return `https://www.last.fm/tag/${convertURL(value)}`;
+      return `https://www.last.fm/tag/${convertURL(params.value)}`;
     default:
       return undefined;
   }

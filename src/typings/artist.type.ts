@@ -1,26 +1,45 @@
 import type { ArtistType, AlbumType, ImageType, SearchMeta, TagType, TrackType } from '@typings/index.js';
 
-export declare interface ArtistGetInfoType extends ArtistType {
-  mbid: string;
-  description?: string;
+export declare interface ArtistGetInfoType {
+  name: string;
+  mbid: string | undefined;
   onTour: boolean;
   stats: {
     scrobbles: number;
     listeners: number;
   };
   userStats: {
-    userPlayCount?: number;
+    userPlayCount: number | undefined;
   };
+  tags: Array<{
+    name: string;
+    url: string | undefined;
+  }>;
+  bio: {
+    summary: string;
+    extended: string;
+    published: Date;
+    url: string;
+  };
+  similarArtists: Array<{
+    name: string;
+    image: ImageType[] | undefined;
+    url: string;
+  }>;
+  url: string;
 }
 
 export declare interface ArtistGetSimilarType {
   search: {
-    artist: ArtistType;
+    artist: {
+      name: string;
+      url: string | undefined;
+    };
   };
   artists: Array<
     ArtistType & {
       match: number;
-      mbid: string;
+      mbid: string | undefined;
     }
   >;
 }
@@ -32,13 +51,12 @@ export declare interface ArtistGetTopAlbumsType {
   albums: Array<
     AlbumType & {
       scrobbles: number;
-      image?: ImageType[];
     }
   >;
 }
 
 export declare interface ArtistGetTopTagsType {
-  artist: ArtistType;
+  search: { artist: ArtistType };
   tags: Array<
     TagType & {
       count: number;
@@ -53,7 +71,6 @@ export declare interface ArtistGetTopTracksType {
   tracks: Array<
     TrackType & {
       rank: number;
-      mbid: string;
       stats: {
         scrobbles: number;
         listeners: number;
@@ -68,7 +85,7 @@ export declare interface ArtistSearchType {
   };
   artists: Array<
     ArtistType & {
-      mbid: string;
+      mbid: string | undefined;
       listeners: number;
     }
   >;

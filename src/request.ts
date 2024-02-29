@@ -79,13 +79,13 @@ export class LastFMRequest {
       return data;
     } catch (err) {
       if (err instanceof FetchError) throw new LastFMError(err.data);
-      else if (err instanceof LastFMError) throw new LastFMError(err.response);
-      else console.error(err);
+      if (err instanceof LastFMError) throw new LastFMError(err.response);
+      console.error(err);
     }
   }
 
   execute() {
     if (this.isPostRequest()) return this.post();
-    else return this.get();
+    return this.get();
   }
 }

@@ -1,4 +1,5 @@
 import Base from '~/base.js';
+import { toArray, toInt } from '~/utils/caster.js';
 
 import type { GeoGetTopArtistsParams, GeoGetTopTracksParams } from '@params/geo.params.js';
 import type { GeoGetTopArtistsResponse, GeoGetTopTracksResponse } from '@responses/index.js';
@@ -24,15 +25,15 @@ export default class Geo extends Base {
     return {
       search: {
         country: attr.country,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
       artists: artistMatches.map((artist) => ({
         name: artist.name,
-        mbid: artist.mbid,
-        listeners: Number(artist.listeners),
+        mbid: artist.mbid === '' ? undefined : artist.mbid,
+        listeners: toInt(artist.listeners),
         url: artist.url,
       })),
     };
@@ -57,20 +58,20 @@ export default class Geo extends Base {
     return {
       search: {
         country: attr.country,
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      tracks: trackMatches.map((track) => ({
-        rank: Number(track['@attr'].rank),
+      tracks: toArray(trackMatches).map((track) => ({
+        rank: toInt(track['@attr'].rank),
         name: track.name,
-        mbid: track.mbid,
-        duration: Number(track.duration),
-        listeners: Number(track.listeners),
+        mbid: track.mbid === '' ? undefined : track.mbid,
+        duration: toInt(track.duration),
+        listeners: toInt(track.listeners),
         artist: {
           name: track.artist.name,
-          mbid: track.artist.mbid,
+          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
           url: track.artist.url,
         },
         url: track.url,

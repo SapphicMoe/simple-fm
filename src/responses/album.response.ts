@@ -21,7 +21,7 @@ export declare interface AlbumGetInfoResponse {
     listeners: string;
     playcount: string;
     userplaycount?: number;
-    tracks?: {
+    tracks: {
       track: ObjectArray<
         TrackResponse & {
           duration: string;

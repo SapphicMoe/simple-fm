@@ -1,7 +1,8 @@
-import type { AlbumType, ImageType, SearchMeta, TagType, TrackType } from '@typings/index.js';
+import type { AlbumType, SearchMeta, TagType, TrackType } from '@typings/index.js';
 
-export declare interface TrackGetInfoType extends TrackType {
-  mbid: string;
+export declare interface TrackGetInfoType {
+  name: string;
+  mbid: string | undefined;
   duration?: number;
   stats: {
     scrobbles: number;
@@ -13,17 +14,19 @@ export declare interface TrackGetInfoType extends TrackType {
   };
   artist: {
     name: string;
-    mbid: string;
+    mbid: string | undefined;
     url: string;
   };
-  album: AlbumType & {
-    position: number;
-    name?: string;
-    mbid?: string;
-    image?: ImageType[];
-    url?: string;
-  };
+  album:
+    | Partial<
+        Omit<AlbumType, 'artist'> & {
+          position: number;
+          mbid: string | undefined;
+        }
+      >
+    | undefined;
   tags?: object[];
+  url: string;
 }
 
 export declare interface TrackGetSimilarType {
@@ -36,9 +39,8 @@ export declare interface TrackGetSimilarType {
   tracks: Array<
     TrackType & {
       match: number;
-      duration?: number;
+      duration: number;
       scrobbles: number;
-      image?: ImageType[];
     }
   >;
 }
@@ -47,9 +49,9 @@ export declare interface TrackGetTopTagsType {
   name: string;
   artist: {
     name: string;
-    url?: string;
+    url: string | undefined;
   };
-  url?: string;
+  url: string | undefined;
   tags: Array<
     TagType & {
       count: number;
@@ -63,7 +65,7 @@ export declare interface TrackSearchType {
   };
   tracks: Array<
     TrackType & {
-      mbid: string;
+      mbid: string | undefined;
       listeners: number;
     }
   >;

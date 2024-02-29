@@ -1,10 +1,10 @@
-import type { AlbumType, ArtistType, ImageType, SearchMeta, TagType, TrackType } from '@typings/index.js';
+import type { AlbumType, ArtistType, SearchMeta, TagType, TrackType } from '@typings/index.js';
 
 export declare interface TagGetInfoType extends TagType {
-  description?: string;
+  description: string;
   stats: {
-    count?: number;
-    reach?: number;
+    count: number;
+    reach: number;
   };
 }
 
@@ -15,11 +15,10 @@ export declare interface TagGetTopAlbumsType {
   albums: Array<
     AlbumType & {
       rank: number;
-      mbid?: string;
+      mbid: string | undefined;
       artist: {
-        mbid: string;
+        mbid: string | undefined;
       };
-      image?: ImageType[];
     }
   >;
 }
@@ -31,7 +30,6 @@ export declare interface TagGetTopArtistsType {
   artists: Array<
     ArtistType & {
       rank: number;
-      mbid: string;
     }
   >;
 }
@@ -43,11 +41,7 @@ export declare interface TagGetTopTracksType {
   tracks: Array<
     TrackType & {
       rank: number;
-      mbid: string;
-      duration?: number;
-      artist: {
-        mbid: string;
-      };
+      duration: number;
     }
   >;
 }

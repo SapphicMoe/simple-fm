@@ -4,7 +4,7 @@ export declare interface ChartGetTopArtistsType {
   search: SearchMeta;
   artists: Array<
     ArtistType & {
-      mbid: string;
+      mbid: string | undefined;
       stats: {
         scrobbles: number;
         listeners: number;
@@ -29,7 +29,7 @@ export declare interface ChartGetTopTracksType {
   search: SearchMeta;
   tracks: Array<
     TrackType & {
-      mbid: string;
+      mbid: string | undefined;
       stats: {
         scrobbles: number;
         listeners: number;

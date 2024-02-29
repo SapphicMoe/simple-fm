@@ -14,10 +14,12 @@ export declare interface TrackGetInfoResponse {
     artist: ArtistResponse & {
       mbid: string;
     };
-    album?: AlbumResponse & {
-      title: string;
-      '@attr'?: { position: string };
-    };
+    album?:
+      | (AlbumResponse & {
+          title?: string;
+          '@attr': { position: string };
+        })
+      | undefined;
     toptags: {
       tag: Array<
         TagResponse & {

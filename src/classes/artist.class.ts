@@ -1,5 +1,6 @@
 import { convertImageSizes, createLastFmURL } from '@utils/convert.js';
 import Base from '~/base.js';
+import { convertSearch, sanitizeBio, toArray, toBool, toFloat, toInt } from '~/utils/caster.js';
 
 import type {
   ArtistGetInfoParams,
@@ -40,16 +41,30 @@ export default class Artist extends Base {
 
     return {
       name: artist.name,
-      mbid: artist.mbid,
-      description: artist.bio.summary,
-      onTour: Boolean(Number(artist.ontour)).valueOf(),
+      mbid: artist.mbid === '' ? undefined : artist.mbid,
+      onTour: toBool(artist.ontour),
       stats: {
-        scrobbles: Number(artist.stats.playcount),
-        listeners: Number(artist.stats.listeners),
+        scrobbles: toInt(artist.stats.playcount),
+        listeners: toInt(artist.stats.listeners),
       },
       userStats: {
-        userPlayCount: Number(artist.stats.userplaycount),
+        userPlayCount: Number.isNaN(toInt(artist.stats.userplaycount)) ? undefined : toInt(artist.stats.userplaycount),
       },
+      tags: toArray(artist.tags.tag).map((tag) => ({
+        name: tag.name,
+        url: tag.url,
+      })),
+      bio: {
+        summary: sanitizeBio(artist.bio.summary),
+        extended: sanitizeBio(artist.bio.content),
+        published: new Date(`${artist.bio.published} UTC`),
+        url: artist.bio.links.link.href,
+      },
+      similarArtists: toArray(artist.similar.artist).map((artist) => ({
+        name: artist.name,
+        image: convertImageSizes(artist.image),
+        url: artist.url,
+      })),
       url: artist.url,
     };
   }
@@ -72,13 +87,13 @@ export default class Artist extends Base {
       search: {
         artist: {
           name: attr.artist,
-          url: createLastFmURL('artist', attr.artist),
+          url: createLastFmURL({ type: 'artist', value: attr.artist }),
         },
       },
-      artists: artistMatches.map((artist) => ({
-        match: Number(artist.match),
+      artists: toArray(artistMatches).map((artist) => ({
+        match: toFloat(artist.match),
         name: artist.name,
-        mbid: artist.mbid,
+        mbid: artist.mbid === '' ? undefined : artist.mbid,
         url: artist.url,
       })),
     };
@@ -104,16 +119,16 @@ export default class Artist extends Base {
       search: {
         artist: {
           name: attr.artist,
-          url: createLastFmURL('artist', attr.artist),
+          url: createLastFmURL({ type: 'artist', value: attr.artist }),
         },
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
-      albums: albumMatches.map((album) => ({
+      albums: toArray(albumMatches).map((album) => ({
         name: album.name,
-        scrobbles: Number(album.playcount),
+        scrobbles: toInt(album.playcount),
         artist: {
           name: album.artist.name,
           url: album.artist.url,
@@ -137,11 +152,13 @@ export default class Artist extends Base {
     });
 
     return {
-      artist: {
-        name: attr.artist,
-        url: createLastFmURL('artist', attr.artist),
+      search: {
+        artist: {
+          name: attr.artist,
+          url: createLastFmURL({ type: 'artist', value: attr.artist }),
+        },
       },
-      tags: tagMatches.map((tag) => ({
+      tags: toArray(tagMatches).map((tag) => ({
         count: tag.count,
         name: tag.name,
         url: tag.url,
@@ -169,24 +186,24 @@ export default class Artist extends Base {
       search: {
         artist: {
           name: attr.artist,
-          url: createLastFmURL('artist', attr.artist),
+          url: createLastFmURL({ type: 'artist', value: attr.artist }),
         },
-        page: Number(attr.page),
-        itemsPerPage: Number(attr.perPage),
-        totalPages: Number(attr.totalPages),
-        totalResults: Number(attr.total),
+        page: toInt(attr.page),
+        itemsPerPage: toInt(attr.perPage),
+        totalPages: toInt(attr.totalPages),
+        totalResults: toInt(attr.total),
       },
       tracks: trackMatches.map((track) => ({
-        rank: Number(track['@attr'].rank),
+        rank: toInt(track['@attr'].rank),
         name: track.name,
-        mbid: track.mbid,
+        mbid: track.mbid === '' ? undefined : track.mbid,
         artist: {
           name: track.artist.name,
           url: track.artist.url,
         },
         stats: {
-          scrobbles: Number(track.playcount),
-          listeners: Number(track.listeners),
+          scrobbles: toInt(track.playcount),
+          listeners: toInt(track.listeners),
         },
         url: track.url,
       })),
@@ -213,16 +230,11 @@ export default class Artist extends Base {
     });
 
     return {
-      search: {
-        query: results['opensearch:Query'].searchTerms,
-        page: Number(results['opensearch:Query'].startPage),
-        itemsPerPage: Number(results['opensearch:itemsPerPage']),
-        totalResults: Number(results['opensearch:totalResults']),
-      },
-      artists: artistMatches.map((artist) => ({
+      search: convertSearch(results),
+      artists: toArray(artistMatches).map((artist) => ({
         name: artist.name,
-        mbid: artist.mbid,
-        listeners: Number(artist.listeners),
+        mbid: artist.mbid === '' ? undefined : artist.mbid,
+        listeners: toInt(artist.listeners),
         url: artist.url,
       })),
     };

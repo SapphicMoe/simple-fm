@@ -10,13 +10,30 @@ import type {
 export declare interface ArtistGetInfoResponse {
   artist: ArtistResponse & {
     mbid: string;
+    ontour: string;
     stats: {
       listeners: string;
       playcount: string;
       userplaycount?: string;
     };
-    ontour: string;
-    bio: { summary: string };
+    tags: {
+      tag: TagResponse[];
+    };
+    bio: {
+      links: {
+        link: {
+          '#text': string;
+          rel: string;
+          href: string;
+        };
+      };
+      published: string;
+      summary: string;
+      content: string;
+    };
+    similar: {
+      artist: ArtistResponse[];
+    };
   };
 }
 

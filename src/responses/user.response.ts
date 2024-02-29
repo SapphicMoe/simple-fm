@@ -2,7 +2,6 @@ import type {
   ArtistResponse,
   AlbumResponse,
   AttrResponse,
-  ImageResponse,
   TagResponse,
   TrackResponse,
   UserResponse,
@@ -44,28 +43,15 @@ export declare interface UserGetLovedTracksResponse {
 export declare interface UserGetPersonalTagsResponse {
   taggings: {
     albums?: {
-      album: Array<{
-        name: string;
-        artist: ArtistResponse & {
-          mbid: string;
-        };
-        url: string;
-        image: ImageResponse[];
-      }>;
+      album: Array<AlbumResponse & { artist: ArtistResponse }>;
     };
     artists?: {
-      artist: Array<
-        ArtistResponse & {
-          mbid: string;
-        }
-      >;
+      artist: ArtistResponse[];
     };
     tracks?: {
       track: Array<
         TrackResponse & {
-          artist: ArtistResponse & {
-            mbid: string;
-          };
+          artist: ArtistResponse;
         }
       >;
     };
