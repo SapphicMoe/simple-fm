@@ -19,11 +19,18 @@ export default class SimpleFMClient {
 
   constructor(
     private readonly key: string,
-    private readonly options: { userAgent?: string } = {}
+    private readonly options: {
+      userAgent?: string;
+      versioning?: boolean;
+    } = {
+      versioning: true,
+    }
   ) {
     this.validateApiKey();
 
-    options.userAgent ??= `simple-fm v${pkg.version} - a simple Last.fm wrapper written in TypeScript (https://github.com/solelychloe/simple-fm)`;
+    options.userAgent ??= `simple-fm${
+      options.versioning ? ` v${pkg.version}` : ''
+    } - a simple Last.fm wrapper written in TypeScript (https://github.com/solelychloe/simple-fm)`;
 
     this.album = this.createService(Album);
     this.artist = this.createService(Artist);
