@@ -43,8 +43,11 @@ To obtain a Last.fm API key, click [here to register an API account][last-fm-api
 ```ts
 // Import the simple-fm package.
 import SimpleFM from '@solely/simple-fm'; // ESM
+import SimpleFM from 'https://esm.sh/@solely/simple-fm'; // Deno
 const SimpleFM = require('@solely/simple-fm'); // CommonJS
+```
 
+```ts
 // Replace the token with your Last.fm API key.
 const client = new SimpleFM('Last.fm API key');
 
@@ -52,13 +55,6 @@ const client = new SimpleFM('Last.fm API key');
 const json = await client.user.getRecentTracks({ username: 'solelychloe' });
 
 console.log(json);
-// => { search: { user: 'solelychloe', nowPlaying: true, ... }, tracks: [...] }
-```
-
-If you're using [Deno][deno-repo], you can import `simple-fm` via a CDN:
-
-```ts
-import SimpleFM from 'https://esm.sh/@solely/simple-fm';
 ```
 
 # License
@@ -70,7 +66,6 @@ This package is licensed under the [zlib][license] license.
 [actions-image]:
   https://img.shields.io/github/actions/workflow/status/solelychloe/simple-fm/main.yml?colorA=18181B&colorB=de3931
 [actions-link]: https://github.com/solelychloe/simple-fm/actions/workflows/main.yml
-[deno-repo]: https://github.com/denoland/deno
 [docs]: https://simple.arciniega.one
 [logo]: /public/logo.svg 'The Twitter headphone emoji with musical notes in it.'
 [license]: /LICENSE
