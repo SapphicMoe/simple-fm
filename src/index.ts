@@ -1,3 +1,5 @@
+import { USER_AGENT } from './constants.js';
+
 import Album from '@classes/album.class.js';
 import Artist from '@classes/artist.class.js';
 import Chart from '@classes/chart.class.js';
@@ -6,7 +8,6 @@ import Tag from '@classes/tag.class.js';
 import Track from '@classes/track.class.js';
 import User from '@classes/user.class.js';
 import LastFMError from '@utils/error.js';
-import { pkg } from '@utils/package.js';
 
 export default class SimpleFMClient {
   readonly album: Album;
@@ -21,16 +22,11 @@ export default class SimpleFMClient {
     private readonly key: string,
     private readonly options: {
       userAgent?: string;
-      versioning?: boolean;
-    } = {
-      versioning: true,
-    }
+    } = {}
   ) {
     this.validateApiKey();
 
-    options.userAgent ??= `simple-fm${
-      options.versioning ? ` v${pkg.version}` : ''
-    } - a simple Last.fm wrapper written in TypeScript (https://github.com/solelychloe/simple-fm)`;
+    options.userAgent ??= USER_AGENT;
 
     this.album = this.createService(Album);
     this.artist = this.createService(Artist);

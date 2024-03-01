@@ -1,5 +1,7 @@
 import { $fetch, FetchError } from 'ofetch';
 
+import { BASE_URL } from './constants.js';
+
 import LastFMError from '@utils/error.js';
 
 import type { RequestMethod } from '@typings/index.js';
@@ -58,8 +60,6 @@ export class LastFMRequest {
   }
 
   private async get<T>(): Promise<T | undefined> {
-    const baseURL = 'https://ws.audioscrobbler.com/2.0';
-
     const params = {
       api_key: this.key,
       format: 'json',
@@ -67,7 +67,7 @@ export class LastFMRequest {
     };
 
     try {
-      const data = await $fetch<Data<T>>(baseURL, {
+      const data = await $fetch<Data<T>>(BASE_URL, {
         params,
         headers: {
           'User-Agent': this.userAgent,

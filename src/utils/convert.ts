@@ -1,7 +1,8 @@
+import { IMAGE_SIZES } from '~/constants.js';
+
 import type { ImageResponse } from '@responses/index.js';
 import type { ImageType } from '@typings/index.js';
 
-const imageSizes = ['extralarge', 'large', 'medium', 'small'];
 const convertURL = (url?: string) => encodeURIComponent(url ?? '').replaceAll(/%20/g, '+');
 
 type LastFmURLType = 'album' | 'artist' | 'tag' | 'track';
@@ -17,7 +18,7 @@ export const convertImageSizes = (images?: ImageResponse[]) => {
   if (!images) return undefined;
 
   const data = images
-    .filter((image) => image['#text'] && imageSizes.includes(image.size))
+    .filter((image) => image['#text'] && IMAGE_SIZES.includes(image.size))
     .map(
       (image): ImageType => ({
         size: image.size,
