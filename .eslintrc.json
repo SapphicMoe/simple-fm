@@ -5,6 +5,7 @@
   },
   "rules": {
     "import/extensions": "off",
-    "import/no-useless-path-segments": "off"
+    "import/no-useless-path-segments": "off",
+    "@typescript-eslint/no-unnecessary-condition": "off"
   }
 }
