@@ -48,7 +48,7 @@ export default class Artist extends Base {
         listeners: toInt(artist.stats.listeners),
       },
       userStats: {
-        userPlayCount: Number.isNaN(toInt(artist.stats.userplaycount)) ? undefined : toInt(artist.stats.userplaycount),
+        userPlayCount: artist.stats.userplaycount ? toInt(artist.stats.userplaycount) : undefined,
       },
       tags: toArray(artist.tags.tag).map((tag) => ({
         name: tag.name,
