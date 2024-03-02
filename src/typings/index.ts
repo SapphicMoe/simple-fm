@@ -74,7 +74,6 @@ export interface PersonalTag {
 }
 
 export interface AlbumType {
-  position?: number;
   name: string;
   mbid?: string;
   artist: ArtistType;
