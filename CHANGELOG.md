@@ -1,5 +1,13 @@
 # @solely/simple-fm
 
+## 1.7.1
+
+### Patch Changes
+
+- 65d0a7c: Use a constants file & make user agent version static. Should fix issues in environments like Cloudflare Workers.
+- 0a05734: Clean up condition check for userPlayCount in artist.getInfo
+- 6ecb4b9: Fix nowPlaying condition check
+
 ## 1.7.0
 
 ### Minor Changes
