@@ -45,6 +45,7 @@ export declare interface UserGetRecentTracksType {
       dateAdded: Date | undefined;
       mbid: string | undefined;
       album: {
+        name: string;
         mbid: string | undefined;
       };
     }
