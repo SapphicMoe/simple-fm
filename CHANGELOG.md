@@ -1,5 +1,12 @@
 # @solely/simple-fm
 
+## 1.7.2
+
+### Patch Changes
+
+- 38d2200: Remove position from AlbumType
+- 891cd60: Add back the name property to albums in user.getRecentTracks
+
 ## 1.7.1
 
 ### Patch Changes
