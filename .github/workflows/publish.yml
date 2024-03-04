@@ -42,6 +42,22 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Retrieve package.json version
+        id: get_version
+        run: echo ::set-output name=version::$(node -e "console.log(require('./package.json').version)")
+
+      - name: Update simple-fm version
+        run: |
+          sed -i "s/const PACKAGE_VERSION = '[0-9.]*'/const PACKAGE_VERSION = '${{ steps.get_version.outputs.version }}'/" src/constants.ts
+
+      - name: Commit version update
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add src/constants.ts
+          git commit -m "chore: update version to ${{ steps.get_version.outputs.version }}"
+          git push
+
       - name: Create Release Pull Request or Publish to npm
         # https://github.com/changesets/action
         uses: changesets/action@v1
