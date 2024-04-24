@@ -1,19 +1,22 @@
 export const toInt = <T extends number | string>(value?: T): number => {
   if (typeof value === 'number') return value;
-  else if (typeof value === 'string') return parseInt(value);
-  else return NaN;
+  if (typeof value === 'string') return Number.parseInt(value);
+
+  return Number.NaN;
 };
 
 export const toFloat = <T extends number | string>(value?: T): number => {
   if (typeof value === 'number') return value;
-  else if (typeof value === 'string') return parseFloat(value);
-  else return NaN;
+  if (typeof value === 'string') return Number.parseFloat(value);
+
+  return Number.NaN;
 };
 
 export const toArray = <T>(value: T | T[]): T[] => {
   if (Array.isArray(value)) return value;
-  else if (!value) return [];
-  else return [value];
+  if (!value) return [];
+
+  return [value];
 };
 
 export const toBool = (value: any): boolean => {
