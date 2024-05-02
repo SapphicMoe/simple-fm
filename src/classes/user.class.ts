@@ -220,7 +220,7 @@ export default class User extends Base {
     return {
       search: {
         user: attr.user,
-        nowPlaying: !!toBool(trackMatches[0]['@attr']?.nowplaying),
+        nowPlaying: !!toBool(trackMatches?.[0]?.['@attr']?.nowplaying),
         page: toInt(attr.page),
         itemsPerPage: toInt(attr.perPage),
         totalPages: toInt(attr.totalPages),
