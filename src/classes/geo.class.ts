@@ -32,7 +32,7 @@ export default class Geo extends Base {
       },
       artists: artistMatches.map((artist) => ({
         name: artist.name,
-        mbid: artist.mbid === '' ? undefined : artist.mbid,
+        mbid: artist.mbid || undefined,
         listeners: toInt(artist.listeners),
         url: artist.url,
       })),
@@ -66,12 +66,12 @@ export default class Geo extends Base {
       tracks: toArray(trackMatches).map((track) => ({
         rank: toInt(track['@attr'].rank),
         name: track.name,
-        mbid: track.mbid === '' ? undefined : track.mbid,
+        mbid: track.mbid || undefined,
         duration: toInt(track.duration),
         listeners: toInt(track.listeners),
         artist: {
           name: track.artist.name,
-          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
+          mbid: track.artist.mbid || undefined,
           url: track.artist.url,
         },
         url: track.url,

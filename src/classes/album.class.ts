@@ -27,7 +27,7 @@ export default class Album extends Base {
 
     return {
       name: album.name,
-      mbid: album.mbid === '' ? undefined : album.mbid,
+      mbid: album.mbid || undefined,
       artist: {
         name: album.artist,
         url: createLastFmURL({ type: 'artist', value: album.artist }),
@@ -104,7 +104,7 @@ export default class Album extends Base {
       search: convertSearch(results),
       albums: toArray(albumMatches).map((album) => ({
         name: album.name,
-        mbid: album.mbid === '' ? undefined : album.mbid,
+        mbid: album.mbid || undefined,
         artist: {
           name: album.artist,
           url: createLastFmURL({ type: 'artist', value: album.artist }),

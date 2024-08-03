@@ -73,10 +73,10 @@ export default class Tag extends Base {
       albums: toArray(albumMatches).map((album) => ({
         rank: toInt(album['@attr'].rank),
         name: album.name,
-        mbid: album.mbid === '' ? undefined : album.mbid,
+        mbid: album.mbid || undefined,
         artist: {
           name: album.artist.name,
-          mbid: album.artist.mbid === '' ? undefined : album.artist.mbid,
+          mbid: album.artist.mbid || undefined,
           url: album.artist.url,
         },
         url: createLastFmURL({ type: 'album', value: album.artist.name, album: album.name }),
@@ -112,7 +112,7 @@ export default class Tag extends Base {
       artists: toArray(artistMatches).map((artist) => ({
         rank: Number(artist['@attr'].rank),
         name: artist.name,
-        mbid: artist.mbid === '' ? undefined : artist.mbid,
+        mbid: artist.mbid || undefined,
         url: artist.url,
       })),
     };
@@ -145,11 +145,11 @@ export default class Tag extends Base {
       tracks: toArray(trackMatches).map((track) => ({
         rank: toInt(track['@attr'].rank),
         name: track.name,
-        mbid: track.mbid === '' ? undefined : track.mbid,
+        mbid: track.mbid || undefined,
         duration: toInt(track.duration),
         artist: {
           name: track.artist.name,
-          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
+          mbid: track.artist.mbid || undefined,
           url: track.artist.url,
         },
         url: track.url,

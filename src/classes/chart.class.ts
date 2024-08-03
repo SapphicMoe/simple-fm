@@ -33,7 +33,7 @@ export default class Chart extends Base {
       },
       artists: toArray(artistMatches).map((artist) => ({
         name: artist.name,
-        mbid: artist.mbid === '' ? undefined : artist.mbid,
+        mbid: artist.mbid || undefined,
         stats: {
           scrobbles: toInt(artist.playcount),
           listeners: toInt(artist.listeners),
@@ -98,7 +98,7 @@ export default class Chart extends Base {
       },
       tracks: toArray(trackMatches).map((track) => ({
         name: track.name,
-        mbid: track.mbid === '' ? undefined : track.mbid,
+        mbid: track.mbid || undefined,
         stats: {
           scrobbles: toInt(track.playcount),
           listeners: toInt(track.listeners),

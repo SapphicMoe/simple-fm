@@ -37,7 +37,7 @@ export default class Track extends Base {
 
     return {
       name: track.name,
-      mbid: track.mbid === '' ? undefined : track.mbid,
+      mbid: track.mbid || undefined,
       duration: toInt(track.duration),
       stats: {
         scrobbles: toInt(track.playcount),
@@ -49,7 +49,7 @@ export default class Track extends Base {
       },
       artist: {
         name: track.artist.name,
-        mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
+        mbid: track.artist.mbid || undefined,
         url: track.artist.url,
       },
       album:
@@ -58,7 +58,7 @@ export default class Track extends Base {
           : {
               position: album['@attr'] ? toInt(album['@attr'].position) : undefined,
               name: album.title,
-              mbid: album.mbid === '' ? undefined : album.mbid,
+              mbid: album.mbid || undefined,
               image: convertImageSizes(album.image),
               url: album.url,
             },
@@ -95,7 +95,7 @@ export default class Track extends Base {
       tracks: toArray(trackMatches).map((track) => ({
         match: toInt(track.match),
         name: track.name,
-        mbid: track.mbid === '' ? undefined : track.mbid,
+        mbid: track.mbid || undefined,
         duration: toInt(track.duration),
         scrobbles: toInt(track.playcount),
         artist: {
@@ -162,7 +162,7 @@ export default class Track extends Base {
       },
       tracks: toArray(trackMatches).map((track) => ({
         name: track.name,
-        mbid: track.mbid === '' ? undefined : track.mbid,
+        mbid: track.mbid || undefined,
         listeners: toInt(track.listeners),
         artist: {
           name: track.artist,

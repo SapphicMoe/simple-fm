@@ -63,7 +63,7 @@ export default class User extends Base {
       },
       friends: toArray(userMatches).map((user) => ({
         name: user.name,
-        realName: user.realname === '' ? undefined : user.realname,
+        realName: user.realname || undefined,
         country: user.country === 'None' ? undefined : user.country,
         type: user.type,
         subscriber: toBool(user.subscriber),
@@ -86,7 +86,7 @@ export default class User extends Base {
 
     return {
       name: user.name,
-      realName: user.realname === '' ? undefined : user.realname,
+      realName: user.realname || undefined,
       country: user.country === 'None' ? undefined : user.country,
       type: user.type,
       subscriber: toBool(user.subscriber),
@@ -128,11 +128,11 @@ export default class User extends Base {
       },
       tracks: toArray(trackMatches).map((track) => ({
         name: track.name,
-        mbid: track.mbid === '' ? undefined : track.mbid,
+        mbid: track.mbid || undefined,
         date: new Date(toInt(track.date.uts) * 1000),
         artist: {
           name: track.artist.name,
-          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
+          mbid: track.artist.mbid || undefined,
           url: track.artist.url,
         },
         url: track.url,
@@ -158,13 +158,14 @@ export default class User extends Base {
       method: 'user.getPersonalTags',
       ...params,
     });
+
     const responseTypes = {
       album: toArray(albumMatches).map((album) => ({
         name: album?.name,
-        mbid: album?.mbid === '' ? undefined : album?.mbid,
+        mbid: album?.mbid || undefined,
         artist: {
           name: album?.artist.name,
-          mbid: album?.artist.mbid === '' ? undefined : album?.artist.mbid,
+          mbid: album?.artist.mbid || undefined,
           url: album?.artist.url,
         },
         url: album?.url,
@@ -172,16 +173,16 @@ export default class User extends Base {
 
       artist: toArray(artistMatches).map((artist) => ({
         name: artist?.name,
-        mbid: artist?.mbid === '' ? undefined : artist?.mbid,
+        mbid: artist?.mbid || undefined,
         url: artist?.url,
       })),
 
       track: toArray(trackMatches).map((track) => ({
         name: track?.name,
-        mbid: track?.mbid === '' ? undefined : track?.mbid,
+        mbid: track?.mbid || undefined,
         artist: {
           name: track?.artist.name,
-          mbid: track?.artist.mbid === '' ? undefined : track?.artist.mbid,
+          mbid: track?.artist.mbid || undefined,
           url: track?.artist.url,
         },
         url: track?.url,
@@ -229,17 +230,17 @@ export default class User extends Base {
       tracks: toArray(trackMatches).map((track) => ({
         dateAdded: track.date ? new Date(toInt(track.date.uts) * 1000) : undefined,
         name: track.name,
-        mbid: track.mbid === '' ? undefined : track.mbid,
+        mbid: track.mbid || undefined,
         artist: {
           name: track.artist['#text'],
-          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
+          mbid: track.artist.mbid || undefined,
           url: createLastFmURL({ type: 'artist', value: track.artist['#text'] }),
         },
         album: {
           name: track.album['#text'],
-          mbid: track.album.mbid === '' ? undefined : track.album.mbid,
+          mbid: track.album.mbid || undefined,
         },
-        url: track.url,
+        url: track.url || undefined,
         image: convertImageSizes(track.image),
       })),
     };
@@ -272,11 +273,11 @@ export default class User extends Base {
       albums: toArray(albumMatches).map((album) => ({
         rank: toInt(album['@attr'].rank),
         name: album.name,
-        mbid: album.mbid === '' ? undefined : album.mbid,
+        mbid: album.mbid || undefined,
         playCount: toInt(album.playcount),
         artist: {
           name: album.artist.name,
-          mbid: album.artist.mbid === '' ? undefined : album.artist.mbid,
+          mbid: album.artist.mbid || undefined,
           url: album.artist.url,
         },
         url: album.url,
@@ -312,7 +313,7 @@ export default class User extends Base {
       artists: toArray(artistMatches).map((artist) => ({
         rank: toInt(artist['@attr'].rank),
         name: artist.name,
-        mbid: artist.mbid === '' ? undefined : artist.mbid,
+        mbid: artist.mbid || undefined,
         scrobbles: toInt(artist.playcount),
         url: artist.url,
       })),
@@ -372,14 +373,14 @@ export default class User extends Base {
       tracks: toArray(trackMatches).map((track) => ({
         rank: toInt(track['@attr'].rank),
         name: track.name,
-        mbid: track.mbid === '' ? undefined : track.mbid,
+        mbid: track.mbid || undefined,
         stats: {
           duration: toInt(track.duration),
           userPlayCount: toInt(track.playcount),
         },
         artist: {
           name: track.artist.name,
-          mbid: track.artist.mbid === '' ? undefined : track.artist.mbid,
+          mbid: track.artist.mbid || undefined,
           url: track.artist.url,
         },
         url: track.url,

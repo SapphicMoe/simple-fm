@@ -41,7 +41,7 @@ export default class Artist extends Base {
 
     return {
       name: artist.name,
-      mbid: artist.mbid === '' ? undefined : artist.mbid,
+      mbid: artist.mbid || undefined,
       onTour: toBool(artist.ontour),
       stats: {
         scrobbles: toInt(artist.stats.playcount),
@@ -93,7 +93,7 @@ export default class Artist extends Base {
       artists: toArray(artistMatches).map((artist) => ({
         match: toFloat(artist.match),
         name: artist.name,
-        mbid: artist.mbid === '' ? undefined : artist.mbid,
+        mbid: artist.mbid || undefined,
         url: artist.url,
       })),
     };
@@ -196,7 +196,7 @@ export default class Artist extends Base {
       tracks: trackMatches.map((track) => ({
         rank: toInt(track['@attr'].rank),
         name: track.name,
-        mbid: track.mbid === '' ? undefined : track.mbid,
+        mbid: track.mbid || undefined,
         artist: {
           name: track.artist.name,
           url: track.artist.url,
@@ -233,7 +233,7 @@ export default class Artist extends Base {
       search: convertSearch(results),
       artists: toArray(artistMatches).map((artist) => ({
         name: artist.name,
-        mbid: artist.mbid === '' ? undefined : artist.mbid,
+        mbid: artist.mbid || undefined,
         listeners: toInt(artist.listeners),
         url: artist.url,
       })),
