@@ -43,12 +43,15 @@ export default class Album extends Base {
         name: tag.name,
         url: tag.url,
       })),
-      tracks: toArray(trackMatches).map((track) => ({
-        rank: toInt(track['@attr'].rank),
-        name: track.name,
-        duration: toInt(track.duration),
-        url: track.url,
-      })),
+      tracks: toArray(trackMatches).map(
+        (track) =>
+          ({
+            rank: toInt(track['@attr'].rank),
+            name: track.name,
+            duration: toInt(track.duration),
+            url: track.url,
+          }) satisfies AlbumGetInfoType['tracks']
+      ),
       url: album.url,
       image: convertImageSizes(album.image),
     };

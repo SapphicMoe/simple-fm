@@ -17,7 +17,7 @@ export declare interface AlbumGetInfoType {
   };
   tags: ObjectArray<TagType>;
   tracks: ObjectArray<
-    Omit<TrackType, 'artist' | 'mbid'> & {
+    TrackType & {
       rank: number;
       duration: number;
     }

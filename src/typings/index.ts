@@ -75,15 +75,12 @@ export interface PersonalTag {
 
 export interface AlbumType {
   name: string;
-  mbid?: string;
-  artist: ArtistType;
   url: string | undefined;
   image: ImageType[] | undefined;
 }
 
 export interface ArtistType {
   name: string;
-  mbid?: string;
   url: string | undefined;
 }
 
@@ -94,9 +91,6 @@ export interface TagType {
 
 export interface TrackType {
   name: string;
-  mbid: string | undefined;
-  artist: ArtistType | undefined;
-  album?: AlbumType;
   url: string | undefined;
 }
 

@@ -29,6 +29,7 @@ export interface LastFMArgument {
 
   mbid?: string;
 
+  extended?: number;
   taggingtype?: string;
   autocorrect?: boolean | number;
   recenttracks?: boolean | number;

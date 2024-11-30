@@ -221,14 +221,13 @@ export default class User extends Base {
     return {
       search: {
         user: attr.user,
-        nowPlaying: !!toBool(trackMatches?.[0]?.['@attr']?.nowplaying),
+        nowPlaying: !!toBool(trackMatches[0]['@attr']?.nowplaying),
         page: toInt(attr.page),
         itemsPerPage: toInt(attr.perPage),
         totalPages: toInt(attr.totalPages),
         totalResults: toInt(attr.total),
       },
       tracks: toArray(trackMatches).map((track) => ({
-        dateAdded: track.date ? new Date(toInt(track.date.uts) * 1000) : undefined,
         name: track.name,
         mbid: track.mbid || undefined,
         artist: {
@@ -241,6 +240,7 @@ export default class User extends Base {
           mbid: track.album.mbid || undefined,
         },
         url: track.url || undefined,
+        timestamp: track.date ? new Date(toInt(track.date.uts) * 1000) : undefined,
         image: convertImageSizes(track.image),
       })),
     };
@@ -270,19 +270,22 @@ export default class User extends Base {
         totalPages: toInt(attr.totalPages),
         totalResults: toInt(attr.total),
       },
-      albums: toArray(albumMatches).map((album) => ({
-        rank: toInt(album['@attr'].rank),
-        name: album.name,
-        mbid: album.mbid || undefined,
-        playCount: toInt(album.playcount),
-        artist: {
-          name: album.artist.name,
-          mbid: album.artist.mbid || undefined,
-          url: album.artist.url,
-        },
-        url: album.url,
-        image: convertImageSizes(album.image),
-      })),
+      albums: toArray(albumMatches).map(
+        (album) =>
+          ({
+            rank: toInt(album['@attr'].rank),
+            name: album.name,
+            mbid: album.mbid || undefined,
+            playCount: toInt(album.playcount),
+            artist: {
+              name: album.artist.name,
+              mbid: album.artist.mbid || undefined,
+              url: album.artist.url,
+            },
+            url: album.url,
+            image: convertImageSizes(album.image),
+          }) satisfies UserGetTopAlbumsType['albums'][number]
+      ),
     };
   }
 
@@ -310,13 +313,16 @@ export default class User extends Base {
         totalPages: toInt(attr.totalPages),
         totalResults: toInt(attr.total),
       },
-      artists: toArray(artistMatches).map((artist) => ({
-        rank: toInt(artist['@attr'].rank),
-        name: artist.name,
-        mbid: artist.mbid || undefined,
-        scrobbles: toInt(artist.playcount),
-        url: artist.url,
-      })),
+      artists: toArray(artistMatches).map(
+        (artist) =>
+          ({
+            rank: toInt(artist['@attr'].rank),
+            name: artist.name,
+            mbid: artist.mbid || undefined,
+            scrobbles: toInt(artist.playcount),
+            url: artist.url,
+          }) satisfies UserGetTopArtistsType['artists'][number]
+      ),
     };
   }
 
@@ -338,11 +344,14 @@ export default class User extends Base {
       search: {
         user: attr.user,
       },
-      tags: toArray(tagMatches).map((tag) => ({
-        count: toInt(tag.count),
-        name: tag.name,
-        url: tag.url,
-      })),
+      tags: toArray(tagMatches).map(
+        (tag) =>
+          ({
+            count: toInt(tag.count),
+            name: tag.name,
+            url: tag.url,
+          }) satisfies UserGetTopTagsType['tags'][number]
+      ),
     };
   }
 
@@ -370,22 +379,25 @@ export default class User extends Base {
         totalPages: toInt(attr.totalPages),
         totalResults: toInt(attr.total),
       },
-      tracks: toArray(trackMatches).map((track) => ({
-        rank: toInt(track['@attr'].rank),
-        name: track.name,
-        mbid: track.mbid || undefined,
-        stats: {
-          duration: toInt(track.duration),
-          userPlayCount: toInt(track.playcount),
-        },
-        artist: {
-          name: track.artist.name,
-          mbid: track.artist.mbid || undefined,
-          url: track.artist.url,
-        },
-        url: track.url,
-        image: convertImageSizes(track.image),
-      })),
+      tracks: toArray(trackMatches).map(
+        (track) =>
+          ({
+            rank: toInt(track['@attr'].rank),
+            name: track.name,
+            mbid: track.mbid || undefined,
+            stats: {
+              duration: toInt(track.duration),
+              userPlayCount: toInt(track.playcount),
+            },
+            artist: {
+              name: track.artist.name,
+              mbid: track.artist.mbid || undefined,
+              url: track.artist.url,
+            },
+            url: track.url,
+            image: convertImageSizes(track.image),
+          }) satisfies UserGetTopTracksType['tracks'][number]
+      ),
     };
   }
 }

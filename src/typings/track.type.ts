@@ -19,7 +19,7 @@ export declare interface TrackGetInfoType {
   };
   album:
     | Partial<
-        Omit<AlbumType, 'artist'> & {
+        AlbumType & {
           position: number;
           mbid: string | undefined;
         }

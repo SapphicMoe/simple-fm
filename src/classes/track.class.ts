@@ -160,16 +160,19 @@ export default class Track extends Base {
         ...convertSearch(results),
         query: params.track,
       },
-      tracks: toArray(trackMatches).map((track) => ({
-        name: track.name,
-        mbid: track.mbid || undefined,
-        listeners: toInt(track.listeners),
-        artist: {
-          name: track.artist,
-          url: createLastFmURL({ type: 'artist', value: track.artist }),
-        },
-        url: track.url,
-      })),
+      tracks: toArray(trackMatches).map(
+        (track) =>
+          ({
+            name: track.name,
+            mbid: track.mbid || undefined,
+            listeners: toInt(track.listeners),
+            artist: {
+              name: track.artist,
+              url: createLastFmURL({ type: 'artist', value: track.artist }),
+            },
+            url: track.url,
+          }) satisfies TrackSearchType['tracks'][number]
+      ),
     };
   }
 }

@@ -1,4 +1,13 @@
-import type { AlbumType, ArtistType, PersonalTag, SearchMeta, TagType, TrackType, UserType } from '@typings/index.js';
+import type {
+  AlbumType,
+  ArtistType,
+  ImageType,
+  PersonalTag,
+  SearchMeta,
+  TagType,
+  TrackType,
+  UserType,
+} from '@typings/index.js';
 
 export declare interface UserGetFriendsType {
   search: SearchMeta & {
@@ -35,19 +44,40 @@ export declare interface UserGetPersonalTagsType {
   response?: PersonalTag[];
 }
 
+export interface UserGetRecentTracks {
+  search: SearchMeta & {
+    user: string;
+    nowPlaying: boolean;
+  };
+  tracks: Array<
+    TrackType & {
+      mbid: string | undefined;
+      album: {
+        name: string;
+        mbid: string | undefined;
+      };
+      artist: ArtistType | undefined;
+      timestamp: Date | undefined;
+      image: ImageType[] | undefined;
+    }
+  >;
+}
+
 export declare interface UserGetRecentTracksType {
   search: SearchMeta & {
     user: string;
     nowPlaying: boolean;
   };
   tracks: Array<
-    Omit<TrackType, 'album'> & {
-      dateAdded: Date | undefined;
+    TrackType & {
       mbid: string | undefined;
       album: {
         name: string;
         mbid: string | undefined;
       };
+      artist: ArtistType | undefined;
+      timestamp: Date | undefined;
+      image: ImageType[] | undefined;
     }
   >;
 }
@@ -62,7 +92,9 @@ export declare interface UserGetTopAlbumsType {
       mbid: string | undefined;
       playCount: number;
       artist: {
+        name: string;
         mbid: string | undefined;
+        url: string;
       };
     }
   >;
@@ -101,12 +133,15 @@ export declare interface UserGetTopTracksType {
       rank: number;
       mbid: string | undefined;
       stats: {
-        duration?: number;
+        duration: number;
         userPlayCount: number;
       };
       artist: {
+        name: string;
         mbid: string | undefined;
+        url: string;
       };
+      image: ImageType[] | undefined;
     }
   >;
 }
