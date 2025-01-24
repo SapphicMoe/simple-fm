@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://simple.arciniega.one" title="simple.arciniega.one">
+<a href="https://simple.sapphic.moe" title="simple.sapphic.moe">
     <img
       src="public/logo.svg"
       height="100"
@@ -64,9 +64,9 @@ This package is licensed under the [zlib][license] license.
 © 2024 Chloe Arciniega.
 
 [actions-image]:
-  https://img.shields.io/github/actions/workflow/status/solelychloe/simple-fm/main.yml?colorA=18181B&colorB=de3931
-[actions-link]: https://github.com/solelychloe/simple-fm/actions/workflows/main.yml
-[docs]: https://simple.arciniega.one
+  https://img.shields.io/github/actions/workflow/status/SapphicMoe/simple-fm/main.yml?colorA=18181B&colorB=de3931
+[actions-link]: https://github.com/SapphicMoe/simple-fm/actions/workflows/main.yml
+[docs]: https://simple.sapphic.moe
 [logo]: /public/logo.svg 'The Twitter headphone emoji with musical notes in it.'
 [license]: /LICENSE
 [downloads-image]: https://img.shields.io/npm/dm/@solely/simple-fm.svg?style=flat&colorA=18181B&colorB=de3931
